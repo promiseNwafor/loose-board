@@ -1,0 +1,93 @@
+.Auth .h4{
+    font-family: 'Courier New', Courier, monospace;
+    width: 50%;
+    margin: auto;
+    padding-top: 0.1rem;
+    font-size: 24px;
+    color: rgb(58, 105, 177);
+}
+
+.logo{
+    width: 50%;
+    margin: auto;
+    height: 120px;
+}
+
+.logo img{
+    width: 70px;
+}
+
+.Auth{
+    height: 100vh;
+    width: 100vw;
+    background: white;
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.Auth .Box{
+    width: 300px;
+    height: 400px;
+    box-shadow: 5px 5px 20px 0.5px rgb(227, 227, 235), -10px -10px 20px 0.2px rgb(226, 219, 219);
+    margin: 0 2rem;
+    border-radius: 20px;
+}
+
+.Auth .wrap{
+    width: 60%;
+    margin: auto;
+}
+
+.Auth .wrap div{
+    margin: 2rem auto;
+}
+
+img{
+    width: 50%;
+    margin: 2rem;
+    margin-right: 3rem;
+}
+
+/* .input{
+    position: relative;
+} */
+
+input{
+    border: none;
+    border-bottom: 1px solid rgb(122, 120, 120);
+    position: relative;
+}
+
+
+i{
+    position: absolute;
+    left: -50;
+    /* top: -10px; */
+}
+
+.Btn{
+    width: 80px;
+    background: rgb(36, 72, 192);
+    margin: auto;
+    margin-top: 2rem;
+    padding: 0.4rem 1.5rem;
+    border-radius: 7px;
+    cursor: pointer;
+}
+
+button{
+    width: 30px;
+    background: inherit;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.foot{
+    color: rgb(25, 127, 223);
+    width: 50%;
+    margin: auto;
+    cursor: pointer;
+}

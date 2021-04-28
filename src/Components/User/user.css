@@ -1,0 +1,61 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background: inherit;
+}
+
+.AddReport{
+    width: 100vw;
+    min-height: 100vh;
+    background: rgb(211, 207, 207);
+    padding-top: 3rem;
+}
+
+.AddReport .head{
+    width: 30%;
+    margin: auto;
+    color: rgb(42, 100, 187);
+}
+
+.AddReport .wrap{
+    width: 60%;
+    margin: auto;
+    padding: 3rem 4rem;
+    background: white;
+    border-radius: 15px;
+}
+
+.AddReport .select{
+    width: 100%;
+}
+
+.AddReport input{
+    border: none;
+    border-bottom: 1px solid rgb(122, 120, 120);
+    position: relative;
+    background: inherit;
+    width: 30%;
+    margin: 1rem auto;
+    margin-right: 1rem;
+    padding: 0.6rem;
+}
+
+.AddReport .Input input{
+    width: 100%;
+    margin: 1.6rem auto;
+}
+
+.AddReport .Select input{
+    margin: 0;
+    border: none;
+}
+
+.AddReport .Select{
+    margin: 1rem auto;
+}
+
+.AddReport .Btn{
+    width: 30%;
+}
+
