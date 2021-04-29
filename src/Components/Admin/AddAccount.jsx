@@ -33,33 +33,23 @@ function AddAccount() {
     ];
 
     var date = new Date(),
-    today = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
+    today = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate() + accountName
+    var day = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate()
 
     const handleBtnClick = () => {
         if (platform !== "" || accountName !== ""){
             switch(platform.value){
                 case 'facebook':
-                    
-                    handleAddAccount({id: today, accountName, manager: manager.value, date: today, facebook: {likes, comments, reach, shares, leads, views, impressions, followers, downloads}})
-                  
+                    handleAddAccount({id: today, label: accountName, manager: manager.value, date: day, facebook: {likes, comments, reach, shares, leads, views, impressions, followers, downloads}}, today)
                 break
                 case 'twitter':
-                    // setTwitter({
-                    //     likes, comments, reach, shares, leads, views, impressions, followers, downloads
-                    // })
-                handleAddAccount({id: today, accountName, manager: manager.value, date: today, twitter: {likes, comments, reach, shares, leads, views, impressions, followers, downloads}})
+                    handleAddAccount({id: today, label: accountName, manager: manager.value, date: day, twitter: {likes, comments, reach, shares, leads, views, impressions, followers, downloads}}, today)
                 break
                 case 'instagram':
-                    // setInstagram({
-                    //     likes, comments, reach, shares, leads, views, impressions, followers, downloads
-                    // })
-                    handleAddAccount({id: today, accountName, saves, manager: manager.value, date: today, instagram: {likes, comments, reach, shares, leads, views, impressions, followers, downloads}})
+                    handleAddAccount({id: today, label: accountName, manager: manager.value, date: day, instagram: {likes, comments, saves, reach, shares, leads, views, impressions, followers, downloads}}, today)
                 break
                 case 'linkedin':
-                    // setLinkedin({
-                    //     likes, comments, reach, shares, leads, views, impressions, followers, downloads
-                    // })
-                    handleAddAccount({id: today, accountName, manager: manager.value, date: today, linkedin: {likes, comments, reach, shares, leads, views, impressions, followers, downloads}})
+                    handleAddAccount({id: today, label: accountName, manager: manager.value, date: day, linkedin: {likes, comments, reach, shares, leads, views, impressions, followers, downloads}}, today)
                 break
             }
         }

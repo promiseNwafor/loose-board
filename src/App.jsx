@@ -5,6 +5,7 @@ import Register from './Components/Auth/Register'
 import Auth from './Components/Auth/Auth'
 import AddAccount from './Components/Admin/AddAccount'
 import AddReport from './Components/User/AddReport'
+import Overview from './Components/Admin/Overview'
 
 
 export const AuthScreen = React.createContext()
@@ -17,10 +18,12 @@ function App() {
     const twitterRef = firebase.firestore().collection("twitter");
     const instagramRef = firebase.firestore().collection("instagram");
     const linkedinRef = firebase.firestore().collection("linkedin");
+    const [isAdmin, setIsAdmin] = useState(false)
     const [locale, setLocale] = useState('')
     const [isLogged, setIsLogged] = useState(false)
   const [loading, setLoading] = useState(false);
   const [managerAccounts, setManagerAccounts] = useState([])
+  const [accounts, setAccounts] = useState([])
     const [currentUser, setCurrentUser] = useState(null);
     
     var date = new Date(),
@@ -149,10 +152,13 @@ function App() {
             })
     }
 
-    const handleAddAccount = (newAccount) => {
+    const handleAddAccount = (newAccount, id) => {
             setLoading(true)
+            accountsRef
+            .doc(id).get().then((res) => {
+                if (res.exists){
          accountsRef
-            .doc(newAccount.id)
+            .doc(id)
             .update(newAccount)
             .catch((err) => {
                 console.log(err);
@@ -161,6 +167,21 @@ function App() {
                 alert("Account added")
                 console.log(newAccount)
             })
+        }else{
+            accountsRef
+               .doc(newAccount.id)
+               .set(newAccount)
+               .catch((err) => {
+                   console.log(err);
+               }).then(()=> {
+                   setLoading(false)
+                   alert("Account added")
+                   console.log(newAccount)
+               })
+
+        }
+            })
+            
             setLoading(false)
     }
 
@@ -176,6 +197,17 @@ function App() {
         // console.log(managerAccounts)
     }
 
+    const getAccounts = () => {
+        accountsRef.onSnapshot((querySnapshot) => {
+            const items = []
+            querySnapshot.forEach((doc) => {
+                items.push(doc.data())
+            })
+            setAccounts(items)
+        })
+        console.log(accounts)
+    }
+
     useEffect(() => {
         setLocale(localStorage.getItem('isRegistered'))
         firebase.auth().onAuthStateChanged((user) => {
@@ -183,22 +215,27 @@ function App() {
         });
         currentUser ? getManagerAccounts() : console.log("No user yet")
         // console.log(today)
-    }, [currentUser, loading])
+        getAccounts()
+    }, [currentUser])
 
     useEffect(() => {
-    }, [loading])
+        console.log(isAdmin)
+    }, [loading, isAdmin])
 
     return (
         <AuthContext.Provider
       value={{
-          managerAccounts,
-          handleAddAccount,
-          addToFacebook,
-          addToInstagram,
-          addToLinkedin,
-          addToTwitter,
+        setCurrentUser,
+        handleAddAccount,
+        addToFacebook,
+        addToInstagram,
+        addToLinkedin,
+        addToTwitter,
+        setIsAdmin,
+        managerAccounts,
         currentUser,
         loading,
+        accounts,
       }}
     >
         <AuthScreen.Provider value={{setAuthScreen, setIsLogged}}>
@@ -208,14 +245,16 @@ function App() {
                         <Route exact path="/">
                             <Auth />
                         </Route>
-                        <Route exact path="/addAccount">
-                            <AddAccount />
+                        <Route exact path="/home">
+                            { isAdmin ?
+                                <AddReport /> 
+                                : <AddAccount />}
                         </Route>
-                        <Route exact path="/addReport">
+                        {/* <Route exact path="/addReport">
                             <AddReport />
-                        </Route>
-                        <Route exact path="/register">
-                            <Register />
+                        </Route> */}
+                        <Route exact path="/overview">
+                            <Overview />
                         </Route>
                     </Switch>
                     {/* { locale === 'true' ? <Login /> : <Register /> } */}

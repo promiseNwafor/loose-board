@@ -13,8 +13,8 @@ function Register() {
   const [confirmPassword, setConfirmPassword] = useState("");
 
     const setIsRegister = useContext(SetIsRegister)
-    const setAuthScreen = useContext(AuthScreen)
-    const {currentUser} = useContext(AuthContext)
+    const {setAuthScreen} = useContext(AuthScreen)
+    const {currentUser, setIsAdmin} = useContext(AuthContext)
 
     const register = (e) => {
         e.preventDefault()
@@ -29,10 +29,10 @@ function Register() {
                     firebase.auth().currentUser.updateProfile({ displayName: username })
                 })
                 .then(() => {
-                    // setAuthScreen()
-                    currentUser ? currentUser.email.includes('seun') ? window.location.pathname = '/addAccount' : window.location.pathname = '/addReport'
-                    : console.log('None')
-                    console.log(currentUser.t.code)
+                    setAuthScreen()
+                    currentUser ? currentUser.email.includes('seun') ? setIsAdmin(true) : setIsAdmin(false) 
+                    : console.log('no curentUser')
+                    console.log(currentUser)
                     setLoading(false)
                     resetInput();
                 })

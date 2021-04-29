@@ -10,7 +10,7 @@ function Login() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
-    const {currentUser} = useContext(AuthContext)
+    const {currentUser, setIsAdmin, setCurrentUser} = useContext(AuthContext)
 
     const login = (e) => {
         e.preventDefault()
@@ -22,10 +22,15 @@ function Login() {
             .auth()
             .signInWithEmailAndPassword(email, password)
             .then(() => {
-              currentUser.email.includes('seun') ? window.location.pathname = '/addAccount' : window.location.pathname = '/addReport'
-                console.log(currentUser)
-                setLoading(false)
-                resetInput();
+              currentUser ? currentUser.email.includes('seun') ? setIsAdmin(true) : setIsAdmin(false) 
+                    : console.log('no curentUser')
+                    console.log(currentUser.email)
+                    // console.log(currentUser)
+                  }).then(() => {
+                    // window.location.pathname = '/home'
+                      setLoading(false)
+                      resetInput();
+                    
             })
             .catch((err) => {
               console.error(err);

@@ -5,25 +5,34 @@
     background: inherit;
 }
 
-.AddAccount{
+.AddAccount, .Overview{
     width: 100vw;
     min-height: 100vh;
     background: rgb(211, 207, 207);
     padding-top: 3rem;
 }
 
-.AddAccount .head{
+.AddAccount .head, .Overview .head{
     display: flex;
     justify-content: center;
     color: rgb(42, 100, 187);
 }
 
-.AddAccount .wrap{
+.Overview .head{
+    justify-content: flex-start;
+}
+
+.AddAccount .wrap, .Overview .wrap{
     width: 60%;
     margin: auto;
     padding: 3rem 4rem;
     background: white;
     border-radius: 15px;
+}
+
+.Overview .wrap{
+    min-width: 800px;
+    padding: 3rem
 }
 
 .AddAccount .select{
@@ -57,5 +66,22 @@
 
 .AddAccount .Btn{
     width: 30%;
+}
+
+.Overview .flex{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.Overview .flex>div{
+    /* width: 18%; */
+    font-weight: bold;
+    padding: 2rem;
+}
+
+.Overview .row{
+    padding: 1.2rem;
+    padding-left: 0;
 }
 

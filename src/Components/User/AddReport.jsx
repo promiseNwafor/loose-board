@@ -29,7 +29,7 @@ function AddReport() {
 
 
     var date = new Date(),
-    today = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
+    today = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate() + accountName.label
     // var time = date.getFullYear() + '-' + date.getMonth() + '-' + date.getDate() + '-' + date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds();
     // var id = today + '-' + accountName.label
 
