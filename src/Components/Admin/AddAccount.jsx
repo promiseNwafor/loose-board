@@ -4,7 +4,7 @@ import { AuthContext } from '../../App'
 import './admin.css'
 
 function AddAccount() {
-    const {handleAddAccount} = useContext(AuthContext)
+    const {handleAddAccount, loading} = useContext(AuthContext)
     const [accountName, setAccountName] = useState("")
     const [manager, setManager] = useState("")
     const [platform, setPlatform] = useState("")
@@ -32,9 +32,8 @@ function AddAccount() {
         { value: 'linkedin', label: 'linkedin' },
     ];
 
-    let idCounter = 1
     var date = new Date(),
-    today = date.getFullYear() + '-' + date.getMonth() + '-' + date.getDay();
+    today = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
 
     const handleBtnClick = () => {
         if (platform !== "" || accountName !== ""){
@@ -110,8 +109,11 @@ function AddAccount() {
                 </div>
             </form>
             <div className="Btn">
+            {
+                  loading ? <p>Adding...</p> :
                   <button onClick={handleBtnClick} className="btn" type="submit">SUBMIT</button>
-              </div>
+            }
+            </div>
         </div>
         </div>
     )

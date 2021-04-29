@@ -6,8 +6,7 @@ import './user.css'
 
 function AddReport() {
 
-    const {currentUser, managerAccounts, addToFacebook, addToInstagram, addToLinkedin, addToTwitter} = useContext(AuthContext)
-    const {handleAddAccount} = useContext(AuthContext)
+    const {currentUser, loading, managerAccounts, addToFacebook, addToInstagram, addToLinkedin, addToTwitter} = useContext(AuthContext)
     const [accountName, setAccountName] = useState("")
     const [platform, setPlatform] = useState("")
     const [likes, setLikes] = useState(0)
@@ -30,25 +29,31 @@ function AddReport() {
 
 
     var date = new Date(),
-    today = date.getFullYear() + '-' + date.getMonth() + '-' + date.getDay();
-    var time = date.getFullYear() + '-' + date.getMonth() + '-' + date.getDay() + '-' + date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds();
-    var id = today + '-' + accountName.label
+    today = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
+    // var time = date.getFullYear() + '-' + date.getMonth() + '-' + date.getDate() + '-' + date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds();
+    // var id = today + '-' + accountName.label
 
     const handleBtnClick = () => {
         if (platform !== "" || accountName !== ""){
             switch(platform.value){
                 case 'facebook':                   
-                    addToFacebook({id, accountName: accountName.label, date: today, engagements: {likes, comments, reach, shares, leads, views, impressions, followers, downloads}})                
+                    addToFacebook({id: today, accounts: [{accountName: accountName.label, date: today, engagements: {likes, comments, reach, shares, leads, views, impressions, followers, downloads}}]},
+                        {accountName: accountName.label, date: today, engagements: {likes, comments, reach, shares, leads, views, impressions, followers, downloads}}, today)                
                 break
                 case 'twitter':
-                    addToTwitter({id, accountName: accountName.label, date: today, engagements: {likes, comments, reach, shares, leads, views, impressions, followers, downloads}})
+                    addToTwitter({id: today, accounts: [{accountName: accountName.label, date: today, engagements: {likes, comments, reach, shares, leads, views, impressions, followers, downloads}}]},
+                        {accountName: accountName.label, date: today, engagements: {likes, comments, reach, shares, leads, views, impressions, followers, downloads}}, today)
                 break
                 case 'instagram':
-                    addToInstagram({id, accountName: accountName.label, date: today, engagements: {likes, comments, reach, shares, leads, views, impressions, followers, downloads}})
+                    addToInstagram({id: today, accounts: [{accountName: accountName.label, date: today, engagements: {likes, comments, saves, reach, shares, leads, views, impressions, followers, downloads}}]},
+                        {accountName: accountName.label, date: today, engagements: {likes, comments, reach, shares, leads, views, impressions, followers, downloads}}, today)
                 break
                 case 'linkedin':
-                    addToLinkedin({id, accountName: accountName.label, date: today, engagements: {likes, comments, reach, shares, leads, views, impressions, followers, downloads}})
+                    addToLinkedin({id: today, accounts: [{accountName: accountName.label, date: today, engagements: {likes, comments, reach, shares, leads, views, impressions, followers, downloads}}]},
+                        {accountName: accountName.label, date: today, engagements: {likes, comments, reach, shares, leads, views, impressions, followers, downloads}}, today)
                 break
+                default:
+                    return 'none';
             }
         }
     }
@@ -96,8 +101,11 @@ function AddReport() {
                 </div>
             </form>
             <div className="Btn">
+            {
+                  loading ? <p>Adding...</p> :
                   <button onClick={handleBtnClick} className="btn" type="submit">SUBMIT</button>
-              </div>
+            }
+            </div>
         </div>
         </div>
     )

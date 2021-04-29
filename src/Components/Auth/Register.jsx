@@ -9,6 +9,7 @@ function Register() {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
   const [confirmPassword, setConfirmPassword] = useState("");
 
     const setIsRegister = useContext(SetIsRegister)
@@ -21,21 +22,24 @@ function Register() {
             alert("Input valid details")
             resetInput()
         } else {
-            // addNewUser({ email, username, isAdmin, id: time })
+            setLoading(true)
             firebase
                 .auth()
                 .createUserWithEmailAndPassword(email, password).then(() => {
                     firebase.auth().currentUser.updateProfile({ displayName: username })
                 })
                 .then(() => {
-                    setAuthScreen()
-                    // setIsLogged(true)
-                    console.log(currentUser)
+                    // setAuthScreen()
+                    currentUser ? currentUser.email.includes('seun') ? window.location.pathname = '/addAccount' : window.location.pathname = '/addReport'
+                    : console.log('None')
+                    console.log(currentUser.t.code)
+                    setLoading(false)
                     resetInput();
                 })
                 .catch((err) => {
                     console.error(err);
                 });
+                setLoading(false)
         }
     };
 
@@ -74,7 +78,10 @@ function Register() {
                 </div>
             </form>
             <div className="Btn">
+            {
+                  loading ? <p>Loading...</p> :
                 <button onClick={register} type="submit">REGISTER</button>
+            }
             </div>
 
         </div>

@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import firebase from '../../lib/firebase'
 import { AuthContext } from '../../App'
 import { SetIsRegister } from './Auth';
@@ -9,6 +9,7 @@ function Login() {
     const setIsRegister = useContext(SetIsRegister)
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
     const {currentUser} = useContext(AuthContext)
 
     const login = (e) => {
@@ -16,13 +17,14 @@ function Login() {
         if (email === "" || password === "") {
           alert("Input details")
         } else {
+          setLoading(true)
           firebase
             .auth()
             .signInWithEmailAndPassword(email, password)
             .then(() => {
               currentUser.email.includes('seun') ? window.location.pathname = '/addAccount' : window.location.pathname = '/addReport'
                 console.log(currentUser)
-                // setIsLogged(true)
+                setLoading(false)
                 resetInput();
             })
             .catch((err) => {
@@ -35,6 +37,10 @@ function Login() {
         setEmail("");
         setPassword("");
       };
+
+      useEffect(() => {
+
+      }, [loading])
 
     return (
         <div className="Login">
@@ -56,7 +62,12 @@ function Login() {
                   </div>
               </form>
               <div className="Btn">
-                  <button onClick={login} type="submit">LOGIN</button>
+                {
+                  loading ? <p>Loading...</p> :
+                  <button onClick={login} type="submit">
+                    LOGIN
+                    </button>
+                  }
               </div>
 
           </div>

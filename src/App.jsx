@@ -19,66 +19,149 @@ function App() {
     const linkedinRef = firebase.firestore().collection("linkedin");
     const [locale, setLocale] = useState('')
     const [isLogged, setIsLogged] = useState(false)
-    const [managerAccounts, setManagerAccounts] = useState([])
+  const [loading, setLoading] = useState(false);
+  const [managerAccounts, setManagerAccounts] = useState([])
     const [currentUser, setCurrentUser] = useState(null);
+    
+    var date = new Date(),
+    today = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
     
     const setAuthScreen = () => {
         localStorage.setItem('isRegistered', 'true');
     };
 
-    const addToFacebook = (newAccount) => {
-         facebookRef
-            .doc(newAccount.id)
-            .set(newAccount)
-            .catch((err) => {
-                console.log(err);
-            }).then(()=> {
-                console.log(newAccount)
-            })
+    const addToFacebook = (newAccount, updateAcc, day) => {
+        setLoading(true)
+        facebookRef.doc(day).get().then((res) => {
+            if (res.exists){
+                facebookRef.doc(day).update({
+                   accounts: firebase.firestore.FieldValue.arrayUnion(updateAcc)
+                })
+                .catch((err) => {
+                    console.log(err);
+                }).then(()=> {
+                    setLoading(false)
+                    alert("Report added")
+                })
+            }else{
+                facebookRef.doc(newAccount.id)
+                .set(newAccount)
+                .catch((err) => {
+                    console.log(err);
+                }).then(()=> {
+                    setLoading(false)
+                    alert("Report added")
+                    console.log(newAccount)
+                })
+                
+            }
+        })
+        setLoading(false)
     }
 
-    const addToInstagram = (newAccount) => {
-         instagramRef
-            .doc(newAccount.id)
-            .set(newAccount)
-            .catch((err) => {
-                console.log(err);
-            }).then(()=> {
-                console.log(newAccount)
-            })
+    const addToInstagram = (newAccount, updateAcc, day) => {
+        setLoading(true)
+         instagramRef.doc(day).get().then((res) => {
+            if (res.exists){
+                instagramRef.doc(day).update({
+                   accounts: firebase.firestore.FieldValue.arrayUnion(updateAcc)
+                })
+                .catch((err) => {
+                    console.log(err);
+                }).then(()=> {
+                    alert("Report added")
+                    setLoading(false)
+                })
+            }else{
+                instagramRef.doc(newAccount.id)
+                .set(newAccount)
+                .catch((err) => {
+                    console.log(err);
+                }).then(()=> {
+                    alert("Report added")
+                    setLoading(false)
+                    console.log(newAccount)
+                })
+                
+            }
+        })
+        setLoading(false)
     }
 
-    const addToLinkedin = (newAccount) => {
-         linkedinRef
-            .doc(newAccount.id)
-            .set(newAccount)
-            .catch((err) => {
-                console.log(err);
-            }).then(()=> {
-                console.log(newAccount)
+    const addToLinkedin = (newAccount, updateAcc, day) => {
+                setLoading(true)
+                linkedinRef
+            .doc(day).get().then((res) => {
+                if (res.exists){
+                    linkedinRef.doc(day).update({
+                       accounts: firebase.firestore.FieldValue.arrayUnion(updateAcc)
+                    })
+                    .set({newAccount})
+                    .catch((err) => {
+                        console.log(err);
+                    }).then(()=> {
+                        setLoading(false)
+                alert("Report added")
+                    })
+                }else{
+                    linkedinRef.doc(newAccount.id)
+                    .set({newAccount})
+                    .catch((err) => {
+                        console.log(err);
+                    }).then(()=> {
+                        setLoading(false)
+                        alert("Report added")
+                        console.log(newAccount)
+                    })
+                    
+                }
             })
+            setLoading(false)
     }
 
-    const addToTwitter = (newAccount) => {
-         twitterRef
-            .doc(newAccount.id)
+    const addToTwitter = (newAccount, updateAcc, day) => {
+                setLoading(true)
+                twitterRef
+            .doc(day).get().then((res) => {
+                if (res.exists){
+                    twitterRef.doc(day).update({
+                       accounts: firebase.firestore.FieldValue.arrayUnion(updateAcc)
+                    })
+                    .catch((err) => {
+                        console.log(err);
+                    }).then(()=> {
+                setLoading(false)
+                alert("Report added")
+            })
+        }else{
+            twitterRef.doc(newAccount.id)
             .set(newAccount)
             .catch((err) => {
                 console.log(err);
             }).then(()=> {
+                setLoading(false)
+                alert("Report added")
                 console.log(newAccount)
+                    })
+    
+                }
+                setLoading(false)
             })
     }
 
     const handleAddAccount = (newAccount) => {
+            setLoading(true)
          accountsRef
             .doc(newAccount.id)
             .update(newAccount)
             .catch((err) => {
                 console.log(err);
             }).then(()=> {
+                setLoading(false)
+                alert("Account added")
                 console.log(newAccount)
             })
+            setLoading(false)
     }
 
     const getManagerAccounts = () => {
@@ -90,7 +173,7 @@ function App() {
             setManagerAccounts(items)
             // return items
         })
-        console.log(managerAccounts)
+        // console.log(managerAccounts)
     }
 
     useEffect(() => {
@@ -99,8 +182,11 @@ function App() {
             setCurrentUser(user);
         });
         currentUser ? getManagerAccounts() : console.log("No user yet")
-        // console.log(isLogged)
-    }, [currentUser])
+        // console.log(today)
+    }, [currentUser, loading])
+
+    useEffect(() => {
+    }, [loading])
 
     return (
         <AuthContext.Provider
@@ -112,6 +198,7 @@ function App() {
           addToLinkedin,
           addToTwitter,
         currentUser,
+        loading,
       }}
     >
         <AuthScreen.Provider value={{setAuthScreen, setIsLogged}}>

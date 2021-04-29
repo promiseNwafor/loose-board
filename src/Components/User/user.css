@@ -13,8 +13,8 @@
 }
 
 .AddReport .head{
-    width: 30%;
-    margin: auto;
+    display: flex;
+    justify-content: center;
     color: rgb(42, 100, 187);
 }
 
