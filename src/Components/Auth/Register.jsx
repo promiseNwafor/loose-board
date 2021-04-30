@@ -33,9 +33,15 @@ function Register() {
                     currentUser ? currentUser.email.includes('seun') ? setIsAdmin(true) : setIsAdmin(false) 
                     : console.log('no curentUser')
                     console.log(currentUser)
-                    setLoading(false)
-                    resetInput();
+                    // setLoading(false)
+                    // resetInput();
                 })
+                .then(() => {
+                    window.location.pathname = '/home'
+                      setLoading(false)
+                      resetInput();
+                    
+            })
                 .catch((err) => {
                     console.error(err);
                 });

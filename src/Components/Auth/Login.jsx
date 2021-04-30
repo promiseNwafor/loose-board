@@ -27,7 +27,7 @@ function Login() {
                     console.log(currentUser.email)
                     // console.log(currentUser)
                   }).then(() => {
-                    // window.location.pathname = '/home'
+                    window.location.pathname = '/home'
                       setLoading(false)
                       resetInput();
                     

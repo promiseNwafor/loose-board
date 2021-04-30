@@ -81,7 +81,17 @@
 }
 
 .Overview .row{
+    display: flex;
+    /* justify-content: center; */
+    align-items: center;
     padding: 1.2rem;
     padding-left: 0;
+    border-bottom: 1px solid gray;
+}
+
+.Overview .row p{
+    width: 130px;
+    padding-right: 1.2rem;
+    /* padding-left: 0; */
 }
 

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import firebase from './lib/firebase'
-import Register from './Components/Auth/Register'
 import Auth from './Components/Auth/Auth'
 import AddAccount from './Components/Admin/AddAccount'
 import AddReport from './Components/User/AddReport'
@@ -24,6 +23,10 @@ function App() {
   const [loading, setLoading] = useState(false);
   const [managerAccounts, setManagerAccounts] = useState([])
   const [accounts, setAccounts] = useState([])
+  const [facebookItems, setFacebookItems] = useState([])
+  const [twitterItems, setTwitterItems] = useState([])
+  const [instagramItems, setInstagramItems] = useState([])
+  const [linkedinItems, setLinkedinItems] = useState([])
     const [currentUser, setCurrentUser] = useState(null);
     
     var date = new Date(),
@@ -35,18 +38,18 @@ function App() {
 
     const addToFacebook = (newAccount, updateAcc, day) => {
         setLoading(true)
-        facebookRef.doc(day).get().then((res) => {
-            if (res.exists){
-                facebookRef.doc(day).update({
-                   accounts: firebase.firestore.FieldValue.arrayUnion(updateAcc)
-                })
-                .catch((err) => {
-                    console.log(err);
-                }).then(()=> {
-                    setLoading(false)
-                    alert("Report added")
-                })
-            }else{
+        // facebookRef.doc(day).get().then((res) => {
+        //     if (res.exists){
+        //         facebookRef.doc(day).update({
+        //            updateAcc
+        //         })
+        //         .catch((err) => {
+        //             console.log(err);
+        //         }).then(()=> {
+        //             setLoading(false)
+        //             alert("Report added")
+        //         })
+        //     }else{
                 facebookRef.doc(newAccount.id)
                 .set(newAccount)
                 .catch((err) => {
@@ -57,25 +60,25 @@ function App() {
                     console.log(newAccount)
                 })
                 
-            }
-        })
+        //     }
+        // })
         setLoading(false)
     }
 
     const addToInstagram = (newAccount, updateAcc, day) => {
         setLoading(true)
-         instagramRef.doc(day).get().then((res) => {
-            if (res.exists){
-                instagramRef.doc(day).update({
-                   accounts: firebase.firestore.FieldValue.arrayUnion(updateAcc)
-                })
-                .catch((err) => {
-                    console.log(err);
-                }).then(()=> {
-                    alert("Report added")
-                    setLoading(false)
-                })
-            }else{
+        //  instagramRef.doc(day).get().then((res) => {
+        //     if (res.exists){
+        //         instagramRef.doc(day).update({
+        //            accounts: firebase.firestore.FieldValue.arrayUnion(updateAcc)
+        //         })
+        //         .catch((err) => {
+        //             console.log(err);
+        //         }).then(()=> {
+        //             alert("Report added")
+        //             setLoading(false)
+        //         })
+        //     }else{
                 instagramRef.doc(newAccount.id)
                 .set(newAccount)
                 .catch((err) => {
@@ -86,27 +89,27 @@ function App() {
                     console.log(newAccount)
                 })
                 
-            }
-        })
+        //     }
+        // })
         setLoading(false)
     }
 
     const addToLinkedin = (newAccount, updateAcc, day) => {
                 setLoading(true)
-                linkedinRef
-            .doc(day).get().then((res) => {
-                if (res.exists){
-                    linkedinRef.doc(day).update({
-                       accounts: firebase.firestore.FieldValue.arrayUnion(updateAcc)
-                    })
-                    .set({newAccount})
-                    .catch((err) => {
-                        console.log(err);
-                    }).then(()=> {
-                        setLoading(false)
-                alert("Report added")
-                    })
-                }else{
+            //     linkedinRef
+            // .doc(day).get().then((res) => {
+            //     if (res.exists){
+            //         linkedinRef.doc(day).update({
+            //            accounts: firebase.firestore.FieldValue.arrayUnion(updateAcc)
+            //         })
+            //         .set({newAccount})
+            //         .catch((err) => {
+            //             console.log(err);
+            //         }).then(()=> {
+            //             setLoading(false)
+            //     alert("Report added")
+            //         })
+            //     }else{
                     linkedinRef.doc(newAccount.id)
                     .set({newAccount})
                     .catch((err) => {
@@ -117,26 +120,26 @@ function App() {
                         console.log(newAccount)
                     })
                     
-                }
-            })
+            //     }
+            // })
             setLoading(false)
     }
 
     const addToTwitter = (newAccount, updateAcc, day) => {
                 setLoading(true)
-                twitterRef
-            .doc(day).get().then((res) => {
-                if (res.exists){
-                    twitterRef.doc(day).update({
-                       accounts: firebase.firestore.FieldValue.arrayUnion(updateAcc)
-                    })
-                    .catch((err) => {
-                        console.log(err);
-                    }).then(()=> {
-                setLoading(false)
-                alert("Report added")
-            })
-        }else{
+        //         twitterRef
+        //     .doc(day).get().then((res) => {
+        //         if (res.exists){
+        //             twitterRef.doc(day).update({
+        //                accounts: firebase.firestore.FieldValue.arrayUnion(updateAcc)
+        //             })
+        //             .catch((err) => {
+        //                 console.log(err);
+        //             }).then(()=> {
+        //         setLoading(false)
+        //         alert("Report added")
+        //     })
+        // }else{
             twitterRef.doc(newAccount.id)
             .set(newAccount)
             .catch((err) => {
@@ -147,9 +150,9 @@ function App() {
                 console.log(newAccount)
                     })
     
-                }
-                setLoading(false)
-            })
+                    setLoading(false)
+                // }
+            // })
     }
 
     const handleAddAccount = (newAccount, id) => {
@@ -208,6 +211,53 @@ function App() {
         console.log(accounts)
     }
 
+    const getFacebook = (accName) => {
+        // where("state", "==", "CO").where("name", "==", "Denver")
+        const items = []
+        facebookRef.where("accountName", "==", accName).onSnapshot((querySnapshot) => {
+            querySnapshot.forEach((doc) => {
+                items.push(doc.data())
+            })
+            // setFacebookItems(items)
+            console.log(items)
+            // console.log(facebookItems)
+        })
+        // return items
+    }
+
+    const getTwitter = () => {
+        twitterRef.onSnapshot((querySnapshot) => {
+            const items = []
+            querySnapshot.forEach((doc) => {
+                items.push(doc.data())
+            })
+            setTwitterItems(items)
+        })
+        console.log(twitterItems)
+    }
+
+    const getInstagram = () => {
+        instagramRef.onSnapshot((querySnapshot) => {
+            const items = []
+            querySnapshot.forEach((doc) => {
+                items.push(doc.data())
+            })
+            setInstagramItems(items)
+        })
+        console.log(instagramItems)
+    }
+
+    const getLinkedin = () => {
+        linkedinRef.onSnapshot((querySnapshot) => {
+            const items = []
+            querySnapshot.forEach((doc) => {
+                items.push(doc.data())
+            })
+            setLinkedinItems(items)
+        })
+        console.log(linkedinItems)
+    }
+
     useEffect(() => {
         setLocale(localStorage.getItem('isRegistered'))
         firebase.auth().onAuthStateChanged((user) => {
@@ -216,7 +266,12 @@ function App() {
         currentUser ? getManagerAccounts() : console.log("No user yet")
         // console.log(today)
         getAccounts()
+        // getFacebook("Cellar Central")
     }, [currentUser])
+
+    // useEffect(() => {
+    //     getAccounts()
+    // }, [])
 
     useEffect(() => {
         console.log(isAdmin)
@@ -226,6 +281,7 @@ function App() {
         <AuthContext.Provider
       value={{
         setCurrentUser,
+        getFacebook,
         handleAddAccount,
         addToFacebook,
         addToInstagram,
@@ -236,6 +292,7 @@ function App() {
         currentUser,
         loading,
         accounts,
+        facebookItems,
       }}
     >
         <AuthScreen.Provider value={{setAuthScreen, setIsLogged}}>
@@ -247,14 +304,17 @@ function App() {
                         </Route>
                         <Route exact path="/home">
                             { isAdmin ?
-                                <AddReport /> 
-                                : <AddAccount />}
+                                <AddAccount /> 
+                                : <AddReport />}
                         </Route>
                         {/* <Route exact path="/addReport">
                             <AddReport />
                         </Route> */}
                         <Route exact path="/overview">
                             <Overview />
+                        </Route>
+                        <Route exact path="/addAccount">
+                            <AddAccount />
                         </Route>
                     </Switch>
                     {/* { locale === 'true' ? <Login /> : <Register /> } */}
