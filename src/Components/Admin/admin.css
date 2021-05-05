@@ -5,24 +5,24 @@
     background: inherit;
 }
 
-.AddAccount, .Overview{
+.AddAccount, .Overview, .Analytics{
     width: 100vw;
     min-height: 100vh;
     background: rgb(211, 207, 207);
     padding-top: 3rem;
 }
 
-.AddAccount .head, .Overview .head{
+.AddAccount .head, .Analytics .head{
     display: flex;
     justify-content: center;
     color: rgb(42, 100, 187);
 }
 
-.Overview .head{
+.Analytics .head{
     justify-content: flex-start;
 }
 
-.AddAccount .wrap, .Overview .wrap{
+.AddAccount .wrap, .Analytics .wrap{
     width: 60%;
     margin: auto;
     padding: 3rem 4rem;
@@ -30,9 +30,27 @@
     border-radius: 15px;
 }
 
-.Overview .wrap{
+.Analytics .wrap{
     min-width: 800px;
     padding: 3rem
+}
+
+table{
+    margin-top: 2rem;
+    width: 100%;
+    text-align: left;
+    /* border-bottom: 1px solid gray; */
+}
+
+td{
+    border-bottom: 1px solid rgb(201, 199, 199);
+    padding: 1.5rem;
+    padding-left: 0;
+}
+
+table small{
+    color: blue;
+    cursor: pointer;
 }
 
 .AddAccount .select{

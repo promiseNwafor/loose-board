@@ -29,7 +29,7 @@ function AddReport() {
 
 
     var date = new Date(),
-    today = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate() + accountName.label
+    today = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate()
     var time = date.getFullYear() + '-' + date.getMonth() + '-' + date.getDate() + '-' + date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds();
     // var id = today + '-' + accountName.label
 
@@ -37,20 +37,16 @@ function AddReport() {
         if (platform !== "" || accountName !== ""){
             switch(platform.value){
                 case 'facebook':                   
-                    addToFacebook({id: today, accountName: accountName.label, date: today, engagements: {likes, comments, reach, shares, leads, views, impressions, followers, downloads}},
-                        {accountName: accountName.label, date: time, engagements: {likes, comments, reach, shares, leads, views, impressions, followers, downloads}}, today)                
+                    addToFacebook(accountName.label, {id: today, likes, comments, reach, shares, leads, views, impressions, followers, downloads})                
                 break
                 case 'twitter':
-                    addToTwitter({id: today, accountName: accountName.label, date: today, engagements: {likes, comments, reach, shares, leads, views, impressions, followers, downloads}},
-                        {accountName: accountName.label, date: time, engagements: {likes, comments, reach, shares, leads, views, impressions, followers, downloads}}, today)
+                    addToTwitter(accountName.label, {id: today, likes, comments, reach, shares, leads, views, impressions, followers, downloads})
                 break
                 case 'instagram':
-                    addToInstagram({id: today, accountName: accountName.label, date: time, engagements: {likes, comments, saves, reach, shares, leads, views, impressions, followers, downloads}},
-                        {accountName: accountName.label, date: today, engagements: {likes, comments, reach, shares, leads, views, impressions, followers, downloads}}, today)
+                    addToInstagram(accountName.label, {id: today, likes, comments, saves, reach, shares, leads, views, impressions, followers, downloads})
                 break
                 case 'linkedin':
-                    addToLinkedin({id: today, accountName: accountName.label, date: time, engagements: {likes, comments, reach, shares, leads, views, impressions, followers, downloads}},
-                        {accountName: accountName.label, date: today, engagements: {likes, comments, reach, shares, leads, views, impressions, followers, downloads}}, today)
+                    addToLinkedin(accountName.label, {id: today, likes, comments, reach, shares, leads, views, impressions, followers, downloads})
                 break
                 default:
                     return 'none';
@@ -106,6 +102,12 @@ function AddReport() {
                   <button onClick={handleBtnClick} className="btn" type="submit">SUBMIT</button>
             }
             </div>
+            {/* <div className="Btn">
+            {
+                  loading ? <p>Adding...</p> :
+                  <button onClick={handleBtnClick} className="btn" type="submit">ADD MORE</button>
+            }
+            </div> */}
         </div>
         </div>
     )

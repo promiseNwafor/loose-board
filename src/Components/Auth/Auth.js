@@ -15,7 +15,7 @@ function Auth() {
 
   return (
     <div className="Auth">
-          <img src="/bg.png" alt="Background image"/>
+          <img src="/bg.png" alt="Background"/>
         <SetIsRegister.Provider value={setIsRegister}>
           {
             isRegister ? <Register /> : <Login />

@@ -1,6 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react'
 import firebase from '../../lib/firebase'
-import { AuthContext } from '../../App'
 import { SetIsRegister } from './Auth';
 import './auth.css' 
 
@@ -10,7 +9,6 @@ function Login() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
-    const {currentUser, setIsAdmin, setCurrentUser} = useContext(AuthContext)
 
     const login = (e) => {
         e.preventDefault()
@@ -21,21 +19,22 @@ function Login() {
           firebase
             .auth()
             .signInWithEmailAndPassword(email, password)
-            .then(() => {
-              currentUser ? currentUser.email.includes('seun') ? setIsAdmin(true) : setIsAdmin(false) 
-                    : console.log('no curentUser')
-                    console.log(currentUser.email)
-                    // console.log(currentUser)
-                  }).then(() => {
+            // .then(() => {
+            //   currentUser ? currentUser.email.includes('seun') ? setIsAdmin(true) : setIsAdmin(false) 
+            //         : console.log('no curentUser')
+            //         console.log(currentUser.email)
+            //       })
+                  .then(() => {
+                    setLoading(false)
+                    resetInput();
                     window.location.pathname = '/home'
-                      setLoading(false)
-                      resetInput();
                     
             })
             .catch((err) => {
               console.error(err);
             });
         }
+        setLoading(false)
       };
 
       const resetInput = () => {
