@@ -1,14 +1,15 @@
 import React, { useState, useEffect, useContext } from "react";
 import Select from "react-select";
 import { AuthContext } from "../../App";
+import Nav from "../Nav";
 import "./admin.css";
 
 function AddAccount() {
-  const { handleAddAccount, loading } = useContext(AuthContext);
+  const { handleAddAccount, loading, currentUser } = useContext(AuthContext);
   const [accountName, setAccountName] = useState("");
   const [manager, setManager] = useState("");
   const [platform, setPlatform] = useState("");
-//   const [addMore, setAddMore] = useState(false);
+  //   const [addMore, setAddMore] = useState(false);
   const [likes, setLikes] = useState(0);
   const [comments, setComments] = useState(0);
   const [shares, setShares] = useState(0);
@@ -128,13 +129,13 @@ function AddAccount() {
     }
   };
 
-//   const handleAddMore = () => {
-//     setAddMore(true);
-//   };
+  //   const handleAddMore = () => {
+  //     setAddMore(true);
+  //   };
 
-//   useEffect(() => {
+  //   useEffect(() => {
 
-//   }, [addMore])
+  //   }, [addMore])
 
   const showForm = (
     <>
@@ -244,27 +245,29 @@ function AddAccount() {
   );
 
   return (
-    <div className="AddAccount">
-      <div className="wrap">
-        <div className="head">
-          <h3>New Account</h3>
-        </div>
-        {showForm}
-        <div className="Btn">
-          {loading ? (
-            <p>Adding...</p>
-          ) : (
-            <button onClick={handleBtnClick} className="btn" type="submit">
-              SUBMIT
-            </button>
-          )}
-        </div>
-        {/* <div className="Btn">
+    <div className="Cover">
+        <Nav name={currentUser ? currentUser.displayName : ""} />
+      <div className="AddAccount">
+        <div className="wrap">
+          <div className="head">
+            <h3>New Account</h3>
+          </div>
+          {showForm}
+          <div className="Btn">
+            {loading ? (
+              <p>Adding...</p>
+            ) : (
+              <button onClick={handleBtnClick} className="btn" type="submit">
+                SUBMIT
+              </button>
+            )}
+          </div>
+          {/* <div className="Btn">
           <button onClick={handleAddMore} className="btn" type="submit">
             ADD MORE
           </button>
         </div> */}
-        {/* {
+          {/* {
             addMore ? <>
             {showForm}
             <div className="Btn">
@@ -283,6 +286,7 @@ function AddAccount() {
         </div>
             </> : null
         } */}
+        </div>
       </div>
     </div>
   );

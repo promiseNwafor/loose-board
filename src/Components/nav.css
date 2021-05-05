@@ -1,0 +1,43 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.Nav{
+    overflow: hidden;
+    height: 70px;
+    background: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 0 2rem;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    box-shadow: 5px 5px 20px 0.5px rgb(197, 197, 197);
+}
+
+.Nav .left, .Nav .right{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2rem;
+    width: 300px;
+    color: rgb(0, 81, 255);
+}
+
+.Nav .right{
+    width: 160px;
+}
+
+.Nav .logo, .Nav .add, .Nav .logout{
+    width: 40px;
+    height: 40px;
+}
+
+.Nav .logo{
+    width: 40px;
+    height: 50px;
+}

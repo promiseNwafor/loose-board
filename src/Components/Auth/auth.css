@@ -7,13 +7,13 @@
     justify-content: center;
 }
 
-.logo{
+.Auth .logo{
     margin: auto;
     display: flex;
     justify-content: center;
 }
 
-.logo img{
+.Auth .logo img{
     width: 70px;
 }
 
@@ -44,7 +44,7 @@
     border-radius: 20px;
 }
 
-img{
+.Auth img{
     width: 40%;
 }
 

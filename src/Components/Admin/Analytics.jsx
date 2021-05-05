@@ -1,9 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import firebase from "../../lib/firebase";
+import { AuthContext } from "../../App";
 import Popup from "./Popup";
 import "./admin.css";
+import Nav from "../Nav";
 
 function Analytics() {
+  const { currentUser } = useContext(AuthContext);
   const accountsRef = firebase.firestore().collection("account");
   const [accounts, setAccounts] = useState([]);
   const [metric, setMetric] = useState();
@@ -296,102 +299,105 @@ function Analytics() {
   useEffect(() => {}, [metric, totalMetric, isOpen]);
 
   return (
-    <div className="Analytics">
-      <div className="wrap">
-        <div className="head">
-          <h3>Analytics</h3>
+    <div className="Cover">
+      <Nav path="/addAccount" name={currentUser ? currentUser.displayName : ""} />
+      <div className="Analytics">
+        <div className="wrap">
+          <div className="head">
+            <h3>Analytics</h3>
+          </div>
+          {isLoading ? (
+            <center>
+              <h2>Loading...</h2>
+            </center>
+          ) : (
+            <table>
+              <thead>
+                <tr>
+                  <th>Account</th>
+                  <th>Handler</th>
+                  <th>Facebook</th>
+                  <th>Twitter</th>
+                  <th>Instagram</th>
+                  <th>Linkedin</th>
+                </tr>
+              </thead>
+              {accounts.map((account) => {
+                return (
+                  <tbody key={account.id}>
+                    <tr>
+                      <td>{account.label}</td>
+                      <td>{account.manager}</td>
+                      <td>
+                        <small
+                          onClick={() => {
+                            //   get assigned target
+                            setTotalMetric(account.facebook);
+                            viewFacebook(account);
+                          }}
+                        >
+                          View
+                        </small>
+                      </td>
+                      <td>
+                        <small
+                          onClick={() => {
+                            //   get assigned target
+                            setTotalMetric(account.twitter);
+                            viewTwitter(account);
+                          }}
+                        >
+                          View
+                        </small>
+                      </td>
+                      <td>
+                        <small
+                          onClick={() => {
+                            //   get assigned target
+                            setTotalMetric(account.instagram);
+                            viewInstagram(account);
+                          }}
+                        >
+                          View
+                        </small>
+                      </td>
+                      <td>
+                        <small
+                          onClick={() => {
+                            //   get assigned target
+                            setTotalMetric(account.linkedin);
+                            viewLinkedin(account);
+                          }}
+                        >
+                          View
+                        </small>
+                      </td>
+                    </tr>
+                  </tbody>
+                );
+              })}
+            </table>
+          )}
+          {isOpen && (
+            <Popup
+              content={
+                <div>
+                  {metric ? (
+                    <>
+                      <div className="head">
+                        <h3>Monthly percentage</h3>
+                      </div>
+                      <p>{metric.likes}% likes</p>
+                      <p>{metric.comments}% comments</p>
+                      {/* <p>{metric.shares}% shares</p> */}
+                    </>
+                  ) : null}
+                </div>
+              }
+              handleClose={togglePopup}
+            />
+          )}
         </div>
-        {isLoading ? (
-          <center>
-            <h2>Loading...</h2>
-          </center>
-        ) : (
-          <table>
-            <thead>
-              <tr>
-                <th>Account</th>
-                <th>Handler</th>
-                <th>Facebook</th>
-                <th>Twitter</th>
-                <th>Instagram</th>
-                <th>Linkedin</th>
-              </tr>
-            </thead>
-            {accounts.map((account) => {
-              return (
-                <tbody key={account.id}>
-                  <tr>
-                    <td>{account.label}</td>
-                    <td>{account.manager}</td>
-                    <td>
-                      <small
-                        onMouseOver={() => {
-                          //   get assigned target
-                          setTotalMetric(account.facebook);
-                          viewFacebook(account);
-                        }}
-                      >
-                        View
-                      </small>
-                    </td>
-                    <td>
-                      <small
-                        onMouseOver={() => {
-                          //   get assigned target
-                          setTotalMetric(account.twitter);
-                          viewTwitter(account);
-                        }}
-                      >
-                        View
-                      </small>
-                    </td>
-                    <td>
-                      <small
-                        onMouseOver={() => {
-                          //   get assigned target
-                          setTotalMetric(account.instagram);
-                          viewInstagram(account);
-                        }}
-                      >
-                        View
-                      </small>
-                    </td>
-                    <td>
-                      <small
-                        onMouseOver={() => {
-                          //   get assigned target
-                          setTotalMetric(account.linkedin);
-                          viewLinkedin(account);
-                        }}
-                      >
-                        View
-                      </small>
-                    </td>
-                  </tr>
-                </tbody>
-              );
-            })}
-          </table>
-        )}
-        {isOpen && (
-          <Popup
-            content={
-              <div>
-                {metric ? (
-                  <>
-                    <div className="head">
-                      <h3>Percentage target met for the month</h3>
-                    </div>
-                    <p>{metric.likes}% likes</p>
-                    <p>{metric.comments}% comments</p>
-                    {/* <p>{metric.shares}% shares</p> */}
-                  </>
-                ) : null}
-              </div>
-            }
-            handleClose={togglePopup}
-          />
-        )}
       </div>
     </div>
   );
