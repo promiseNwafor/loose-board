@@ -6,267 +6,266 @@ import "./admin.css";
 import Nav from "../Nav";
 
 function Analytics() {
-  const { currentUser } = useContext(AuthContext);
+  const { currentUser, isAdmin } = useContext(AuthContext);
   const accountsRef = firebase.firestore().collection("account");
   const [accounts, setAccounts] = useState([]);
-  const [metric, setMetric] = useState();
-  const [totalMetric, setTotalMetric] = useState();
+  const [accFacebook, setAccFacebook] = useState();
+  const [accTwitter, setAccTwitter] = useState();
+  const [accInstagram, setAccInstagram] = useState();
+  const [accLinkedin, setAccLinkedin] = useState();
+  const [metric, setMetric] = useState("");
+  const [totalMetricFacebook, setTotalMetricFacebook] = useState({});
+  const [totalMetricTwitter, setTotalMetricTwitter] = useState({});
+  const [totalMetricInstagram, setTotalMetricInstagram] = useState({});
+  const [totalMetricLinkedin, setTotalMetricLinkedin] = useState({});
   const [error, setError] = useState();
   const [isOpen, setIsOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
   const viewFacebook = async (account) => {
-    await accountsRef
-      .doc(account.label)
-      .collection("facebook")
-      .get()
-      .then((response) => {
-        // get the subcollection metric
-        const items = [];
-        response.forEach((document) => {
-          const fetchedItem = {
-            id: document.id,
-            ...document.data(),
-          };
-          items.push(fetchedItem);
-        });
-        // add up each metric
-        var likes,
-          comments,
-          reach,
-          shares,
-          leads,
-          impressions,
-          downloads,
-          views,
-          followers;
-        likes = comments = reach = shares = leads = impressions = downloads = views = followers = 0;
-        // var comments = 0;
-        items.forEach((item) => {
-          likes += item.likes;
-          comments += item.comments;
-          reach += item.reach;
-          shares += item.shares;
-          leads += item.leads;
-          impressions += item.impressions;
-          downloads += item.downloads;
-          views += item.views;
-          followers += item.followers;
-          // saves += item.saves;
-        });
-        // check if total is not empty before setting facebook
-        totalMetric
-          ? setMetric({
-              likes: ((likes / totalMetric.likes) * 100).toFixed(0),
-              comments: ((comments / totalMetric.comments) * 100).toFixed(0),
-              reach: ((reach / totalMetric.reach) * 100).toFixed(0),
-              shares: ((shares / totalMetric.shares) * 100).toFixed(0),
-              leads: ((leads / totalMetric.leads) * 100).toFixed(0),
-              impressions: (
-                (impressions / totalMetric.impressions) *
-                100
-              ).toFixed(0),
-              downloads: ((downloads / totalMetric.downloads) * 100).toFixed(0),
-              views: ((views / totalMetric.views) * 100).toFixed(0),
-              followers: ((followers / totalMetric.followers) * 100).toFixed(0),
-              // saves: ((saves / totalMetric.saves) * 100).toFixed(0),
-            })
-          : console.log("Fb empty");
-        console.log(metric);
-      })
-      .then(() => {
-        //   open popup
-        togglePopup();
-      });
+    // ===============set the assigned target metrics===============
+    var itemTotal;
+    accountsRef.doc(account.label).onSnapshot((querySnapshot) => {
+      itemTotal = querySnapshot.data().facebook;
+      // console.log(itemTotal);
+    });
+    var finalAns;
+    const items = [];
+    accounts.length > 0
+      ? accountsRef
+          .doc(account.label)
+          .collection("facebook")
+          .get()
+          .then((response) => {
+            // ===============get the subcollection metric===============
+            response.forEach((document) => {
+              const fetchedItem = {
+                id: document.id,
+                ...document.data(),
+              };
+              items.push(fetchedItem);
+            });
+            // console.log(items);
+            // ===============add up each metric report===============
+            var likes,
+              comments,
+              reach,
+              shares,
+              leads,
+              impressions,
+              downloads,
+              views,
+              followers;
+            likes = comments = reach = shares = leads = impressions = downloads = views = followers = 0;
+            items.forEach((itemMetric) => {
+              likes += parseInt(itemMetric.likes);
+              comments += parseInt(itemMetric.comments);
+              reach += parseInt(itemMetric.reach);
+              shares += parseInt(itemMetric.shares);
+              leads += parseInt(itemMetric.leads);
+              impressions += parseInt(itemMetric.impressions);
+              downloads += parseInt(itemMetric.downloads);
+              views += parseInt(itemMetric.views);
+              followers += parseInt(itemMetric.followers);
+            });
+            // ===============get the percentage met===============
+            finalAns = {
+              likes: ((likes / itemTotal.likes) * 100).toFixed(0),
+              comments: ((comments / itemTotal.comments) * 100).toFixed(0),
+            };
+            // console.log(`${likes/parseInt(itemTotal.likes)} ${itemTotal.likes} likes and ${comments} comments`)
+            // console.log(finalAns)
+            setTotalMetricFacebook(finalAns);
+          })
+          .catch((err) => {
+            setError(err);
+          })
+      : console.log("No accounts yet");
   };
 
-  const viewTwitter = (account) => {
-    accountsRef
-      .doc(account.label)
-      .collection("twitter")
-      .get()
-      .then((response) => {
-        // get the subcollection metric
-        const items = [];
-        response.forEach((document) => {
-          const fetchedItem = {
-            id: document.id,
-            ...document.data(),
-          };
-          items.push(fetchedItem);
-        });
-        // add up each metric
-        var likes,
-          comments,
-          reach,
-          shares,
-          leads,
-          impressions,
-          downloads,
-          views,
-          followers;
-        likes = comments = reach = shares = leads = impressions = downloads = views = followers = 0;
-        items.forEach((item) => {
-          likes += item.likes;
-          comments += item.comments;
-          reach += item.reach;
-          shares += item.shares;
-          leads += item.leads;
-          impressions += item.impressions;
-          downloads += item.downloads;
-          views += item.views;
-          followers += item.followers;
-        });
-        // check if total is not empty before setting facebook
-        totalMetric
-          ? setMetric({
-              likes: ((likes / totalMetric.likes) * 100).toFixed(0),
-              comments: ((comments / totalMetric.comments) * 100).toFixed(0),
-              reach: ((reach / totalMetric.reach) * 100).toFixed(0),
-              shares: ((shares / totalMetric.shares) * 100).toFixed(0),
-              leads: ((leads / totalMetric.leads) * 100).toFixed(0),
-              impressions: (
-                (impressions / totalMetric.impressions) *
-                100
-              ).toFixed(0),
-              downloads: ((downloads / totalMetric.downloads) * 100).toFixed(0),
-              views: ((views / totalMetric.views) * 100).toFixed(0),
-              followers: ((followers / totalMetric.followers) * 100).toFixed(0),
-            })
-          : console.log("Tw empty");
-        console.log(metric);
-      })
-      .then(() => {
-        //   open popup
-        togglePopup();
-      });
+  const viewTwitter = async (account) => {
+    // ===============set the assigned target metrics===============
+    var itemTotal;
+    accountsRef.doc(account.label).onSnapshot((querySnapshot) => {
+      itemTotal = querySnapshot.data().facebook;
+      // console.log(itemTotal);
+    });
+    var finalAns;
+    const items = [];
+    accounts.length > 0
+      ? accountsRef
+          .doc(account.label)
+          .collection("twitter")
+          .get()
+          .then((response) => {
+            // ===============get the subcollection metric===============
+            response.forEach((document) => {
+              const fetchedItem = {
+                id: document.id,
+                ...document.data(),
+              };
+              items.push(fetchedItem);
+            });
+            // console.log(items);
+            // ===============add up each metric report===============
+            var likes,
+              comments,
+              reach,
+              shares,
+              leads,
+              impressions,
+              downloads,
+              views,
+              followers;
+            likes = comments = reach = shares = leads = impressions = downloads = views = followers = 0;
+            items.forEach((itemMetric) => {
+              likes += parseInt(itemMetric.likes);
+              comments += parseInt(itemMetric.comments);
+              reach += parseInt(itemMetric.reach);
+              shares += parseInt(itemMetric.shares);
+              leads += parseInt(itemMetric.leads);
+              impressions += parseInt(itemMetric.impressions);
+              downloads += parseInt(itemMetric.downloads);
+              views += parseInt(itemMetric.views);
+              followers += parseInt(itemMetric.followers);
+            });
+            // ===============get the percentage met===============
+            finalAns = {
+              likes: ((likes / itemTotal.likes) * 100).toFixed(0),
+              comments: ((comments / itemTotal.comments) * 100).toFixed(0),
+            };
+            // console.log(`${likes/parseInt(itemTotal.likes)} ${itemTotal.likes} likes and ${comments} comments`)
+            // console.log(finalAns)
+            setTotalMetricTwitter(finalAns);
+          })
+          .catch((err) => {
+            setError(err);
+          })
+      : console.log("No accounts yet");
   };
 
-  const viewInstagram = (account) => {
-    accountsRef
-      .doc(account.label)
-      .collection("instagram")
-      .get()
-      .then((response) => {
-        // get the subcollection metric
-        const items = [];
-        response.forEach((document) => {
-          const fetchedItem = {
-            id: document.id,
-            ...document.data(),
-          };
-          items.push(fetchedItem);
-        });
-        // add up each metric
-        var likes,
-          comments,
-          reach,
-          shares,
-          leads,
-          impressions,
-          downloads,
-          views,
-          followers,
-          saves;
-        likes = comments = reach = shares = leads = impressions = downloads = views = followers = saves = 0;
-        items.forEach((item) => {
-          likes += item.likes;
-          comments += item.comments;
-          reach += item.reach;
-          shares += item.shares;
-          leads += item.leads;
-          impressions += item.impressions;
-          downloads += item.downloads;
-          views += item.views;
-          followers += item.followers;
-          saves += item.saves;
-        });
-        // check if total is not empty before setting facebook
-        totalMetric
-          ? setMetric({
-              likes: ((likes / totalMetric.likes) * 100).toFixed(0),
-              comments: ((comments / totalMetric.comments) * 100).toFixed(0),
-              reach: ((reach / totalMetric.reach) * 100).toFixed(0),
-              shares: ((shares / totalMetric.shares) * 100).toFixed(0),
-              leads: ((leads / totalMetric.leads) * 100).toFixed(0),
-              impressions: (
-                (impressions / totalMetric.impressions) *
-                100
-              ).toFixed(0),
-              downloads: ((downloads / totalMetric.downloads) * 100).toFixed(0),
-              views: ((views / totalMetric.views) * 100).toFixed(0),
-              followers: ((followers / totalMetric.followers) * 100).toFixed(0),
-              saves: ((saves / totalMetric.saves) * 100).toFixed(0),
-            })
-          : console.log("Ig empty");
-        console.log(metric);
-      })
-      .then(() => {
-        //   open popup
-        togglePopup();
-      });
+  const viewInstagram = async (account) => {
+    // ===============set the assigned target metrics===============
+    var itemTotal;
+    accountsRef.doc(account.label).onSnapshot((querySnapshot) => {
+      itemTotal = querySnapshot.data().facebook;
+      // console.log(itemTotal);
+    });
+    var finalAns;
+    const items = [];
+    accounts.length > 0
+      ? accountsRef
+          .doc(account.label)
+          .collection("instagram")
+          .get()
+          .then((response) => {
+            // ===============get the subcollection metric===============
+            response.forEach((document) => {
+              const fetchedItem = {
+                id: document.id,
+                ...document.data(),
+              };
+              items.push(fetchedItem);
+            });
+            // console.log(items);
+            // ===============add up each metric report===============
+            var likes,
+              comments,
+              reach,
+              shares,
+              leads,
+              impressions,
+              downloads,
+              views,
+              saves,
+              followers;
+            likes = comments = reach = shares = saves = leads = impressions = downloads = views = followers = 0;
+            items.forEach((itemMetric) => {
+              likes += parseInt(itemMetric.likes);
+              comments += parseInt(itemMetric.comments);
+              reach += parseInt(itemMetric.reach);
+              shares += parseInt(itemMetric.shares);
+              leads += parseInt(itemMetric.leads);
+              impressions += parseInt(itemMetric.impressions);
+              downloads += parseInt(itemMetric.downloads);
+              views += parseInt(itemMetric.views);
+              followers += parseInt(itemMetric.followers);
+              saves += parseInt(itemMetric.saves);
+            });
+            // ===============get the percentage met===============
+            finalAns = {
+              likes: ((likes / itemTotal.likes) * 100).toFixed(0),
+              comments: ((comments / itemTotal.comments) * 100).toFixed(0),
+            };
+            // console.log(`${likes/parseInt(itemTotal.likes)} ${itemTotal.likes} likes and ${comments} comments`)
+            // console.log(finalAns)
+            setTotalMetricInstagram(finalAns);
+          })
+          .catch((err) => {
+            setError(err);
+          })
+      : console.log("No accounts yet");
   };
 
-  const viewLinkedin = (account) => {
-    accountsRef
-      .doc(account.label)
-      .collection("linkedin")
-      .get()
-      .then((response) => {
-        // get the subcollection metric
-        const items = [];
-        response.forEach((document) => {
-          const fetchedItem = {
-            id: document.id,
-            ...document.data(),
-          };
-          items.push(fetchedItem);
-        });
-        // add up each metric
-        var likes,
-          comments,
-          reach,
-          shares,
-          leads,
-          impressions,
-          downloads,
-          views,
-          followers,
-          likes = (comments = reach = shares = leads = impressions = downloads = views = followers = 0);
-        items.forEach((item) => {
-          likes += item.likes;
-          comments += item.comments;
-          reach += item.reach;
-          shares += item.shares;
-          leads += item.leads;
-          impressions += item.impressions;
-          downloads += item.downloads;
-          views += item.views;
-          followers += item.followers;
-        });
-        // check if total is not empty before setting facebook
-        totalMetric
-          ? setMetric({
-              likes: ((likes / totalMetric.likes) * 100).toFixed(0),
-              comments: ((comments / totalMetric.comments) * 100).toFixed(0),
-              reach: ((reach / totalMetric.reach) * 100).toFixed(0),
-              shares: ((shares / totalMetric.shares) * 100).toFixed(0),
-              leads: ((leads / totalMetric.leads) * 100).toFixed(0),
-              impressions: (
-                (impressions / totalMetric.impressions) *
-                100
-              ).toFixed(0),
-              downloads: ((downloads / totalMetric.downloads) * 100).toFixed(0),
-              views: ((views / totalMetric.views) * 100).toFixed(0),
-              followers: ((followers / totalMetric.followers) * 100).toFixed(0),
-            })
-          : console.log("Ln empty");
-        console.log(metric);
-      })
-      .then(() => {
-        //   open popup
-        togglePopup();
-      });
+  const viewLinkedin = async (account) => {
+    // ===============set the assigned target metrics===============
+    var itemTotal;
+    accountsRef.doc(account.label).onSnapshot((querySnapshot) => {
+      itemTotal = querySnapshot.data().facebook;
+      // console.log(itemTotal);
+    });
+    var finalAns;
+    const items = [];
+    accounts.length > 0
+      ? accountsRef
+          .doc(account.label)
+          .collection("linkedin")
+          .get()
+          .then((response) => {
+            // ===============get the subcollection metric===============
+            response.forEach((document) => {
+              const fetchedItem = {
+                id: document.id,
+                ...document.data(),
+              };
+              items.push(fetchedItem);
+            });
+            // console.log(items);
+            // ===============add up each metric report===============
+            var likes,
+              comments,
+              reach,
+              shares,
+              leads,
+              impressions,
+              downloads,
+              views,
+              followers;
+            likes = comments = reach = shares = leads = impressions = downloads = views = followers = 0;
+            items.forEach((itemMetric) => {
+              likes += parseInt(itemMetric.likes);
+              comments += parseInt(itemMetric.comments);
+              reach += parseInt(itemMetric.reach);
+              shares += parseInt(itemMetric.shares);
+              leads += parseInt(itemMetric.leads);
+              impressions += parseInt(itemMetric.impressions);
+              downloads += parseInt(itemMetric.downloads);
+              views += parseInt(itemMetric.views);
+              followers += parseInt(itemMetric.followers);
+            });
+            // ===============get the percentage met===============
+            finalAns = {
+              likes: ((likes / itemTotal.likes) * 100).toFixed(0),
+              comments: ((comments / itemTotal.comments) * 100).toFixed(0),
+            };
+            // console.log(`${likes/parseInt(itemTotal.likes)} ${itemTotal.likes} likes and ${comments} comments`)
+            // console.log(finalAns)
+            setTotalMetricLinkedin(finalAns);
+          })
+          .catch((err) => {
+            setError(err);
+          })
+      : console.log("No accounts yet");
   };
 
   const togglePopup = () => {
@@ -275,130 +274,210 @@ function Analytics() {
 
   useEffect(() => {
     setIsLoading(true);
-    accountsRef
-      .get()
-      .then((response) => {
-        const items = [];
-        response.forEach((document) => {
-          const fetchedItem = {
-            id: document.id,
-            ...document.data(),
-          };
-          items.push(fetchedItem);
-        });
-        setAccounts(items);
-        setIsLoading(false);
-        console.log(accounts);
-      })
-      .catch((err) => {
-        setError(err);
-        setIsLoading(true);
-      });
-  }, []);
+    // viewFacebook(accounts[0])
+    currentUser
+      ? accountsRef
+          .get()
+          .then((response) => {
+            const items = [];
+            response.forEach((document) => {
+              const fetchedItem = {
+                id: document.id,
+                ...document.data(),
+              };
+              items.push(fetchedItem);
+            });
+            setAccounts(items);
+            setIsLoading(false);
+            // console.log(accounts);
+          })
+          .catch((err) => {
+            setError(err);
+            setIsLoading(true);
+          })
+      : console.log("No user");
+    // console.log(isAdmin)
+  }, [currentUser]);
 
-  useEffect(() => {}, [metric, totalMetric, isOpen]);
+  useEffect(() => {
+    accFacebook ? viewFacebook(accFacebook) : console.log("acc not ready");
+    // console.log(accFacebook);
+  }, [accFacebook]);
 
+  useEffect(() => {
+    accTwitter ? viewTwitter(accTwitter) : console.log("acc not ready");
+    // console.log(accTwitter);
+  }, [accTwitter]);
+
+  useEffect(() => {
+    accInstagram ? viewInstagram(accInstagram) : console.log("acc not ready");
+    // console.log(accInstagram);
+  }, [accInstagram]);
+
+  useEffect(() => {
+    accLinkedin ? viewLinkedin(accLinkedin) : console.log("acc not ready");
+    // console.log(accLinkedin);
+  }, [accLinkedin]);
+
+  useEffect(() => {
+    // console.log(totalMetricFacebook);
+  }, [totalMetricFacebook]);
+
+  useEffect(() => {
+    // console.log(totalMetricTwitter);
+  }, [totalMetricTwitter]);
+
+  useEffect(() => {
+    // console.log(totalMetricInstagram);
+  }, [totalMetricInstagram]);
+
+  useEffect(() => {
+    // console.log(totalMetricLinkedin);
+  }, [totalMetricLinkedin]);
+
+  useEffect(() => {
+    // console.log(totalMetricFacebook);
+  }, [metric]);
+
+  useEffect(() => {
+    // console.log(totalMetricFacebook);
+  }, [isOpen]);
+
+  if (!currentUser || currentUser.email === null) {
+    return (
+      <div>
+        <center>
+          <h2>Please ensure you're signed in</h2>
+        </center>
+      </div>
+    );
+  }
   return (
     <div className="Cover">
-      <Nav path="/addAccount" name={currentUser ? currentUser.displayName : ""} />
-      <div className="Analytics">
-        <div className="wrap">
-          <div className="head">
-            <h3>Analytics</h3>
+      <Nav
+        path="/addAccount"
+        name={currentUser ? currentUser.displayName : ""}
+      />
+      {isAdmin ? (
+        <div className="Analytics">
+          <div className="wrap">
+            <div className="head">
+              <h3>Accounts overview</h3>
+            </div>
+            {isLoading ? (
+              <center>
+                <h2>Loading...</h2>
+              </center>
+            ) : (
+              <table>
+                <thead>
+                  <tr>
+                    <th>Account</th>
+                    <th>Handler</th>
+                    <th>Facebook</th>
+                    <th>Twitter</th>
+                    <th>Instagram</th>
+                    <th>Linkedin</th>
+                  </tr>
+                </thead>
+                {accounts.map((account) => {
+                  return (
+                    <tbody key={account.id}>
+                      <tr>
+                        <td>{account.label}</td>
+                        <td>{account.manager}</td>
+                        <td>
+                          <small
+                            onClick={() => {
+                              setMetric("facebook");
+                              setAccFacebook(account);
+                              togglePopup();
+                            }}
+                          >
+                            View
+                          </small>
+                        </td>
+                        <td>
+                          <small
+                            onClick={() => {
+                              setMetric("twitter");
+                              setAccTwitter(account);
+                              togglePopup();
+                            }}
+                          >
+                            View
+                          </small>
+                        </td>
+                        <td>
+                          <small
+                            onClick={() => {
+                              setMetric("instagram");
+                              setAccInstagram(account);
+                              togglePopup();
+                            }}
+                          >
+                            View
+                          </small>
+                        </td>
+                        <td>
+                          <small
+                            onClick={() => {
+                              setMetric("linkedin");
+                              setAccLinkedin(account);
+                              togglePopup();
+                            }}
+                          >
+                            View
+                          </small>
+                        </td>
+                      </tr>
+                    </tbody>
+                  );
+                })}
+              </table>
+            )}
+            {isOpen && (
+              <Popup
+                content={
+                  <div>
+                    <div className="head">
+                      <h3>Percentage met so far</h3>
+                    </div>
+                    {metric === "facebook" ? (
+                      <>
+                        <p>{totalMetricFacebook.likes}% likes</p>
+                        <p>{totalMetricFacebook.comments}% comments</p>
+                      </>
+                    ) : metric === "twitter" ? (
+                      <>
+                        <p>{totalMetricTwitter.likes}% likes</p>
+                        <p>{totalMetricTwitter.comments}% comments</p>
+                      </>
+                    ) : metric === "instagram" ? (
+                      <>
+                        <p>{totalMetricInstagram.likes}% likes</p>
+                        <p>{totalMetricInstagram.comments}% comments</p>
+                      </>
+                    ) : metric === "linkedin" ? (
+                      <>
+                        <p>{totalMetricLinkedin.likes}% likes</p>
+                        <p>{totalMetricLinkedin.comments}% comments</p>
+                      </>
+                    ) : null}
+                  </div>
+                }
+                handleClose={togglePopup}
+              />
+            )}
           </div>
-          {isLoading ? (
-            <center>
-              <h2>Loading...</h2>
-            </center>
-          ) : (
-            <table>
-              <thead>
-                <tr>
-                  <th>Account</th>
-                  <th>Handler</th>
-                  <th>Facebook</th>
-                  <th>Twitter</th>
-                  <th>Instagram</th>
-                  <th>Linkedin</th>
-                </tr>
-              </thead>
-              {accounts.map((account) => {
-                return (
-                  <tbody key={account.id}>
-                    <tr>
-                      <td>{account.label}</td>
-                      <td>{account.manager}</td>
-                      <td>
-                        <small
-                          onClick={() => {
-                            //   get assigned target
-                            setTotalMetric(account.facebook);
-                            viewFacebook(account);
-                          }}
-                        >
-                          View
-                        </small>
-                      </td>
-                      <td>
-                        <small
-                          onClick={() => {
-                            //   get assigned target
-                            setTotalMetric(account.twitter);
-                            viewTwitter(account);
-                          }}
-                        >
-                          View
-                        </small>
-                      </td>
-                      <td>
-                        <small
-                          onClick={() => {
-                            //   get assigned target
-                            setTotalMetric(account.instagram);
-                            viewInstagram(account);
-                          }}
-                        >
-                          View
-                        </small>
-                      </td>
-                      <td>
-                        <small
-                          onClick={() => {
-                            //   get assigned target
-                            setTotalMetric(account.linkedin);
-                            viewLinkedin(account);
-                          }}
-                        >
-                          View
-                        </small>
-                      </td>
-                    </tr>
-                  </tbody>
-                );
-              })}
-            </table>
-          )}
-          {isOpen && (
-            <Popup
-              content={
-                <div>
-                  {metric ? (
-                    <>
-                      <div className="head">
-                        <h3>Monthly percentage</h3>
-                      </div>
-                      <p>{metric.likes}% likes</p>
-                      <p>{metric.comments}% comments</p>
-                      {/* <p>{metric.shares}% shares</p> */}
-                    </>
-                  ) : null}
-                </div>
-              }
-              handleClose={togglePopup}
-            />
-          )}
         </div>
-      </div>
+      ) : (
+        <div>
+          <center>
+            <h2>Please you're not an Admin</h2>
+          </center>
+        </div>
+      )}
     </div>
   );
 }

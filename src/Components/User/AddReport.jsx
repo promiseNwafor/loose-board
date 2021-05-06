@@ -13,6 +13,7 @@ function AddReport() {
     addToInstagram,
     addToLinkedin,
     addToTwitter,
+    isAdmin,
   } = useContext(AuthContext);
   const [accountName, setAccountName] = useState("");
   const [platform, setPlatform] = useState("");
@@ -117,129 +118,146 @@ function AddReport() {
     }
   };
 
+  if (!currentUser || currentUser.email === null) {
+    return (
+      <div>
+        <center>
+          <h2>Please ensure you're signed in</h2>
+        </center>
+      </div>
+    );
+  }
   return (
     <div className="Cover">
       <Nav name={currentUser ? currentUser.displayName : ""} />
-      <div className="AddReport">
-        <div className="wrap">
-          <div className="head">
-            <h3>New Report</h3>
-          </div>
-          {/* <div className="head">
+      {!isAdmin ? (
+        <div className="AddReport">
+          <div className="wrap">
+            <div className="head">
+              <h3>New Report</h3>
+            </div>
+            {/* <div className="head">
             {currentUser ? <p>{currentUser.displayName}</p> : ""}
           </div> */}
-          <form>
-            <div className="select">
-              <Select
-                className="Select"
-                placeholder="Account"
-                value={accountName}
-                onChange={setAccountName}
-                options={managerAccounts}
-              />
-            </div>
-            <div className="select">
-              <Select
-                className="Select"
-                placeholder="Platform"
-                value={platform}
-                onChange={setPlatform}
-                options={platforms}
-              />
-            </div>
-            <div className="input">
-              <input
-                onChange={(e) => setReach(e.target.value)}
-                placeholder="Reach"
-                type="number"
-                required
-              />
-              {platform.value === "twitter" ? (
+            <form>
+              <div className="select">
+                <Select
+                  className="Select"
+                  placeholder="Account"
+                  value={accountName}
+                  onChange={setAccountName}
+                  options={managerAccounts}
+                />
+              </div>
+              <div className="select">
+                <Select
+                  className="Select"
+                  placeholder="Platform"
+                  value={platform}
+                  onChange={setPlatform}
+                  options={platforms}
+                />
+              </div>
+              <div className="input">
                 <input
-                  onChange={(e) => setShares(e.target.value)}
-                  placeholder="Retweets"
+                  onChange={(e) => setReach(e.target.value)}
+                  placeholder="Reach"
                   type="number"
                   required
                 />
+                {platform.value === "twitter" ? (
+                  <input
+                    onChange={(e) => setShares(e.target.value)}
+                    placeholder="Retweets"
+                    type="number"
+                    required
+                  />
+                ) : (
+                  <input
+                    onChange={(e) => setShares(e.target.value)}
+                    placeholder="Shares"
+                    type="number"
+                    required
+                  />
+                )}
+                {platform.value === "instagram" ? (
+                  <input
+                    onChange={(e) => setSaves(e.target.value)}
+                    placeholder="Saves"
+                    type="number"
+                    required
+                  />
+                ) : (
+                  ""
+                )}
+                <input
+                  onChange={(e) => setLeads(e.target.value)}
+                  placeholder="Leads"
+                  type="number"
+                  required
+                />
+                <input
+                  onChange={(e) => setImpressions(e.target.value)}
+                  placeholder="Impressions"
+                  type="number"
+                  required
+                />
+                <input
+                  onChange={(e) => setComments(e.target.value)}
+                  placeholder="Comments"
+                  type="number"
+                  required
+                />
+                <input
+                  onChange={(e) => setDownloads(e.target.value)}
+                  placeholder="Downloads"
+                  type="number"
+                  required
+                />
+                <input
+                  onChange={(e) => setLikes(e.target.value)}
+                  placeholder="Likes"
+                  type="number"
+                  required
+                />
+                <input
+                  onChange={(e) => setViews(e.target.value)}
+                  placeholder="Views"
+                  type="number"
+                  required
+                />
+                <input
+                  onChange={(e) => setFollowers(e.target.value)}
+                  placeholder="Followers"
+                  type="number"
+                  required
+                />
+              </div>
+            </form>
+            <div className="Btn">
+              {loading ? (
+                <p>Adding...</p>
               ) : (
-                <input
-                  onChange={(e) => setShares(e.target.value)}
-                  placeholder="Shares"
-                  type="number"
-                  required
-                />
+                <button onClick={handleBtnClick} className="btn" type="submit">
+                  SUBMIT
+                </button>
               )}
-              {platform.value === "instagram" ? (
-                <input
-                  onChange={(e) => setSaves(e.target.value)}
-                  placeholder="Saves"
-                  type="number"
-                  required
-                />
-              ) : (
-                ""
-              )}
-              <input
-                onChange={(e) => setLeads(e.target.value)}
-                placeholder="Leads"
-                type="number"
-                required
-              />
-              <input
-                onChange={(e) => setImpressions(e.target.value)}
-                placeholder="Impressions"
-                type="number"
-                required
-              />
-              <input
-                onChange={(e) => setComments(e.target.value)}
-                placeholder="Comments"
-                type="number"
-                required
-              />
-              <input
-                onChange={(e) => setDownloads(e.target.value)}
-                placeholder="Downloads"
-                type="number"
-                required
-              />
-              <input
-                onChange={(e) => setLikes(e.target.value)}
-                placeholder="Likes"
-                type="number"
-                required
-              />
-              <input
-                onChange={(e) => setViews(e.target.value)}
-                placeholder="Views"
-                type="number"
-                required
-              />
-              <input
-                onChange={(e) => setFollowers(e.target.value)}
-                placeholder="Followers"
-                type="number"
-                required
-              />
             </div>
-          </form>
-          <div className="Btn">
-            {loading ? (
-              <p>Adding...</p>
-            ) : (
-              <button onClick={handleBtnClick} className="btn" type="submit">
-                SUBMIT
-              </button>
-            )}
-          </div>
-          {/* <div className="Btn">
+            {/* <div className="Btn">
             {
                   loading ? <p>Adding...</p> :
                   <button onClick={handleBtnClick} className="btn" type="submit">ADD MORE</button>
             }
             </div> */}
+          </div>
         </div>
-      </div>
+      ) : (
+        <div>
+          <center>
+            <h2>Please you're not a community for any account</h2>
+          </center>
+        </div>
+      )}
     </div>
   );
 }

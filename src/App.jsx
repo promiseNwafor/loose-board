@@ -4,6 +4,7 @@ import firebase from "./lib/firebase";
 import Auth from "./Components/Auth/Auth";
 import AddAccount from "./Components/Admin/AddAccount";
 import AddReport from "./Components/User/AddReport";
+import ManagerAnalytics from "./Components/User/ManagerAnalytics";
 import Analytics from "./Components/Admin/Analytics";
 
 export const AuthScreen = React.createContext();
@@ -13,7 +14,7 @@ function App() {
   const accountsRef = firebase.firestore().collection("account");
   const [isAdmin, setIsAdmin] = useState(false);
   const [locale, setLocale] = useState("");
-  const [isLogged, setIsLogged] = useState(false);
+  const [isLogged, setIsLogged] = useState("false");
   const [loading, setLoading] = useState(false);
   const [managerAccounts, setManagerAccounts] = useState([]);
   const [accounts, setAccounts] = useState([]);
@@ -24,6 +25,7 @@ function App() {
       date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
 
   const setAuthScreen = () => {
+    localStorage.setItem("isLogged", "true");
     localStorage.setItem("isRegistered", "true");
   };
 
@@ -142,7 +144,7 @@ function App() {
   };
 
   useEffect(() => {
-    setLocale(localStorage.getItem("isRegistered"));
+    setLocale(localStorage.getItem("isLogged"));
     firebase.auth().onAuthStateChanged((user) => {
       setCurrentUser(user);
     });
@@ -150,20 +152,20 @@ function App() {
     // console.log(today)
     getAccounts();
     currentUser
-      ? currentUser.email.includes("seun")
-        || currentUser.email.includes("ized")
-        || currentUser.email.includes("kemi")
-        || currentUser.email.includes("charles")
-        || currentUser.email.includes("mobola")
+      ? currentUser.email.includes("seun") ||
+        currentUser.email.includes("ized") ||
+        currentUser.email.includes("kemi") ||
+        currentUser.email.includes("charles") ||
+        currentUser.email.includes("mobola")
         ? setIsAdmin(true)
         : setIsAdmin(false)
       : console.log("no currentUser");
-    console.log(isAdmin);
+    console.log(isLogged);
   }, [currentUser, isAdmin]);
 
   useEffect(() => {
     console.log(currentUser);
-    console.log(isAdmin);
+    console.log(locale);
   }, [loading, isAdmin]);
 
   return (
@@ -176,6 +178,7 @@ function App() {
         addToLinkedin,
         addToTwitter,
         setIsAdmin,
+        isAdmin,
         managerAccounts,
         currentUser,
         loading,
@@ -187,10 +190,19 @@ function App() {
           <div className="App">
             <Switch>
               <Route exact path="/">
-                <Auth />
+                {locale === "true" && isAdmin ? (
+                  <Analytics />
+                ) : locale === "true" && !isAdmin ? (
+                  <ManagerAnalytics />
+                ) : (
+                  <Auth />
+                )}
               </Route>
               <Route exact path="/home">
-                {isAdmin ? <Analytics /> : <AddReport />}
+                {isAdmin ? <Analytics /> : <ManagerAnalytics />}
+              </Route>
+              <Route exact path="/auth">
+                <Auth />
               </Route>
               <Route exact path="/addReport">
                 <AddReport />
@@ -203,6 +215,9 @@ function App() {
               </Route>
               <Route exact path="/analytics">
                 <Analytics />
+              </Route>
+              <Route exact path="/managerAnalytics">
+                <ManagerAnalytics />
               </Route>
             </Switch>
             {/* { locale === 'true' ? <Login /> : <Register /> } */}

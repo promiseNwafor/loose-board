@@ -15,7 +15,7 @@
 .AddReport .head{
     display: flex;
     justify-content: center;
-    color: rgb(42, 100, 187);
+    color: #0c63e6;
 }
 
 .AddReport .wrap{

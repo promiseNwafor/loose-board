@@ -5,7 +5,9 @@ import Nav from "../Nav";
 import "./admin.css";
 
 function AddAccount() {
-  const { handleAddAccount, loading, currentUser } = useContext(AuthContext);
+  const { handleAddAccount, loading, currentUser, isAdmin } = useContext(
+    AuthContext
+  );
   const [accountName, setAccountName] = useState("");
   const [manager, setManager] = useState("");
   const [platform, setPlatform] = useState("");
@@ -244,30 +246,39 @@ function AddAccount() {
     </>
   );
 
+  if (!currentUser || currentUser.email === null) {
+    return <div>
+      <center>
+        <h2>Please ensure you're signed in</h2>
+      </center>
+    </div>;
+  }
+
   return (
     <div className="Cover">
-        <Nav name={currentUser ? currentUser.displayName : ""} />
-      <div className="AddAccount">
-        <div className="wrap">
-          <div className="head">
-            <h3>New Account</h3>
-          </div>
-          {showForm}
-          <div className="Btn">
-            {loading ? (
-              <p>Adding...</p>
-            ) : (
-              <button onClick={handleBtnClick} className="btn" type="submit">
-                SUBMIT
-              </button>
-            )}
-          </div>
-          {/* <div className="Btn">
+      <Nav name={currentUser ? currentUser.displayName : ""} />
+      {isAdmin ? (
+        <div className="AddAccount">
+          <div className="wrap">
+            <div className="head">
+              <h3>New Account</h3>
+            </div>
+            {showForm}
+            <div className="Btn">
+              {loading ? (
+                <p>Adding...</p>
+              ) : (
+                <button onClick={handleBtnClick} className="btn" type="submit">
+                  SUBMIT
+                </button>
+              )}
+            </div>
+            {/* <div className="Btn">
           <button onClick={handleAddMore} className="btn" type="submit">
             ADD MORE
           </button>
         </div> */}
-          {/* {
+            {/* {
             addMore ? <>
             {showForm}
             <div className="Btn">
@@ -286,8 +297,15 @@ function AddAccount() {
         </div>
             </> : null
         } */}
+          </div>
         </div>
-      </div>
+      ) : (
+        <div>
+          <center>
+            <h2>Please you're not an Admin</h2>
+          </center>
+        </div>
+      )}
     </div>
   );
 }

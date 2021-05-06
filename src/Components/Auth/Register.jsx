@@ -10,6 +10,7 @@ function Register() {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [passwordShown, setPasswordShown] = useState(false);
 
   const setIsRegister = useContext(SetIsRegister);
   const { setAuthScreen } = useContext(AuthScreen);
@@ -49,6 +50,10 @@ function Register() {
     setConfirmPassword("");
   };
 
+  const togglePasswordVisiblity = () => {
+    setPasswordShown(passwordShown ? false : true);
+  };
+
 
   return (
     <div className="Register">
@@ -77,21 +82,23 @@ function Register() {
                 type="text"
               />
             </div>
-            <div className="Input">
+            <div className="Input password">
               <input
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="Password"
-                type="text"
+                type={passwordShown ? "text" : "password"}
               />
+              <i className="fa fa-eye" aria-hidden="true" onClick={togglePasswordVisiblity}></i>
             </div>
-            <div className="Input">
+            <div className="Input password">
               <input
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 placeholder="Confirm Password"
-                type="text"
+                type={passwordShown ? "text" : "password"}
               />
+              <i className="fa fa-eye" aria-hidden="true" onClick={togglePasswordVisiblity}></i>
             </div>
           </form>
           <div className="Btn">

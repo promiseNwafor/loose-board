@@ -1,87 +1,96 @@
-.Auth .h4{
-    font-family: 'Courier New', Courier, monospace;
-    padding-top: 1rem;
-    font-size: 24px;
-    color: rgb(58, 105, 177);
-    display: flex;
-    justify-content: center;
+.Auth .h4 {
+  font-family: monospace;
+  padding-top: 1rem;
+  font-size: 24px;
+  color: #0c63e6;
+  display: flex;
+  justify-content: center;
 }
 
-.Auth .logo{
-    margin: auto;
-    display: flex;
-    justify-content: center;
+.Auth .logo {
+  margin: auto;
+  display: flex;
+  justify-content: center;
 }
 
-.Auth .logo img{
-    width: 70px;
+.Auth .logo img {
+  width: 70px;
 }
 
-.Auth{
-    min-height: 100vh;
-    width: 100vw;
-    background: white;
-    margin: auto;
-    display: flex;
-    justify-content: space-evenly;
-    align-items: center;
+.Auth {
+  min-height: 100vh;
+  width: 100vw;
+  background: white;
+  margin: auto;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
 }
 
-.Auth .wrap{
-    width: 75%;
-    margin: auto;
+.Auth .wrap {
+  width: 75%;
+  margin: auto;
 }
 
-.Auth .wrap div{
-    margin: 2rem auto;
+.Auth .wrap div {
+  margin: 2rem auto;
 }
 
-.Auth .Box{
-    width: 420px;
-    height: 400px;
-    box-shadow: 5px 5px 20px 0.5px rgb(227, 227, 235), -10px -10px 20px 0.2px rgb(226, 219, 219);
-    margin: 0;
-    border-radius: 20px;
+.Auth .Box {
+  width: 420px;
+  height: 400px;
+  margin: 0;
+  box-shadow: 0px 0px 40px #00000029;
+  border-radius: 38px;
+  opacity: 1;
 }
 
-.Auth img{
-    width: 40%;
+.Auth img {
+  width: 40%;
 }
 
-
-.Auth input{
-    width: 100%;
-    border: none;
-    border-bottom: 1px solid rgb(122, 120, 120);
-    padding: 0.5rem;
+.Auth input {
+  width: 100%;
+  border: none;
+  border-bottom: 1px solid rgb(122, 120, 120);
+  padding: 0.5rem;
 }
 
-.Btn{
-    width: 150px;
-    background: rgb(36, 72, 192);
-    margin: auto;
-    margin-top: 2rem;
-    padding: 0.4rem 1.5rem;
-    border-radius: 7px;
-    cursor: pointer;
-    display: flex;
-    justify-content: center;
-    color: white;
+.Btn {
+  width: 150px;
+  background: #0c63e6;
+  margin: auto;
+  margin-top: 2rem;
+  padding: 0.6rem 1.5rem;
+  border-radius: 13px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  color: white;
 }
 
-
-button{
-    background: inherit;
-    color: white;
-    border: none;
-    cursor: pointer;
-    margin: auto;
+button {
+  background: inherit;
+  color: white;
+  border: none;
+  cursor: pointer;
+  margin: auto;
 }
 
-.foot{
-    color: rgb(25, 127, 223);
-    display: flex;
-    justify-content: center;
-    cursor: pointer;
-    margin-top: 1rem;
+.foot {
+  color: #0c63e6;
+  display: flex;
+  justify-content: center;
+  cursor: pointer;
+  margin-top: 1rem;
+}
+
+.password {
+  display: flex;
+  align-items: flex-end;
+}
+
+.password i {
+  color: rgb(99, 96, 96);
+  border-bottom: 1px solid gray;
 }
