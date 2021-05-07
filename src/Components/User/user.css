@@ -5,17 +5,26 @@
     background: inherit;
 }
 
+.Cover .Analytics{
+    overflow-x: scroll;
+}
+
 .AddReport{
     width: 100vw;
     min-height: 100vh;
-    background: rgb(211, 207, 207);
+    background: #efefef;
     padding-top: 3rem;
 }
 
 .AddReport .head{
     display: flex;
-    justify-content: center;
     color: #0c63e6;
+}
+
+.head.displayName{
+    justify-content: flex-start;
+    padding: 0 0rem 1rem 2rem;
+    display: none;
 }
 
 .AddReport .wrap{
@@ -59,3 +68,19 @@
     width: 30%;
 }
 
+@media screen and (max-width: 520px) {
+  
+    .Cover .Analytics{
+        overflow-x: scroll;
+    }
+    .AddReport .wrap{
+        width: 85%;
+        padding: 2rem;
+    }
+    .AddReport input{
+        width: 90%;
+    }
+    .head.displayName{
+        display: block;
+    }
+  }

@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
 import firebase from "../../lib/firebase";
-import { AuthScreen, AuthContext } from "../../App";
+import { AuthScreen } from "../../App";
 import "./auth.css";
 import { SetIsRegister } from "./Auth";
 
@@ -33,14 +33,14 @@ function Register() {
           setAuthScreen();
           setLoading(false);
           resetInput();
-          window.location.pathname = "/home";
+          window.location.pathname = "/";
         })
         .catch((err) => {
           console.error(err);
+          setLoading(false);
         });
-      setLoading(false);
     }
-    setLoading(false);
+    // setLoading(false);
   };
 
   const resetInput = () => {
@@ -79,7 +79,7 @@ function Register() {
                 onChange={(e) => setEmail(e.target.value)}
                 value={email}
                 placeholder="Email"
-                type="text"
+                type="email"
               />
             </div>
             <div className="Input password">

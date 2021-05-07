@@ -38,18 +38,18 @@ function AddReport() {
   var date = new Date(),
     today =
       date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
-  var time =
-    date.getFullYear() +
-    "-" +
-    date.getMonth() +
-    "-" +
-    date.getDate() +
-    "-" +
-    date.getHours() +
-    ":" +
-    date.getMinutes() +
-    ":" +
-    date.getSeconds();
+  // var time =
+  //   date.getFullYear() +
+  //   "-" +
+  //   date.getMonth() +
+  //   "-" +
+  //   date.getDate() +
+  //   "-" +
+  //   date.getHours() +
+  //   ":" +
+  //   date.getMinutes() +
+  //   ":" +
+  //   date.getSeconds();
   // var id = today + '-' + accountName.label
 
   const handleBtnClick = () => {
@@ -58,58 +58,58 @@ function AddReport() {
         case "facebook":
           addToFacebook(accountName.label, {
             id: today,
-            likes,
-            comments,
-            reach,
-            shares,
-            leads,
-            views,
-            impressions,
-            followers,
-            downloads,
+            likes: parseInt(likes),
+            comments: parseInt(comments),
+            reach: parseInt(reach),
+            shares: parseInt(shares),
+            leads: parseInt(leads),
+            views: parseInt(views),
+            impressions: parseInt(impressions),
+            followers: parseInt(followers),
+            downloads: parseInt(downloads),
           });
           break;
         case "twitter":
           addToTwitter(accountName.label, {
             id: today,
-            likes,
-            comments,
-            reach,
-            shares,
-            leads,
-            views,
-            impressions,
-            followers,
-            downloads,
+            likes: parseInt(likes),
+            comments: parseInt(comments),
+            reach: parseInt(reach),
+            shares: parseInt(shares),
+            leads: parseInt(leads),
+            views: parseInt(views),
+            impressions: parseInt(impressions),
+            followers: parseInt(followers),
+            downloads: parseInt(downloads),
           });
           break;
         case "instagram":
           addToInstagram(accountName.label, {
             id: today,
-            likes,
-            comments,
-            saves,
-            reach,
-            shares,
-            leads,
-            views,
-            impressions,
-            followers,
-            downloads,
+            likes: parseInt(likes),
+            comments: parseInt(comments),
+            saves: parseInt(saves),
+            reach: parseInt(reach),
+            shares: parseInt(shares),
+            leads: parseInt(leads),
+            views: parseInt(views),
+            impressions: parseInt(impressions),
+            followers: parseInt(followers),
+            downloads: parseInt(downloads),
           });
           break;
         case "linkedin":
           addToLinkedin(accountName.label, {
             id: today,
-            likes,
-            comments,
-            reach,
-            shares,
-            leads,
-            views,
-            impressions,
-            followers,
-            downloads,
+            likes: parseInt(likes),
+            comments: parseInt(comments),
+            reach: parseInt(reach),
+            shares: parseInt(shares),
+            leads: parseInt(leads),
+            views: parseInt(views),
+            impressions: parseInt(impressions),
+            followers: parseInt(followers),
+            downloads: parseInt(downloads),
           });
           break;
         default:
@@ -163,7 +163,6 @@ function AddReport() {
                   onChange={(e) => setReach(e.target.value)}
                   placeholder="Reach"
                   type="number"
-                  required
                 />
                 {platform.value === "twitter" ? (
                   <input
@@ -194,43 +193,36 @@ function AddReport() {
                   onChange={(e) => setLeads(e.target.value)}
                   placeholder="Leads"
                   type="number"
-                  required
                 />
                 <input
                   onChange={(e) => setImpressions(e.target.value)}
                   placeholder="Impressions"
                   type="number"
-                  required
                 />
                 <input
                   onChange={(e) => setComments(e.target.value)}
                   placeholder="Comments"
                   type="number"
-                  required
                 />
                 <input
                   onChange={(e) => setDownloads(e.target.value)}
                   placeholder="Downloads"
                   type="number"
-                  required
                 />
                 <input
                   onChange={(e) => setLikes(e.target.value)}
                   placeholder="Likes"
                   type="number"
-                  required
                 />
                 <input
                   onChange={(e) => setViews(e.target.value)}
                   placeholder="Views"
                   type="number"
-                  required
                 />
                 <input
                   onChange={(e) => setFollowers(e.target.value)}
                   placeholder="Followers"
                   type="number"
-                  required
                 />
               </div>
             </form>
@@ -254,7 +246,7 @@ function AddReport() {
       ) : (
         <div>
           <center>
-            <h2>Please you're not a community for any account</h2>
+            <h2>Please you're not a community manager for any account</h2>
           </center>
         </div>
       )}

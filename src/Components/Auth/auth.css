@@ -94,3 +94,19 @@ button {
   color: rgb(99, 96, 96);
   border-bottom: 1px solid gray;
 }
+
+@media screen and (max-width: 520px) {
+    .Auth{
+       flex-direction: column-reverse;
+    }
+    .Auth .logo img {
+        height: 70px;
+      }
+    .Auth .bg{
+       width: 100%;
+    }
+    .Auth .Box {
+        width: 350px;
+        box-shadow: none;
+      }
+  }

@@ -20,9 +20,9 @@ function App() {
   const [accounts, setAccounts] = useState([]);
   const [currentUser, setCurrentUser] = useState(null);
 
-  var date = new Date(),
-    today =
-      date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
+  // var date = new Date(),
+    // today =
+    //   date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
 
   const setAuthScreen = () => {
     localStorage.setItem("isLogged", "true");
@@ -44,7 +44,7 @@ function App() {
         alert("Report added");
         console.log(newAccount);
       });
-    setLoading(false);
+    // setLoading(false);
   };
 
   const addToInstagram = (id, newAccount) => {
@@ -62,7 +62,7 @@ function App() {
         alert("Report added");
         console.log(newAccount);
       });
-    setLoading(false);
+    // setLoading(false);
   };
 
   const addToLinkedin = (id, newAccount) => {
@@ -80,7 +80,7 @@ function App() {
         alert("Report added");
         console.log(newAccount);
       });
-    setLoading(false);
+    // setLoading(false);
   };
 
   const addToTwitter = (id, newAccount) => {
@@ -98,24 +98,43 @@ function App() {
         alert("Report added");
         console.log(newAccount);
       });
-    setLoading(false);
+    // setLoading(false);
   };
 
   const handleAddAccount = (newAccount) => {
     setLoading(true);
     accountsRef
       .doc(newAccount.id)
-      .set(newAccount)
-      .catch((err) => {
-        console.log(err);
-      })
-      .then(() => {
-        setLoading(false);
-        alert("Account added");
-        console.log(newAccount);
+      .get()
+      .then((res) => {
+        if (res.exists) {
+          accountsRef
+            .doc(newAccount.id)
+            .update(newAccount)
+            .catch((err) => {
+              console.log(err);
+            })
+            .then(() => {
+              setLoading(false);
+              alert("Account added");
+              console.log(newAccount);
+            });
+        } else {
+          accountsRef
+            .doc(newAccount.id)
+            .set(newAccount)
+            .catch((err) => {
+              console.log(err);
+            })
+            .then(() => {
+              setLoading(false);
+              alert("Account added");
+              console.log(newAccount);
+            });
+        }
       });
 
-    setLoading(false);
+    // setLoading(false);
   };
 
   const getManagerAccounts = () => {
@@ -160,12 +179,12 @@ function App() {
         ? setIsAdmin(true)
         : setIsAdmin(false)
       : console.log("no currentUser");
-    console.log(isLogged);
+    // console.log(isLogged);
   }, [currentUser, isAdmin]);
 
   useEffect(() => {
-    console.log(currentUser);
-    console.log(locale);
+    // console.log(currentUser);
+    // console.log(locale);
   }, [loading, isAdmin]);
 
   return (
@@ -207,9 +226,6 @@ function App() {
               <Route exact path="/addReport">
                 <AddReport />
               </Route>
-              {/* <Route exact path="/overview">
-                            <Overview />
-                        </Route> */}
               <Route exact path="/addAccount">
                 <AddAccount />
               </Route>
@@ -220,7 +236,6 @@ function App() {
                 <ManagerAnalytics />
               </Route>
             </Switch>
-            {/* { locale === 'true' ? <Login /> : <Register /> } */}
           </div>
         </Router>
       </AuthScreen.Provider>

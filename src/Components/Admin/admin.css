@@ -5,10 +5,10 @@
     background: inherit;
 }
 
-.AddAccount, .Overview, .Analytics{
+.AddAccount, .Analytics{
     width: 100vw;
     min-height: 100vh;
-    background: rgb(211, 207, 207);
+    background: #efefef;
     padding-top: 3rem;
 }
 
@@ -43,7 +43,7 @@ table{
 }
 
 td{
-    border-bottom: 1px solid rgb(201, 199, 199);
+    border-bottom: 2px solid #efefef;
     padding: 1.5rem;
     padding-left: 0;
 }
@@ -86,30 +86,14 @@ table small{
     width: 30%;
 }
 
-.Overview .flex{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
+@media screen and (max-width: 520px) {
+    .AddAccount .wrap{
+        width: 85%;
+        padding: 2rem;
+    }
+    .AddAccount input{
+        width: 90%;
+    }
+  }
 
-.Overview .flex>div{
-    /* width: 18%; */
-    font-weight: bold;
-    padding: 2rem;
-}
-
-.Overview .row{
-    display: flex;
-    /* justify-content: center; */
-    align-items: center;
-    padding: 1.2rem;
-    padding-left: 0;
-    border-bottom: 1px solid gray;
-}
-
-.Overview .row p{
-    width: 130px;
-    padding-right: 1.2rem;
-    /* padding-left: 0; */
-}
 

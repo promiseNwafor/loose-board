@@ -1,9 +1,11 @@
 import React, { useState, useContext, useEffect } from "react";
 import firebase from "../../lib/firebase";
+import { AuthScreen } from "../../App";
 import { SetIsRegister } from "./Auth";
 import "./auth.css";
 
 function Login() {
+  const { setAuthScreen } = useContext(AuthScreen);
   const setIsRegister = useContext(SetIsRegister);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -19,21 +21,18 @@ function Login() {
       firebase
         .auth()
         .signInWithEmailAndPassword(email, password)
-        // .then(() => {
-        //   currentUser ? currentUser.email.includes('seun') ? setIsAdmin(true) : setIsAdmin(false)
-        //         : console.log('no curentUser')
-        //         console.log(currentUser.email)
-        //       })
         .then(() => {
+          setAuthScreen();
           setLoading(false);
           resetInput();
-          window.location.pathname = "/home";
+          window.location.pathname = "/";
         })
         .catch((err) => {
+          setLoading(false);
           console.error(err);
         });
     }
-    setLoading(false);
+    // setLoading(false);
   };
 
   const resetInput = () => {
@@ -63,7 +62,7 @@ function Login() {
                 onChange={(e) => setEmail(e.target.value)}
                 value={email}
                 placeholder="Email"
-                type="text"
+                type="email"
               />
             </div>
             <div className="Input password">

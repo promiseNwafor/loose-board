@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useContext } from "react";
 import Select from "react-select";
 import { AuthContext } from "../../App";
 import Nav from "../Nav";
@@ -28,6 +28,8 @@ function AddAccount() {
     { value: "Ayomide", label: "Ayomide" },
     { value: "Janelle", label: "Janelle" },
     { value: "Chucks", label: "Chucks" },
+    { value: "Tiwa", label: "Tiwa" },
+    { value: "Gift", label: "Gift" },
   ];
   const platforms = [
     { value: "facebook", label: "facebook" },
@@ -36,14 +38,14 @@ function AddAccount() {
     { value: "linkedin", label: "linkedin" },
   ];
 
-  var date = new Date(),
-    today =
-      date.getFullYear() +
-      "-" +
-      (date.getMonth() + 1) +
-      "-" +
-      date.getDate() +
-      accountName;
+  var date = new Date()
+    // today =
+    //   date.getFullYear() +
+    //   "-" +
+    //   (date.getMonth() + 1) +
+    //   "-" +
+    //   date.getDate() +
+    //   accountName;
   var day =
     date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
 
@@ -57,15 +59,15 @@ function AddAccount() {
             manager: manager.value,
             date: day,
             facebook: {
-              likes,
-              comments,
-              reach,
-              shares,
-              leads,
-              views,
-              impressions,
-              followers,
-              downloads,
+              likes: parseInt(likes),
+              comments: parseInt(comments),
+              reach: parseInt(reach),
+              shares: parseInt(shares),
+              leads: parseInt(leads),
+              views: parseInt(views),
+              impressions: parseInt(impressions),
+              followers: parseInt(followers),
+              downloads: parseInt(downloads),
             },
           });
           break;
@@ -76,15 +78,15 @@ function AddAccount() {
             manager: manager.value,
             date: day,
             twitter: {
-              likes,
-              comments,
-              reach,
-              shares,
-              leads,
-              views,
-              impressions,
-              followers,
-              downloads,
+              likes: parseInt(likes),
+              comments: parseInt(comments),
+              reach: parseInt(reach),
+              shares: parseInt(shares),
+              leads: parseInt(leads),
+              views: parseInt(views),
+              impressions: parseInt(impressions),
+              followers: parseInt(followers),
+              downloads: parseInt(downloads),
             },
           });
           break;
@@ -95,16 +97,16 @@ function AddAccount() {
             manager: manager.value,
             date: day,
             instagram: {
-              likes,
-              comments,
-              saves,
-              reach,
-              shares,
-              leads,
-              views,
-              impressions,
-              followers,
-              downloads,
+              likes: parseInt(likes),
+              comments: parseInt(comments),
+              saves: parseInt(saves),
+              reach: parseInt(reach),
+              shares: parseInt(shares),
+              leads: parseInt(leads),
+              views: parseInt(views),
+              impressions: parseInt(impressions),
+              followers: parseInt(followers),
+              downloads: parseInt(downloads),
             },
           });
           break;
@@ -115,18 +117,20 @@ function AddAccount() {
             manager: manager.value,
             date: day,
             linkedin: {
-              likes,
-              comments,
-              reach,
-              shares,
-              leads,
-              views,
-              impressions,
-              followers,
-              downloads,
+              likes: parseInt(likes),
+              comments: parseInt(comments),
+              reach: parseInt(reach),
+              shares: parseInt(shares),
+              leads: parseInt(leads),
+              views: parseInt(views),
+              impressions: parseInt(impressions),
+              followers: parseInt(followers),
+              downloads: parseInt(downloads),
             },
           });
           break;
+          default:
+            return
       }
     }
   };
@@ -172,7 +176,6 @@ function AddAccount() {
             onChange={(e) => setReach(e.target.value)}
             placeholder="Reach"
             type="number"
-            required
           />
           {platform.value === "twitter" ? (
             <input
@@ -203,43 +206,36 @@ function AddAccount() {
             onChange={(e) => setLeads(e.target.value)}
             placeholder="Leads"
             type="number"
-            required
           />
           <input
             onChange={(e) => setImpressions(e.target.value)}
             placeholder="Impressions"
             type="number"
-            required
           />
           <input
             onChange={(e) => setComments(e.target.value)}
             placeholder="Comments"
             type="number"
-            required
           />
           <input
             onChange={(e) => setDownloads(e.target.value)}
             placeholder="Downloads"
             type="number"
-            required
           />
           <input
             onChange={(e) => setLikes(e.target.value)}
             placeholder="Likes"
             type="number"
-            required
           />
           <input
             onChange={(e) => setViews(e.target.value)}
             placeholder="Views"
             type="number"
-            required
           />
           <input
             onChange={(e) => setFollowers(e.target.value)}
             placeholder="Followers"
             type="number"
-            required
           />
         </div>
       </form>
@@ -247,11 +243,13 @@ function AddAccount() {
   );
 
   if (!currentUser || currentUser.email === null) {
-    return <div>
-      <center>
-        <h2>Please ensure you're signed in</h2>
-      </center>
-    </div>;
+    return (
+      <div>
+        <center>
+          <h2>Please ensure you're signed in</h2>
+        </center>
+      </div>
+    );
   }
 
   return (
@@ -259,6 +257,9 @@ function AddAccount() {
       <Nav name={currentUser ? currentUser.displayName : ""} />
       {isAdmin ? (
         <div className="AddAccount">
+          <div className="head displayName">
+            <h3>Welcome, {currentUser.displayName}</h3>
+          </div>
           <div className="wrap">
             <div className="head">
               <h3>New Account</h3>
