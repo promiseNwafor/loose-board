@@ -397,6 +397,9 @@ function ManagerAnalytics() {
       />
       {!isAdmin ? (
         <div className="Analytics">
+          <div className="head displayName">
+            <h3>Welcome {currentUser.displayName}</h3>
+          </div>
           <div className="wrap">
             <div className="head">
               <h3>Here's your overview</h3>
