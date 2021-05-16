@@ -55,6 +55,16 @@
     margin: 1.6rem auto;
 }
 
+.AddReport .date input{
+    width: 100%;
+    border: 1px solid rgb(206, 202, 202);
+    border-radius: 4px;
+    color: rgb(122, 120, 120);
+    font-size: 15px;
+    margin: auto;
+    padding: 0.5rem;
+}
+
 .AddReport .Select input{
     margin: 0;
     border: none;
@@ -79,6 +89,9 @@
     }
     .AddReport input{
         width: 90%;
+    }
+    .AddReport .date input{
+        width: 100%;
     }
     .head.displayName{
         display: block;

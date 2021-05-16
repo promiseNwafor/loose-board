@@ -3,6 +3,7 @@ import firebase from "../../lib/firebase";
 import { AuthScreen } from "../../App";
 import { SetIsRegister } from "./Auth";
 import "./auth.css";
+import LoadingIndicator from "../LoadingIndicator";
 
 function Login() {
   const { setAuthScreen } = useContext(AuthScreen);
@@ -72,18 +73,31 @@ function Login() {
                 placeholder="Password"
                 type={passwordShown ? "text" : "password"}
               />
-              <i className="fa fa-eye" aria-hidden="true" onClick={togglePasswordVisiblity}></i>
+              <i
+                className="fa fa-eye"
+                aria-hidden="true"
+                onClick={togglePasswordVisiblity}
+              ></i>
             </div>
           </form>
-          <div className="Btn">
-            {loading ? (
-              <p>Loading...</p>
-            ) : (
+          {/* <div className="Btn"> */}
+          {loading ? (
+            <center>
+              <LoadingIndicator
+                className="loader"
+                type="Circles"
+                height={30}
+                width={30}
+              />
+            </center>
+          ) : (
+            <div className="Btn">
               <button onClick={login} type="submit">
                 LOGIN
               </button>
-            )}
-          </div>
+            </div>
+          )}
+          {/* </div> */}
         </div>
       </div>
       <div className="foot">

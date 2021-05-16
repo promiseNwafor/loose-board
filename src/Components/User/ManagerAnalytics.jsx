@@ -4,6 +4,7 @@ import { AuthContext } from "../../App";
 import Popup from "../Admin/Popup";
 import "../Admin/admin.css";
 import Nav from "../Nav";
+import LoadingIndicator from "../LoadingIndicator";
 
 function ManagerAnalytics() {
   const { currentUser, isAdmin } = useContext(AuthContext);
@@ -384,7 +385,8 @@ function ManagerAnalytics() {
     return (
       <div>
         <center>
-          <h2>Please ensure you're signed in</h2>
+          {/* <h2>Please ensure you're signed in</h2> */}
+          <LoadingIndicator type='Circles' height={100} width={100} />
         </center>
       </div>
     );
@@ -393,7 +395,7 @@ function ManagerAnalytics() {
     <div className="Cover">
       <Nav
         path="/addReport"
-        name={currentUser ? currentUser.displayName : ""}
+        name={currentUser ? `Welcome, ${currentUser.displayName}` : ""}
       />
       {!isAdmin ? (
         <div className="Analytics">
@@ -406,7 +408,7 @@ function ManagerAnalytics() {
             </div>
             {isLoading ? (
               <center>
-                <h2>Loading...</h2>
+                <LoadingIndicator type='Rings' height={50} width={50} />
               </center>
             ) : (
               <table>

@@ -77,6 +77,10 @@ button {
   margin: auto;
 }
 
+/* .Loader{
+  height: 10;
+} */
+
 .foot {
   color: #0c63e6;
   display: flex;

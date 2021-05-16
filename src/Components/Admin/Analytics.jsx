@@ -4,6 +4,7 @@ import { AuthContext } from "../../App";
 import Popup from "./Popup";
 import "./admin.css";
 import Nav from "../Nav";
+import LoadingIndicator from "../LoadingIndicator";
 
 function Analytics() {
   const { currentUser, isAdmin } = useContext(AuthContext);
@@ -376,7 +377,7 @@ function Analytics() {
     return (
       <div>
         <center>
-          <h2>Please ensure you're signed in</h2>
+          <LoadingIndicator type='Circles' height={100} width={100} />
         </center>
       </div>
     );
@@ -385,7 +386,7 @@ function Analytics() {
     <div className="Cover">
       <Nav
         path="/addAccount"
-        name={currentUser ? currentUser.displayName : ""}
+        name={currentUser ? `Welcome, ${currentUser.displayName}` : ""}
       />
       {isAdmin ? (
         <div className="Analytics">
@@ -398,7 +399,7 @@ function Analytics() {
             </div>
             {isLoading ? (
               <center>
-                <h2>Loading...</h2>
+                <LoadingIndicator type='Rings' height={50} width={50} />
               </center>
             ) : (
               <table>

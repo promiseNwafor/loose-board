@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { send } from "emailjs-com";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import firebase from "./lib/firebase";
 import Auth from "./Components/Auth/Auth";
@@ -19,14 +20,23 @@ function App() {
   const [managerAccounts, setManagerAccounts] = useState([]);
   const [accounts, setAccounts] = useState([]);
   const [currentUser, setCurrentUser] = useState(null);
-
-  // var date = new Date(),
-    // today =
-    //   date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
-
+  const [isWeekend, setIsWeekend] = useState(false);
   const setAuthScreen = () => {
     localStorage.setItem("isLogged", "true");
     localStorage.setItem("isRegistered", "true");
+  };
+
+  const handleLogout = () => {
+    firebase
+      .auth()
+      .signOut()
+      .then(() => {
+        localStorage.setItem("isLogged", "false");
+      })
+      .then(() => {
+        setLocale(localStorage.getItem("isLogged"));
+        window.location.pathname = "/";
+      });
   };
 
   const addToFacebook = (id, newAccount) => {
@@ -159,7 +169,29 @@ function App() {
       });
       setAccounts(items);
     });
-    console.log(accounts);
+    // console.log(accounts);
+  };
+
+  const handleSendEmail = () => {
+    send(
+      "service_leolhdo",
+      "template_dqdqsfn",
+      {
+        from_name: "Loosebot",
+        to_name: currentUser.displayName,
+        to_email: currentUser.email,
+        message: "It's time for your daily report,<br/><b> Ensure to do so</b>",
+        reply_to: "",
+      },
+      "user_TcK80igUFauKfN3Gqb1QS"
+    )
+      .then((response) => {
+        console.log("SUCCESS!", response.status, response.text);
+      })
+      .catch((err) => {
+        console.log("FAILED...", err);
+      });
+    // console.log("Happening");
   };
 
   useEffect(() => {
@@ -168,7 +200,6 @@ function App() {
       setCurrentUser(user);
     });
     currentUser ? getManagerAccounts() : console.log("No user yet");
-    // console.log(today)
     getAccounts();
     currentUser
       ? currentUser.email.includes("seun") ||
@@ -179,8 +210,43 @@ function App() {
         ? setIsAdmin(true)
         : setIsAdmin(false)
       : console.log("no currentUser");
-    // console.log(isLogged);
-  }, [currentUser, isAdmin]);
+  }, [currentUser, isAdmin, locale]);
+
+  useEffect(() => {
+    var currentTime = new Date();
+    var year = currentTime.getFullYear();
+    var month = currentTime.getMonth();
+    var day = currentTime.getDate();
+    var hour = 18;
+    var minute = 0;
+    var second = 0;
+    var atSix = new Date(year, month, day, hour, minute, second);
+    var positiveDifference = atSix.getTime() - currentTime.getTime();
+    var negativeDifference = 86400000 - (currentTime.getTime() - atSix.getTime());
+    var delay =
+      atSix.getTime() > currentTime.getTime()
+        ? positiveDifference
+        : negativeDifference;
+
+    // console.log(atSix.getTime(), currentTime.getTime());
+    // console.log(atSix.getTime() - currentTime.getTime());
+    // console.log(delay);
+    // 86400000 milliseconds in 1 day
+
+    const handleInterval = () => setInterval(handleSendEmail, 86400000);
+
+    currentUser && !isAdmin && !isWeekend
+      ? setTimeout(() => {
+          handleInterval();
+        }, delay)
+      : clearInterval(handleInterval());
+  }, [currentUser, isAdmin, isWeekend]);
+
+  useEffect(() => {
+    var day = new Date().getDay()
+    setIsWeekend((day === 6) || (day  === 0))
+    // console.log(isWeekend);
+  }, [isWeekend]);
 
   useEffect(() => {
     // console.log(currentUser);
@@ -197,6 +263,7 @@ function App() {
         addToLinkedin,
         addToTwitter,
         setIsAdmin,
+        handleLogout,
         isAdmin,
         managerAccounts,
         currentUser,

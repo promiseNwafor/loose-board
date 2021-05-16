@@ -3,6 +3,7 @@ import Select from "react-select";
 import { AuthContext } from "../../App";
 import Nav from "../Nav";
 import "./user.css";
+import LoadingIndicator from "../LoadingIndicator";
 
 function AddReport() {
   const {
@@ -17,6 +18,7 @@ function AddReport() {
   } = useContext(AuthContext);
   const [accountName, setAccountName] = useState("");
   const [platform, setPlatform] = useState("");
+  const [reportDate, setReportDate] = useState("");
   const [likes, setLikes] = useState(0);
   const [comments, setComments] = useState(0);
   const [shares, setShares] = useState(0);
@@ -38,26 +40,13 @@ function AddReport() {
   var date = new Date(),
     today =
       date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
-  // var time =
-  //   date.getFullYear() +
-  //   "-" +
-  //   date.getMonth() +
-  //   "-" +
-  //   date.getDate() +
-  //   "-" +
-  //   date.getHours() +
-  //   ":" +
-  //   date.getMinutes() +
-  //   ":" +
-  //   date.getSeconds();
-  // var id = today + '-' + accountName.label
 
   const handleBtnClick = () => {
     if (platform !== "" || accountName !== "") {
       switch (platform.value) {
         case "facebook":
           addToFacebook(accountName.label, {
-            id: today,
+            id: reportDate !== "" ? reportDate : today,
             likes: parseInt(likes),
             comments: parseInt(comments),
             reach: parseInt(reach),
@@ -71,7 +60,7 @@ function AddReport() {
           break;
         case "twitter":
           addToTwitter(accountName.label, {
-            id: today,
+            id: reportDate !== "" ? reportDate : today,
             likes: parseInt(likes),
             comments: parseInt(comments),
             reach: parseInt(reach),
@@ -85,7 +74,7 @@ function AddReport() {
           break;
         case "instagram":
           addToInstagram(accountName.label, {
-            id: today,
+            id: reportDate !== "" ? reportDate : today,
             likes: parseInt(likes),
             comments: parseInt(comments),
             saves: parseInt(saves),
@@ -100,7 +89,7 @@ function AddReport() {
           break;
         case "linkedin":
           addToLinkedin(accountName.label, {
-            id: today,
+            id: reportDate !== "" ? reportDate : today,
             likes: parseInt(likes),
             comments: parseInt(comments),
             reach: parseInt(reach),
@@ -122,16 +111,19 @@ function AddReport() {
     return (
       <div>
         <center>
-          <h2>Please ensure you're signed in</h2>
+          <LoadingIndicator type="Circles" height={100} width={100} />
         </center>
       </div>
     );
   }
   return (
     <div className="Cover">
-      <Nav name={currentUser ? currentUser.displayName : ""} />
+      <Nav />
       {!isAdmin ? (
         <div className="AddReport">
+          {/* <div className="head displayName">
+            <h3>Welcome, {currentUser.displayName}</h3>
+          </div> */}
           <div className="wrap">
             <div className="head">
               <h3>New Report</h3>
@@ -139,6 +131,7 @@ function AddReport() {
             {/* <div className="head">
             {currentUser ? <p>{currentUser.displayName}</p> : ""}
           </div> */}
+            {/* <Email /> */}
             <form>
               <div className="select">
                 <Select
@@ -158,10 +151,22 @@ function AddReport() {
                   options={platforms}
                 />
               </div>
+              <div className="date">
+                <input
+                  onChange={(e) => setReportDate(e.target.value)}
+                  placeholder="Date"
+                  type="date"
+                />
+              </div>
               <div className="input">
                 <input
-                  onChange={(e) => setReach(e.target.value)}
-                  placeholder="Reach"
+                  onChange={(e) => setLikes(e.target.value)}
+                  placeholder="Likes"
+                  type="number"
+                />
+                <input
+                  onChange={(e) => setComments(e.target.value)}
+                  placeholder="Comments"
                   type="number"
                 />
                 {platform.value === "twitter" ? (
@@ -200,18 +205,13 @@ function AddReport() {
                   type="number"
                 />
                 <input
-                  onChange={(e) => setComments(e.target.value)}
-                  placeholder="Comments"
+                  onChange={(e) => setReach(e.target.value)}
+                  placeholder="Reach"
                   type="number"
                 />
                 <input
                   onChange={(e) => setDownloads(e.target.value)}
                   placeholder="Downloads"
-                  type="number"
-                />
-                <input
-                  onChange={(e) => setLikes(e.target.value)}
-                  placeholder="Likes"
                   type="number"
                 />
                 <input
@@ -226,15 +226,22 @@ function AddReport() {
                 />
               </div>
             </form>
-            <div className="Btn">
-              {loading ? (
-                <p>Adding...</p>
-              ) : (
+            {loading ? (
+              <center>
+                <LoadingIndicator
+                  className="loader"
+                  type="Circles"
+                  height={30}
+                  width={30}
+                />
+              </center>
+            ) : (
+              <div className="Btn">
                 <button onClick={handleBtnClick} className="btn" type="submit">
                   SUBMIT
                 </button>
-              )}
-            </div>
+              </div>
+            )}
             {/* <div className="Btn">
             {
                   loading ? <p>Adding...</p> :

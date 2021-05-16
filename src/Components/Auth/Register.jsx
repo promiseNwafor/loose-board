@@ -3,6 +3,7 @@ import firebase from "../../lib/firebase";
 import { AuthScreen } from "../../App";
 import "./auth.css";
 import { SetIsRegister } from "./Auth";
+import LoadingIndicator from "../LoadingIndicator";
 
 function Register() {
   const [username, setUsername] = useState("");
@@ -27,7 +28,6 @@ function Register() {
         .createUserWithEmailAndPassword(email, password)
         .then(() => {
           firebase.auth().currentUser.updateProfile({ displayName: username });
-          
         })
         .then(() => {
           setAuthScreen();
@@ -53,7 +53,6 @@ function Register() {
   const togglePasswordVisiblity = () => {
     setPasswordShown(passwordShown ? false : true);
   };
-
 
   return (
     <div className="Register">
@@ -89,7 +88,11 @@ function Register() {
                 placeholder="Password"
                 type={passwordShown ? "text" : "password"}
               />
-              <i className="fa fa-eye" aria-hidden="true" onClick={togglePasswordVisiblity}></i>
+              <i
+                className="fa fa-eye"
+                aria-hidden="true"
+                onClick={togglePasswordVisiblity}
+              ></i>
             </div>
             <div className="Input password">
               <input
@@ -98,18 +101,29 @@ function Register() {
                 placeholder="Confirm Password"
                 type={passwordShown ? "text" : "password"}
               />
-              <i className="fa fa-eye" aria-hidden="true" onClick={togglePasswordVisiblity}></i>
+              <i
+                className="fa fa-eye"
+                aria-hidden="true"
+                onClick={togglePasswordVisiblity}
+              ></i>
             </div>
           </form>
-          <div className="Btn">
-            {loading ? (
-              <p>Loading...</p>
-            ) : (
+          {loading ? (
+            <center>
+              <LoadingIndicator
+                className="loader"
+                type="Circles"
+                height={30}
+                width={30}
+              />
+            </center>
+          ) : (
+            <div className="Btn">
               <button onClick={register} type="submit">
                 REGISTER
               </button>
-            )}
-          </div>
+            </div>
+          )}
         </div>
       </div>
       <div className="foot">

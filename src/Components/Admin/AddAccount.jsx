@@ -3,6 +3,7 @@ import Select from "react-select";
 import { AuthContext } from "../../App";
 import Nav from "../Nav";
 import "./admin.css";
+import LoadingIndicator from "../LoadingIndicator";
 
 function AddAccount() {
   const { handleAddAccount, loading, currentUser, isAdmin } = useContext(
@@ -38,14 +39,14 @@ function AddAccount() {
     { value: "linkedin", label: "linkedin" },
   ];
 
-  var date = new Date()
-    // today =
-    //   date.getFullYear() +
-    //   "-" +
-    //   (date.getMonth() + 1) +
-    //   "-" +
-    //   date.getDate() +
-    //   accountName;
+  var date = new Date();
+  // today =
+  //   date.getFullYear() +
+  //   "-" +
+  //   (date.getMonth() + 1) +
+  //   "-" +
+  //   date.getDate() +
+  //   accountName;
   var day =
     date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
 
@@ -129,8 +130,8 @@ function AddAccount() {
             },
           });
           break;
-          default:
-            return
+        default:
+          return;
       }
     }
   };
@@ -246,7 +247,7 @@ function AddAccount() {
     return (
       <div>
         <center>
-          <h2>Please ensure you're signed in</h2>
+          <LoadingIndicator type="Circles" height={100} width={100} />
         </center>
       </div>
     );
@@ -254,26 +255,33 @@ function AddAccount() {
 
   return (
     <div className="Cover">
-      <Nav name={currentUser ? currentUser.displayName : ""} />
+      <Nav />
       {isAdmin ? (
         <div className="AddAccount">
-          <div className="head displayName">
+          {/* <div className="head displayName">
             <h3>Welcome, {currentUser.displayName}</h3>
-          </div>
+          </div> */}
           <div className="wrap">
             <div className="head">
               <h3>New Account</h3>
             </div>
             {showForm}
-            <div className="Btn">
-              {loading ? (
-                <p>Adding...</p>
-              ) : (
+            {loading ? (
+              <center>
+                <LoadingIndicator
+                  className="loader"
+                  type="Circles"
+                  height={30}
+                  width={30}
+                />
+              </center>
+            ) : (
+              <div className="Btn">
                 <button onClick={handleBtnClick} className="btn" type="submit">
                   SUBMIT
                 </button>
-              )}
-            </div>
+              </div>
+            )}
             {/* <div className="Btn">
           <button onClick={handleAddMore} className="btn" type="submit">
             ADD MORE
