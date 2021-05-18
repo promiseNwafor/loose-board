@@ -33,7 +33,8 @@ function Register() {
           setAuthScreen();
           setLoading(false);
           resetInput();
-          window.location.pathname = "/";
+          // window.location.pathname = "/";
+          console.log(firebase.auth().currentUser);
         })
         .catch((err) => {
           console.error(err);

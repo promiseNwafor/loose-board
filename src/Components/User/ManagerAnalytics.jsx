@@ -395,7 +395,7 @@ function ManagerAnalytics() {
     <div className="Cover">
       <Nav
         path="/addReport"
-        name={currentUser ? `Welcome, ${currentUser.displayName}` : ""}
+        name={currentUser && currentUser.displayName ? `Welcome, ${currentUser.displayName}` : "Welcome"}
       />
       {!isAdmin ? (
         <div className="Analytics">

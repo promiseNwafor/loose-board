@@ -24,9 +24,12 @@ function Login() {
         .signInWithEmailAndPassword(email, password)
         .then(() => {
           setAuthScreen();
+        })
+        .then(() => {
           setLoading(false);
           resetInput();
-          window.location.pathname = "/";
+          // window.location.pathname = "/";
+          console.log(firebase.auth().currentUser);
         })
         .catch((err) => {
           setLoading(false);

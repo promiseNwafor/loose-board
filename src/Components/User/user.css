@@ -78,6 +78,12 @@
     width: 30%;
 }
 
+.posts input{
+    width: 100%;
+    border: 1px solid rgb(206, 202, 202);
+    border-radius: 4px;
+}
+
 @media screen and (max-width: 520px) {
   
     .Cover .Analytics{

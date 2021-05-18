@@ -12,7 +12,7 @@ export const AuthScreen = React.createContext();
 export const AuthContext = React.createContext();
 
 function App() {
-  const accountsRef = firebase.firestore().collection("account");
+  const accountsRef = firebase.firestore().collection("clients");
   const [isAdmin, setIsAdmin] = useState(false);
   const [locale, setLocale] = useState("");
   const [isLogged, setIsLogged] = useState("false");
@@ -69,7 +69,7 @@ function App() {
       })
       .then(() => {
         setLoading(false);
-        alert("Report added");
+        // alert("Report added");
         console.log(newAccount);
       });
     // setLoading(false);
@@ -87,7 +87,7 @@ function App() {
       })
       .then(() => {
         setLoading(false);
-        alert("Report added");
+        // alert("Report added");
         console.log(newAccount);
       });
     // setLoading(false);
@@ -105,7 +105,7 @@ function App() {
       })
       .then(() => {
         setLoading(false);
-        alert("Report added");
+        // alert("Report added");
         console.log(newAccount);
       });
     // setLoading(false);
@@ -206,10 +206,13 @@ function App() {
         currentUser.email.includes("ized") ||
         currentUser.email.includes("kemi") ||
         currentUser.email.includes("charles") ||
+        currentUser.email.includes("elizabeth") ||
+        currentUser.email.includes("joan") ||
         currentUser.email.includes("mobola")
         ? setIsAdmin(true)
         : setIsAdmin(false)
       : console.log("no currentUser");
+      // console.log(currentUser);
   }, [currentUser, isAdmin, locale]);
 
   useEffect(() => {

@@ -86,6 +86,31 @@ table small{
     width: 30%;
 }
 
+.Buttons{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+hr{
+    border: 1px solid #0c63e6;
+    margin: 2rem auto;
+}
+
+button{
+    border-radius: inherit;
+}
+
+@media screen and (max-width: 900px) {
+    .Btn{
+        width: 100%;
+        padding: 0.5rem 0.1rem;
+        border-radius: 30px;
+    }
+    /* .addMore{
+    } */
+  }
+
 @media screen and (max-width: 520px) {
     .AddAccount .wrap{
         width: 85%;
@@ -94,6 +119,11 @@ table small{
     .AddAccount input{
         width: 90%;
     }
+    
+    /* .Btn{ */
+        /* padding: 0.5rem 0.3rem; */
+        /* border-radius: 30px; */
+    /* } */
   }
 
 
