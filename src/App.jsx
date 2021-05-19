@@ -12,7 +12,7 @@ export const AuthScreen = React.createContext();
 export const AuthContext = React.createContext();
 
 function App() {
-  const accountsRef = firebase.firestore().collection("clients");
+  const accountsRef = firebase.firestore().collection("account");
   const [isAdmin, setIsAdmin] = useState(false);
   const [locale, setLocale] = useState("");
   const [isLogged, setIsLogged] = useState("false");

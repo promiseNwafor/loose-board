@@ -16,9 +16,17 @@ function ManagerAnalytics() {
   const [accLinkedin, setAccLinkedin] = useState();
   const [metric, setMetric] = useState("");
   const [totalMetricFacebook, setTotalMetricFacebook] = useState({});
+  const [numberFacebook, setNumberFacebook] = useState({});
+  const [itemTotalFacebook, setItemTotalFacebook] = useState({});
   const [totalMetricTwitter, setTotalMetricTwitter] = useState({});
+  const [numberTwitter, setNumberTwitter] = useState({});
+  const [itemTotalTwitter, setItemTotalTwitter] = useState({});
   const [totalMetricInstagram, setTotalMetricInstagram] = useState({});
+  const [numberInstagram, setNumberInstagram] = useState({});
+  const [itemTotalInstagram, setItemTotalInstagram] = useState({});
   const [totalMetricLinkedin, setTotalMetricLinkedin] = useState({});
+  const [numberLinkedin, setNumberLinkedin] = useState({});
+  const [itemTotalLinkedin, setItemTotalLinkedin] = useState({});
   const [error, setError] = useState();
   const [isOpen, setIsOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -28,6 +36,7 @@ function ManagerAnalytics() {
     var itemTotal;
     accountsRef.doc(account.label).onSnapshot((querySnapshot) => {
       itemTotal = querySnapshot.data().facebook;
+      setItemTotalFacebook(itemTotal);
       // console.log(itemTotal);
     });
     var finalAns;
@@ -69,20 +78,42 @@ function ManagerAnalytics() {
               views += parseInt(itemMetric.views);
               followers += parseInt(itemMetric.followers);
             });
+            setNumberFacebook({
+              likes,
+              comments,
+              reach,
+              shares,
+              leads,
+              impressions,
+              downloads,
+              views,
+              followers,
+            });
             // ===============get the percentage met===============
             finalAns = {
               likes: Math.round((likes / itemTotal.likes) * 100).toFixed(0),
-              comments: Math.round((comments / itemTotal.comments) * 100).toFixed(0),
+              comments: Math.round(
+                (comments / itemTotal.comments) * 100
+              ).toFixed(0),
               shares: Math.round((shares / itemTotal.shares) * 100).toFixed(0),
               reach: Math.round((reach / itemTotal.reach) * 100).toFixed(0),
-              impressions: Math.round((impressions / itemTotal.impressions) * 100).toFixed(0),
-              leads: Math.round((leads / itemTotal.impressions) * 100).toFixed(0),
-              views: Math.round((views / itemTotal.impressions) * 100).toFixed(0),
-              downloads: Math.round((downloads / itemTotal.impressions) * 100).toFixed(0),
-              followers: Math.round((followers / itemTotal.impressions) * 100).toFixed(0),
+              impressions: Math.round(
+                (impressions / itemTotal.impressions) * 100
+              ).toFixed(0),
+              leads: Math.round((leads / itemTotal.impressions) * 100).toFixed(
+                0
+              ),
+              views: Math.round((views / itemTotal.impressions) * 100).toFixed(
+                0
+              ),
+              downloads: Math.round(
+                (downloads / itemTotal.impressions) * 100
+              ).toFixed(0),
+              followers: Math.round(
+                (followers / itemTotal.impressions) * 100
+              ).toFixed(0),
             };
             // console.log(`${likes/parseInt(itemTotal.likes)} ${itemTotal.likes} likes and ${comments} comments`)
-            // console.log(finalAns)
             setTotalMetricFacebook(finalAns);
           })
           .catch((err) => {
@@ -96,7 +127,7 @@ function ManagerAnalytics() {
     var itemTotal;
     accountsRef.doc(account.label).onSnapshot((querySnapshot) => {
       itemTotal = querySnapshot.data().twitter;
-      // console.log(itemTotal);
+      setItemTotalTwitter(itemTotal);
     });
     var finalAns;
     const items = [];
@@ -137,20 +168,42 @@ function ManagerAnalytics() {
               views += parseInt(itemMetric.views);
               followers += parseInt(itemMetric.followers);
             });
+            setNumberTwitter({
+              likes,
+              comments,
+              reach,
+              shares,
+              leads,
+              impressions,
+              downloads,
+              views,
+              followers,
+            });
             // ===============get the percentage met===============
             finalAns = {
-              likes: Math.round((likes / parseInt(itemTotal.likes)) * 100).toFixed(0),
+              likes: Math.round(
+                (likes / parseInt(itemTotal.likes)) * 100
+              ).toFixed(0),
               comments: Math.round(
-                (comments / parseInt(itemTotal.comments)) *
-                100
+                (comments / parseInt(itemTotal.comments)) * 100
               ).toFixed(0),
               shares: Math.round((shares / itemTotal.shares) * 100).toFixed(0),
               reach: Math.round((reach / itemTotal.reach) * 100).toFixed(0),
-              impressions: Math.round((impressions / itemTotal.impressions) * 100).toFixed(0),
-              leads: Math.round((leads / itemTotal.impressions) * 100).toFixed(0),
-              views: Math.round((views / itemTotal.impressions) * 100).toFixed(0),
-              downloads: Math.round((downloads / itemTotal.impressions) * 100).toFixed(0),
-              followers: Math.round((followers / itemTotal.impressions) * 100).toFixed(0),
+              impressions: Math.round(
+                (impressions / itemTotal.impressions) * 100
+              ).toFixed(0),
+              leads: Math.round((leads / itemTotal.impressions) * 100).toFixed(
+                0
+              ),
+              views: Math.round((views / itemTotal.impressions) * 100).toFixed(
+                0
+              ),
+              downloads: Math.round(
+                (downloads / itemTotal.impressions) * 100
+              ).toFixed(0),
+              followers: Math.round(
+                (followers / itemTotal.impressions) * 100
+              ).toFixed(0),
             };
             // console.log(`${likes/parseInt(itemTotal.likes)} ${itemTotal.likes} likes and ${comments} comments`)
             // console.log(finalAns)
@@ -167,7 +220,7 @@ function ManagerAnalytics() {
     var itemTotal;
     accountsRef.doc(account.label).onSnapshot((querySnapshot) => {
       itemTotal = querySnapshot.data().instagram;
-      // console.log(itemTotal);
+      setItemTotalInstagram(itemTotal);
     });
     var finalAns;
     const items = [];
@@ -210,18 +263,42 @@ function ManagerAnalytics() {
               followers += parseInt(itemMetric.followers);
               saves += parseInt(itemMetric.saves);
             });
+            setNumberInstagram({
+              likes,
+              comments,
+              saves,
+              reach,
+              shares,
+              leads,
+              impressions,
+              downloads,
+              views,
+              followers,
+            });
             // ===============get the percentage met===============
             finalAns = {
               likes: Math.round((likes / itemTotal.likes) * 100).toFixed(0),
-              comments: Math.round((comments / itemTotal.comments) * 100).toFixed(0),
+              comments: Math.round(
+                (comments / itemTotal.comments) * 100
+              ).toFixed(0),
               saves: Math.round((saves / itemTotal.saves) * 100).toFixed(0),
               shares: Math.round((shares / itemTotal.shares) * 100).toFixed(0),
               reach: Math.round((reach / itemTotal.reach) * 100).toFixed(0),
-              impressions: Math.round((impressions / itemTotal.impressions) * 100).toFixed(0),
-              leads: Math.round((leads / itemTotal.impressions) * 100).toFixed(0),
-              views: Math.round((views / itemTotal.impressions) * 100).toFixed(0),
-              downloads: Math.round((downloads / itemTotal.impressions) * 100).toFixed(0),
-              followers: Math.round((followers / itemTotal.impressions) * 100).toFixed(0),
+              impressions: Math.round(
+                (impressions / itemTotal.impressions) * 100
+              ).toFixed(0),
+              leads: Math.round((leads / itemTotal.impressions) * 100).toFixed(
+                0
+              ),
+              views: Math.round((views / itemTotal.impressions) * 100).toFixed(
+                0
+              ),
+              downloads: Math.round(
+                (downloads / itemTotal.impressions) * 100
+              ).toFixed(0),
+              followers: Math.round(
+                (followers / itemTotal.impressions) * 100
+              ).toFixed(0),
             };
             // console.log(`${likes/parseInt(itemTotal.likes)} ${itemTotal.likes} likes and ${comments} comments`)
             // console.log(finalAns)
@@ -238,7 +315,7 @@ function ManagerAnalytics() {
     var itemTotal;
     accountsRef.doc(account.label).onSnapshot((querySnapshot) => {
       itemTotal = querySnapshot.data().linkedin;
-      // console.log(itemTotal);
+      setItemTotalLinkedin(itemTotal);
     });
     var finalAns;
     const items = [];
@@ -279,17 +356,40 @@ function ManagerAnalytics() {
               views += parseInt(itemMetric.views);
               followers += parseInt(itemMetric.followers);
             });
+            setNumberLinkedin({
+              likes,
+              comments,
+              reach,
+              shares,
+              leads,
+              impressions,
+              downloads,
+              views,
+              followers,
+            });
             // ===============get the percentage met===============
             finalAns = {
               likes: Math.round((likes / itemTotal.likes) * 100).toFixed(0),
-              comments: Math.round((comments / itemTotal.comments) * 100).toFixed(0),
+              comments: Math.round(
+                (comments / itemTotal.comments) * 100
+              ).toFixed(0),
               shares: Math.round((shares / itemTotal.shares) * 100).toFixed(0),
               reach: Math.round((reach / itemTotal.reach) * 100).toFixed(0),
-              impressions: Math.round((impressions / itemTotal.impressions) * 100).toFixed(0),
-              leads: Math.round((leads / itemTotal.impressions) * 100).toFixed(0),
-              views: Math.round((views / itemTotal.impressions) * 100).toFixed(0),
-              downloads: Math.round((downloads / itemTotal.impressions) * 100).toFixed(0),
-              followers: Math.round((followers / itemTotal.impressions) * 100).toFixed(0),
+              impressions: Math.round(
+                (impressions / itemTotal.impressions) * 100
+              ).toFixed(0),
+              leads: Math.round((leads / itemTotal.impressions) * 100).toFixed(
+                0
+              ),
+              views: Math.round((views / itemTotal.impressions) * 100).toFixed(
+                0
+              ),
+              downloads: Math.round(
+                (downloads / itemTotal.impressions) * 100
+              ).toFixed(0),
+              followers: Math.round(
+                (followers / itemTotal.impressions) * 100
+              ).toFixed(0),
             };
             // console.log(`${likes/parseInt(itemTotal.likes)} ${itemTotal.likes} likes and ${comments} comments`)
             // console.log(finalAns)
@@ -304,6 +404,11 @@ function ManagerAnalytics() {
   const togglePopup = () => {
     setIsOpen(!isOpen);
   };
+
+  useEffect(() => {
+    // console.log(numberFacebook);
+    // console.log(itemTotalFacebook);
+  }, [numberFacebook, itemTotalFacebook]);
 
   useEffect(() => {
     const abortController = new AbortController();
@@ -386,7 +491,7 @@ function ManagerAnalytics() {
       <div>
         <center>
           {/* <h2>Please ensure you're signed in</h2> */}
-          <LoadingIndicator type='Circles' height={100} width={100} />
+          <LoadingIndicator type="Circles" height={100} width={100} />
         </center>
       </div>
     );
@@ -395,7 +500,11 @@ function ManagerAnalytics() {
     <div className="Cover">
       <Nav
         path="/addReport"
-        name={currentUser && currentUser.displayName ? `Welcome, ${currentUser.displayName}` : "Welcome"}
+        name={
+          currentUser && currentUser.displayName
+            ? `Welcome, ${currentUser.displayName}`
+            : "Welcome"
+        }
       />
       {!isAdmin ? (
         <div className="Analytics">
@@ -408,7 +517,7 @@ function ManagerAnalytics() {
             </div>
             {isLoading ? (
               <center>
-                <LoadingIndicator type='Rings' height={50} width={50} />
+                <LoadingIndicator type="Rings" height={50} width={50} />
               </center>
             ) : (
               <table>
@@ -488,36 +597,84 @@ function ManagerAnalytics() {
                         <div className="">
                           <div>{accFacebook.label} Facebook</div>
                         </div>
-                        <p>{totalMetricFacebook.likes}% likes</p>
-                        <p>{totalMetricFacebook.comments}% comments</p>
-                        <p>{totalMetricFacebook.shares}% shares</p>
+                        <p className="span">
+                          <span className="head">{`${numberFacebook.likes} of ${itemTotalFacebook.likes}`}</span>
+                          <span>|</span>
+                          <span>{`${totalMetricFacebook.likes}% likes`}</span>
+                        </p>
+                        <p className="span">
+                          <span className="head">{`${numberFacebook.comments} of ${itemTotalFacebook.comments}`}</span>
+                          <span>|</span>
+                          <span>{`${totalMetricFacebook.comments}% comments`}</span>
+                        </p>
+                        <p className="span">
+                          <span className="head">{`${numberFacebook.shares} of ${itemTotalFacebook.shares}`}</span>
+                          <span>|</span>
+                          <span>{`${totalMetricFacebook.shares}% shares`}</span>
+                        </p>
                       </>
                     ) : metric === "twitter" ? (
                       <>
                         <div className="">
                           <div>{accTwitter.label} Twitter</div>
                         </div>
-                        <p>{totalMetricTwitter.likes}% likes</p>
-                        <p>{totalMetricTwitter.comments}% comments</p>
-                        <p>{totalMetricTwitter.shares}% retweets</p>
+                        <p className="span">
+                          <span className="head">{`${numberTwitter.likes} of ${itemTotalTwitter.likes}`}</span>
+                          <span>|</span>
+                          <span>{`${totalMetricTwitter.likes}% likes`}</span>
+                        </p>
+                        <p className="span">
+                          <span className="head">{`${numberTwitter.comments} of ${itemTotalTwitter.comments}`}</span>
+                          <span>|</span>
+                          <span>{`${totalMetricTwitter.comments}% comments`}</span>
+                        </p>
+                        <p className="span">
+                          <span className="head">{`${numberTwitter.shares} of ${itemTotalTwitter.shares}`}</span>
+                          <span>|</span>
+                          <span>{`${totalMetricTwitter.shares}% retweets`}</span>
+                        </p>
                       </>
                     ) : metric === "instagram" ? (
                       <>
                         <div className="">
                           <div>{accInstagram.label} Instagram</div>
                         </div>
-                        <p>{totalMetricInstagram.likes}% likes</p>
-                        <p>{totalMetricInstagram.comments}% comments</p>
-                        <p>{totalMetricInstagram.saves}% saves</p>
+                        <p className="span">
+                          <span className="head">{`${numberInstagram.likes} of ${itemTotalInstagram.likes}`}</span>
+                          <span>|</span>
+                          <span>{`${totalMetricInstagram.likes}% likes`}</span>
+                        </p>
+                        <p className="span">
+                          <span className="head">{`${numberInstagram.comments} of ${itemTotalInstagram.comments}`}</span>
+                          <span>|</span>
+                          <span>{`${totalMetricInstagram.comments}% comments`}</span>
+                        </p>
+                        <p className="span">
+                          <span className="head">{`${numberInstagram.saves} of ${itemTotalInstagram.saves}`}</span>
+                          <span>|</span>
+                          <span>{`${totalMetricInstagram.saves}% saves`}</span>
+                        </p>
                       </>
                     ) : metric === "linkedin" ? (
                       <>
                         <div className="">
                           <div>{accLinkedin.label} Linkedin</div>
                         </div>
-                        <p>{totalMetricLinkedin.likes}% likes</p>
-                        <p>{totalMetricLinkedin.comments}% comments</p>
-                        <p>{totalMetricLinkedin.shares}% shares</p>
+                        <p className="span">
+                          <span className="head">{`${numberLinkedin.likes} of ${itemTotalLinkedin.likes}`}</span>
+                          <span>|</span>
+                          <span>{`${totalMetricLinkedin.likes}% likes`}</span>
+                        </p>
+                        <p className="span">
+                          <span className="head">{`${numberLinkedin.comments} of ${itemTotalLinkedin.comments}`}</span>
+                          <span>|</span>
+                          <span>{`${totalMetricLinkedin.comments}% comments`}</span>
+                        </p>
+                        <p className="span">
+                          <span className="head">{`${numberLinkedin.shares} of ${itemTotalLinkedin.shares}`}</span>
+                          <span>|</span>
+                          <span>{`${totalMetricLinkedin.shares}% shares`}</span>
+                        </p>
                       </>
                     ) : null}
                   </div>
