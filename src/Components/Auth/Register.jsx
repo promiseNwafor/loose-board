@@ -19,7 +19,7 @@ function Register() {
   const register = (e) => {
     e.preventDefault();
     if (email === "" || password === "" || password !== confirmPassword) {
-      alert("Input valid details");
+      alert("Input valid credentials");
       resetInput();
     } else {
       setLoading(true);
@@ -37,7 +37,8 @@ function Register() {
           console.log(firebase.auth().currentUser);
         })
         .catch((err) => {
-          console.error(err);
+          // console.error(err);
+          alert(err.message)
           setLoading(false);
         });
     }

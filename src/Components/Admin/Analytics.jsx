@@ -57,7 +57,16 @@ function Analytics() {
               downloads,
               views,
               followers;
-            likes = comments = reach = shares = leads = impressions = downloads = views = followers = 0;
+            likes =
+              comments =
+              reach =
+              shares =
+              leads =
+              impressions =
+              downloads =
+              views =
+              followers =
+                0;
             items.forEach((itemMetric) => {
               likes += parseInt(itemMetric.likes);
               comments += parseInt(itemMetric.comments);
@@ -72,14 +81,26 @@ function Analytics() {
             // ===============get the percentage met===============
             finalAns = {
               likes: Math.round((likes / itemTotal.likes) * 100).toFixed(0),
-              comments: Math.round((comments / itemTotal.comments) * 100).toFixed(0),
+              comments: Math.round(
+                (comments / itemTotal.comments) * 100
+              ).toFixed(0),
               shares: Math.round((shares / itemTotal.shares) * 100).toFixed(0),
               reach: Math.round((reach / itemTotal.reach) * 100).toFixed(0),
-              impressions: Math.round((impressions / itemTotal.impressions) * 100).toFixed(0),
-              leads: Math.round((leads / itemTotal.impressions) * 100).toFixed(0),
-              views: Math.round((views / itemTotal.impressions) * 100).toFixed(0),
-              downloads: Math.round((downloads / itemTotal.impressions) * 100).toFixed(0),
-              followers: Math.round((followers / itemTotal.impressions) * 100).toFixed(0),
+              impressions: Math.round(
+                (impressions / itemTotal.impressions) * 100
+              ).toFixed(0),
+              leads: Math.round((leads / itemTotal.impressions) * 100).toFixed(
+                0
+              ),
+              views: Math.round((views / itemTotal.impressions) * 100).toFixed(
+                0
+              ),
+              downloads: Math.round(
+                (downloads / itemTotal.impressions) * 100
+              ).toFixed(0),
+              followers: Math.round(
+                (followers / itemTotal.impressions) * 100
+              ).toFixed(0),
             };
             // console.log(`${likes/parseInt(itemTotal.likes)} ${itemTotal.likes} likes and ${comments} comments`)
             // console.log(finalAns)
@@ -125,7 +146,16 @@ function Analytics() {
               downloads,
               views,
               followers;
-            likes = comments = reach = shares = leads = impressions = downloads = views = followers = 0;
+            likes =
+              comments =
+              reach =
+              shares =
+              leads =
+              impressions =
+              downloads =
+              views =
+              followers =
+                0;
             items.forEach((itemMetric) => {
               likes += parseInt(itemMetric.likes);
               comments += parseInt(itemMetric.comments);
@@ -140,14 +170,26 @@ function Analytics() {
             // ===============get the percentage met===============
             finalAns = {
               likes: Math.round((likes / itemTotal.likes) * 100).toFixed(0),
-              comments: Math.round((comments / itemTotal.comments) * 100).toFixed(0),
+              comments: Math.round(
+                (comments / itemTotal.comments) * 100
+              ).toFixed(0),
               shares: Math.round((shares / itemTotal.shares) * 100).toFixed(0),
               reach: Math.round((reach / itemTotal.reach) * 100).toFixed(0),
-              impressions: Math.round((impressions / itemTotal.impressions) * 100).toFixed(0),
-              leads: Math.round((leads / itemTotal.impressions) * 100).toFixed(0),
-              views: Math.round((views / itemTotal.impressions) * 100).toFixed(0),
-              downloads: Math.round((downloads / itemTotal.impressions) * 100).toFixed(0),
-              followers: Math.round((followers / itemTotal.impressions) * 100).toFixed(0),
+              impressions: Math.round(
+                (impressions / itemTotal.impressions) * 100
+              ).toFixed(0),
+              leads: Math.round((leads / itemTotal.impressions) * 100).toFixed(
+                0
+              ),
+              views: Math.round((views / itemTotal.impressions) * 100).toFixed(
+                0
+              ),
+              downloads: Math.round(
+                (downloads / itemTotal.impressions) * 100
+              ).toFixed(0),
+              followers: Math.round(
+                (followers / itemTotal.impressions) * 100
+              ).toFixed(0),
             };
             // console.log(`${likes/parseInt(itemTotal.likes)} ${itemTotal.likes} likes and ${comments} comments`)
             // console.log(finalAns)
@@ -194,7 +236,17 @@ function Analytics() {
               views,
               saves,
               followers;
-            likes = comments = reach = shares = saves = leads = impressions = downloads = views = followers = 0;
+            likes =
+              comments =
+              reach =
+              shares =
+              saves =
+              leads =
+              impressions =
+              downloads =
+              views =
+              followers =
+                0;
             items.forEach((itemMetric) => {
               likes += parseInt(itemMetric.likes);
               comments += parseInt(itemMetric.comments);
@@ -210,15 +262,27 @@ function Analytics() {
             // ===============get the percentage met===============
             finalAns = {
               likes: Math.round((likes / itemTotal.likes) * 100).toFixed(0),
-              comments: Math.round((comments / itemTotal.comments) * 100).toFixed(0),
+              comments: Math.round(
+                (comments / itemTotal.comments) * 100
+              ).toFixed(0),
               saves: Math.round((saves / itemTotal.saves) * 100).toFixed(0),
               shares: Math.round((shares / itemTotal.shares) * 100).toFixed(0),
               reach: Math.round((reach / itemTotal.reach) * 100).toFixed(0),
-              impressions: Math.round((impressions / itemTotal.impressions) * 100).toFixed(0),
-              leads: Math.round((leads / itemTotal.impressions) * 100).toFixed(0),
-              views: Math.round((views / itemTotal.impressions) * 100).toFixed(0),
-              downloads: Math.round((downloads / itemTotal.impressions) * 100).toFixed(0),
-              followers: Math.round((followers / itemTotal.impressions) * 100).toFixed(0),
+              impressions: Math.round(
+                (impressions / itemTotal.impressions) * 100
+              ).toFixed(0),
+              leads: Math.round((leads / itemTotal.impressions) * 100).toFixed(
+                0
+              ),
+              views: Math.round((views / itemTotal.impressions) * 100).toFixed(
+                0
+              ),
+              downloads: Math.round(
+                (downloads / itemTotal.impressions) * 100
+              ).toFixed(0),
+              followers: Math.round(
+                (followers / itemTotal.impressions) * 100
+              ).toFixed(0),
             };
             // console.log(`${likes/parseInt(itemTotal.likes)} ${itemTotal.likes} likes and ${comments} comments`)
             // console.log(finalAns)
@@ -264,7 +328,16 @@ function Analytics() {
               downloads,
               views,
               followers;
-            likes = comments = reach = shares = leads = impressions = downloads = views = followers = 0;
+            likes =
+              comments =
+              reach =
+              shares =
+              leads =
+              impressions =
+              downloads =
+              views =
+              followers =
+                0;
             items.forEach((itemMetric) => {
               likes += parseInt(itemMetric.likes);
               comments += parseInt(itemMetric.comments);
@@ -279,14 +352,26 @@ function Analytics() {
             // ===============get the percentage met===============
             finalAns = {
               likes: Math.round((likes / itemTotal.likes) * 100).toFixed(0),
-              comments: Math.round((comments / itemTotal.comments) * 100).toFixed(0),
+              comments: Math.round(
+                (comments / itemTotal.comments) * 100
+              ).toFixed(0),
               shares: Math.round((shares / itemTotal.shares) * 100).toFixed(0),
               reach: Math.round((reach / itemTotal.reach) * 100).toFixed(0),
-              impressions: Math.round((impressions / itemTotal.impressions) * 100).toFixed(0),
-              leads: Math.round((leads / itemTotal.impressions) * 100).toFixed(0),
-              views: Math.round((views / itemTotal.impressions) * 100).toFixed(0),
-              downloads: Math.round((downloads / itemTotal.impressions) * 100).toFixed(0),
-              followers: Math.round((followers / itemTotal.impressions) * 100).toFixed(0),
+              impressions: Math.round(
+                (impressions / itemTotal.impressions) * 100
+              ).toFixed(0),
+              leads: Math.round((leads / itemTotal.impressions) * 100).toFixed(
+                0
+              ),
+              views: Math.round((views / itemTotal.impressions) * 100).toFixed(
+                0
+              ),
+              downloads: Math.round(
+                (downloads / itemTotal.impressions) * 100
+              ).toFixed(0),
+              followers: Math.round(
+                (followers / itemTotal.impressions) * 100
+              ).toFixed(0),
             };
             // console.log(`${likes/parseInt(itemTotal.likes)} ${itemTotal.likes} likes and ${comments} comments`)
             // console.log(finalAns)
@@ -377,7 +462,7 @@ function Analytics() {
     return (
       <div>
         <center>
-          <LoadingIndicator type='Circles' height={100} width={100} />
+          <LoadingIndicator type="Circles" height={100} width={100} />
         </center>
       </div>
     );
@@ -389,123 +474,125 @@ function Analytics() {
         name={currentUser ? `Welcome, ${currentUser.displayName}` : ""}
       />
       {isAdmin ? (
-        <div className="Analytics">
-          <div className="head displayName">
-            <h3>Welcome {currentUser.displayName}</h3>
-          </div>
-          <div className="wrap">
-            <div className="head">
-              <h3>Accounts overview</h3>
+        <div className="Wrap">
+            <div className="head displayName">
+              <h3>Welcome {currentUser.displayName}</h3>
             </div>
-            {isLoading ? (
-              <center>
-                <LoadingIndicator type='Rings' height={50} width={50} />
-              </center>
-            ) : (
-              <table>
-                <thead>
-                  <tr>
-                    <th>Account</th>
-                    <th>Handler</th>
-                    <th>Facebook</th>
-                    <th>Twitter</th>
-                    <th>Instagram</th>
-                    <th>Linkedin</th>
-                  </tr>
-                </thead>
-                {accounts.map((account) => {
-                  return (
-                    <tbody key={account.id}>
-                      <tr>
-                        <td>{account.label}</td>
-                        <td>{account.manager}</td>
-                        <td>
-                          <small
-                            onClick={() => {
-                              setMetric("facebook");
-                              setAccFacebook(account);
-                              togglePopup();
-                            }}
-                          >
-                            View
-                          </small>
-                        </td>
-                        <td>
-                          <small
-                            onClick={() => {
-                              setMetric("twitter");
-                              setAccTwitter(account);
-                              togglePopup();
-                            }}
-                          >
-                            View
-                          </small>
-                        </td>
-                        <td>
-                          <small
-                            onClick={() => {
-                              setMetric("instagram");
-                              setAccInstagram(account);
-                              togglePopup();
-                            }}
-                          >
-                            View
-                          </small>
-                        </td>
-                        <td>
-                          <small
-                            onClick={() => {
-                              setMetric("linkedin");
-                              setAccLinkedin(account);
-                              togglePopup();
-                            }}
-                          >
-                            View
-                          </small>
-                        </td>
-                      </tr>
-                    </tbody>
-                  );
-                })}
-              </table>
-            )}
-            {isOpen && (
-              <Popup
-                content={
-                  <div>
-                    <div className="head">
-                      <h3>Percentage met so far</h3>
+          <div className="Analytics">
+            <div className="wrap">
+              <div className="head">
+                <h3>Accounts overview</h3>
+              </div>
+              {isLoading ? (
+                <center>
+                  <LoadingIndicator type="Rings" height={50} width={50} />
+                </center>
+              ) : (
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Account</th>
+                      <th>Handler</th>
+                      <th>Facebook</th>
+                      <th>Twitter</th>
+                      <th>Instagram</th>
+                      <th>Linkedin</th>
+                    </tr>
+                  </thead>
+                  {accounts.map((account) => {
+                    return (
+                      <tbody key={account.id}>
+                        <tr>
+                          <td>{account.label}</td>
+                          <td>{account.manager}</td>
+                          <td>
+                            <small
+                              onClick={() => {
+                                setMetric("facebook");
+                                setAccFacebook(account);
+                                togglePopup();
+                              }}
+                            >
+                              View
+                            </small>
+                          </td>
+                          <td>
+                            <small
+                              onClick={() => {
+                                setMetric("twitter");
+                                setAccTwitter(account);
+                                togglePopup();
+                              }}
+                            >
+                              View
+                            </small>
+                          </td>
+                          <td>
+                            <small
+                              onClick={() => {
+                                setMetric("instagram");
+                                setAccInstagram(account);
+                                togglePopup();
+                              }}
+                            >
+                              View
+                            </small>
+                          </td>
+                          <td>
+                            <small
+                              onClick={() => {
+                                setMetric("linkedin");
+                                setAccLinkedin(account);
+                                togglePopup();
+                              }}
+                            >
+                              View
+                            </small>
+                          </td>
+                        </tr>
+                      </tbody>
+                    );
+                  })}
+                </table>
+              )}
+              {isOpen && (
+                <Popup
+                  content={
+                    <div>
+                      <div className="head">
+                        <h3>Percentage met so far</h3>
+                      </div>
+                      {metric === "facebook" ? (
+                        <>
+                          <p>{totalMetricFacebook.likes}% likes</p>
+                          <p>{totalMetricFacebook.comments}% comments</p>
+                          <p>{totalMetricFacebook.shares}% shares</p>
+                        </>
+                      ) : metric === "twitter" ? (
+                        <>
+                          <p>{totalMetricTwitter.likes}% likes</p>
+                          <p>{totalMetricTwitter.comments}% comments</p>
+                          <p>{totalMetricTwitter.shares}% retweets</p>
+                        </>
+                      ) : metric === "instagram" ? (
+                        <>
+                          <p>{totalMetricInstagram.likes}% likes</p>
+                          <p>{totalMetricInstagram.comments}% comments</p>
+                          <p>{totalMetricInstagram.saves}% saves</p>
+                        </>
+                      ) : metric === "linkedin" ? (
+                        <>
+                          <p>{totalMetricLinkedin.likes}% likes</p>
+                          <p>{totalMetricLinkedin.comments}% comments</p>
+                          <p>{totalMetricLinkedin.shares}% shares</p>
+                        </>
+                      ) : null}
                     </div>
-                    {metric === "facebook" ? (
-                      <>
-                        <p>{totalMetricFacebook.likes}% likes</p>
-                        <p>{totalMetricFacebook.comments}% comments</p>
-                        <p>{totalMetricFacebook.shares}% shares</p>
-                      </>
-                    ) : metric === "twitter" ? (
-                      <>
-                        <p>{totalMetricTwitter.likes}% likes</p>
-                        <p>{totalMetricTwitter.comments}% comments</p>
-                        <p>{totalMetricTwitter.shares}% retweets</p>
-                      </>
-                    ) : metric === "instagram" ? (
-                      <>
-                        <p>{totalMetricInstagram.likes}% likes</p>
-                        <p>{totalMetricInstagram.comments}% comments</p>
-                        <p>{totalMetricInstagram.saves}% saves</p>
-                      </>
-                    ) : metric === "linkedin" ? (
-                      <>
-                        <p>{totalMetricLinkedin.likes}% likes</p>
-                        <p>{totalMetricLinkedin.comments}% comments</p>
-                        <p>{totalMetricLinkedin.shares}% shares</p>
-                      </>
-                    ) : null}
-                  </div>
-                }
-                handleClose={togglePopup}
-              />
-            )}
+                  }
+                  handleClose={togglePopup}
+                />
+              )}
+            </div>
           </div>
         </div>
       ) : (

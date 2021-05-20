@@ -66,7 +66,16 @@ function ManagerAnalytics() {
               downloads,
               views,
               followers;
-            likes = comments = reach = shares = leads = impressions = downloads = views = followers = 0;
+            likes =
+              comments =
+              reach =
+              shares =
+              leads =
+              impressions =
+              downloads =
+              views =
+              followers =
+                0;
             items.forEach((itemMetric) => {
               likes += parseInt(itemMetric.likes);
               comments += parseInt(itemMetric.comments);
@@ -156,7 +165,16 @@ function ManagerAnalytics() {
               downloads,
               views,
               followers;
-            likes = comments = reach = shares = leads = impressions = downloads = views = followers = 0;
+            likes =
+              comments =
+              reach =
+              shares =
+              leads =
+              impressions =
+              downloads =
+              views =
+              followers =
+                0;
             items.forEach((itemMetric) => {
               likes += parseInt(itemMetric.likes);
               comments += parseInt(itemMetric.comments);
@@ -250,7 +268,17 @@ function ManagerAnalytics() {
               views,
               saves,
               followers;
-            likes = comments = reach = shares = saves = leads = impressions = downloads = views = followers = 0;
+            likes =
+              comments =
+              reach =
+              shares =
+              saves =
+              leads =
+              impressions =
+              downloads =
+              views =
+              followers =
+                0;
             items.forEach((itemMetric) => {
               likes += parseInt(itemMetric.likes);
               comments += parseInt(itemMetric.comments);
@@ -344,7 +372,16 @@ function ManagerAnalytics() {
               downloads,
               views,
               followers;
-            likes = comments = reach = shares = leads = impressions = downloads = views = followers = 0;
+            likes =
+              comments =
+              reach =
+              shares =
+              leads =
+              impressions =
+              downloads =
+              views =
+              followers =
+                0;
             items.forEach((itemMetric) => {
               likes += parseInt(itemMetric.likes);
               comments += parseInt(itemMetric.comments);
@@ -507,181 +544,183 @@ function ManagerAnalytics() {
         }
       />
       {!isAdmin ? (
-        <div className="Analytics">
-          <div className="head displayName">
-            <h3>Welcome {currentUser.displayName}</h3>
-          </div>
-          <div className="wrap">
-            <div className="head">
-              <h3>Here's your overview</h3>
+        <div className="Wrap">
+            <div className="head displayName">
+              <h3>Welcome {currentUser.displayName}</h3>
             </div>
-            {isLoading ? (
-              <center>
-                <LoadingIndicator type="Rings" height={50} width={50} />
-              </center>
-            ) : (
-              <table>
-                <thead>
-                  <tr>
-                    <th>Account</th>
-                    <th>Facebook</th>
-                    <th>Twitter</th>
-                    <th>Instagram</th>
-                    <th>Linkedin</th>
-                  </tr>
-                </thead>
-                {accounts.map((account) => {
-                  return (
-                    <tbody key={account.id}>
-                      <tr>
-                        <td>{account.label}</td>
-                        <td>
-                          <small
-                            onClick={() => {
-                              setMetric("facebook");
-                              setAccFacebook(account);
-                              togglePopup();
-                            }}
-                          >
-                            View
-                          </small>
-                        </td>
-                        <td>
-                          <small
-                            onClick={() => {
-                              setMetric("twitter");
-                              setAccTwitter(account);
-                              togglePopup();
-                            }}
-                          >
-                            View
-                          </small>
-                        </td>
-                        <td>
-                          <small
-                            onClick={() => {
-                              setMetric("instagram");
-                              setAccInstagram(account);
-                              togglePopup();
-                            }}
-                          >
-                            View
-                          </small>
-                        </td>
-                        <td>
-                          <small
-                            onClick={() => {
-                              setMetric("linkedin");
-                              setAccLinkedin(account);
-                              togglePopup();
-                            }}
-                          >
-                            View
-                          </small>
-                        </td>
-                      </tr>
-                    </tbody>
-                  );
-                })}
-              </table>
-            )}
-            {isOpen && (
-              <Popup
-                content={
-                  <div>
-                    <div className="head">
-                      <h3>Percentage met so far</h3>
+          <div className="Analytics">
+            <div className="wrap">
+              <div className="head">
+                <h3>Here's your overview</h3>
+              </div>
+              {isLoading ? (
+                <center>
+                  <LoadingIndicator type="Rings" height={50} width={50} />
+                </center>
+              ) : (
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Account</th>
+                      <th>Facebook</th>
+                      <th>Twitter</th>
+                      <th>Instagram</th>
+                      <th>Linkedin</th>
+                    </tr>
+                  </thead>
+                  {accounts.map((account) => {
+                    return (
+                      <tbody key={account.id}>
+                        <tr>
+                          <td>{account.label}</td>
+                          <td>
+                            <small
+                              onClick={() => {
+                                setMetric("facebook");
+                                setAccFacebook(account);
+                                togglePopup();
+                              }}
+                            >
+                              View
+                            </small>
+                          </td>
+                          <td>
+                            <small
+                              onClick={() => {
+                                setMetric("twitter");
+                                setAccTwitter(account);
+                                togglePopup();
+                              }}
+                            >
+                              View
+                            </small>
+                          </td>
+                          <td>
+                            <small
+                              onClick={() => {
+                                setMetric("instagram");
+                                setAccInstagram(account);
+                                togglePopup();
+                              }}
+                            >
+                              View
+                            </small>
+                          </td>
+                          <td>
+                            <small
+                              onClick={() => {
+                                setMetric("linkedin");
+                                setAccLinkedin(account);
+                                togglePopup();
+                              }}
+                            >
+                              View
+                            </small>
+                          </td>
+                        </tr>
+                      </tbody>
+                    );
+                  })}
+                </table>
+              )}
+              {isOpen && (
+                <Popup
+                  content={
+                    <div>
+                      <div className="head">
+                        <h3>Percentage met so far</h3>
+                      </div>
+                      {metric === "facebook" ? (
+                        <>
+                          <div className="">
+                            <div>{accFacebook.label} Facebook</div>
+                          </div>
+                          <p className="span">
+                            <span className="head">{`${numberFacebook.likes} of ${itemTotalFacebook.likes}`}</span>
+                            <span>|</span>
+                            <span>{`${totalMetricFacebook.likes}% likes`}</span>
+                          </p>
+                          <p className="span">
+                            <span className="head">{`${numberFacebook.comments} of ${itemTotalFacebook.comments}`}</span>
+                            <span>|</span>
+                            <span>{`${totalMetricFacebook.comments}% comments`}</span>
+                          </p>
+                          <p className="span">
+                            <span className="head">{`${numberFacebook.shares} of ${itemTotalFacebook.shares}`}</span>
+                            <span>|</span>
+                            <span>{`${totalMetricFacebook.shares}% shares`}</span>
+                          </p>
+                        </>
+                      ) : metric === "twitter" ? (
+                        <>
+                          <div className="">
+                            <div>{accTwitter.label} Twitter</div>
+                          </div>
+                          <p className="span">
+                            <span className="head">{`${numberTwitter.likes} of ${itemTotalTwitter.likes}`}</span>
+                            <span>|</span>
+                            <span>{`${totalMetricTwitter.likes}% likes`}</span>
+                          </p>
+                          <p className="span">
+                            <span className="head">{`${numberTwitter.comments} of ${itemTotalTwitter.comments}`}</span>
+                            <span>|</span>
+                            <span>{`${totalMetricTwitter.comments}% comments`}</span>
+                          </p>
+                          <p className="span">
+                            <span className="head">{`${numberTwitter.shares} of ${itemTotalTwitter.shares}`}</span>
+                            <span>|</span>
+                            <span>{`${totalMetricTwitter.shares}% retweets`}</span>
+                          </p>
+                        </>
+                      ) : metric === "instagram" ? (
+                        <>
+                          <div className="">
+                            <div>{accInstagram.label} Instagram</div>
+                          </div>
+                          <p className="span">
+                            <span className="head">{`${numberInstagram.likes} of ${itemTotalInstagram.likes}`}</span>
+                            <span>|</span>
+                            <span>{`${totalMetricInstagram.likes}% likes`}</span>
+                          </p>
+                          <p className="span">
+                            <span className="head">{`${numberInstagram.comments} of ${itemTotalInstagram.comments}`}</span>
+                            <span>|</span>
+                            <span>{`${totalMetricInstagram.comments}% comments`}</span>
+                          </p>
+                          <p className="span">
+                            <span className="head">{`${numberInstagram.saves} of ${itemTotalInstagram.saves}`}</span>
+                            <span>|</span>
+                            <span>{`${totalMetricInstagram.saves}% saves`}</span>
+                          </p>
+                        </>
+                      ) : metric === "linkedin" ? (
+                        <>
+                          <div className="">
+                            <div>{accLinkedin.label} Linkedin</div>
+                          </div>
+                          <p className="span">
+                            <span className="head">{`${numberLinkedin.likes} of ${itemTotalLinkedin.likes}`}</span>
+                            <span>|</span>
+                            <span>{`${totalMetricLinkedin.likes}% likes`}</span>
+                          </p>
+                          <p className="span">
+                            <span className="head">{`${numberLinkedin.comments} of ${itemTotalLinkedin.comments}`}</span>
+                            <span>|</span>
+                            <span>{`${totalMetricLinkedin.comments}% comments`}</span>
+                          </p>
+                          <p className="span">
+                            <span className="head">{`${numberLinkedin.shares} of ${itemTotalLinkedin.shares}`}</span>
+                            <span>|</span>
+                            <span>{`${totalMetricLinkedin.shares}% shares`}</span>
+                          </p>
+                        </>
+                      ) : null}
                     </div>
-                    {metric === "facebook" ? (
-                      <>
-                        <div className="">
-                          <div>{accFacebook.label} Facebook</div>
-                        </div>
-                        <p className="span">
-                          <span className="head">{`${numberFacebook.likes} of ${itemTotalFacebook.likes}`}</span>
-                          <span>|</span>
-                          <span>{`${totalMetricFacebook.likes}% likes`}</span>
-                        </p>
-                        <p className="span">
-                          <span className="head">{`${numberFacebook.comments} of ${itemTotalFacebook.comments}`}</span>
-                          <span>|</span>
-                          <span>{`${totalMetricFacebook.comments}% comments`}</span>
-                        </p>
-                        <p className="span">
-                          <span className="head">{`${numberFacebook.shares} of ${itemTotalFacebook.shares}`}</span>
-                          <span>|</span>
-                          <span>{`${totalMetricFacebook.shares}% shares`}</span>
-                        </p>
-                      </>
-                    ) : metric === "twitter" ? (
-                      <>
-                        <div className="">
-                          <div>{accTwitter.label} Twitter</div>
-                        </div>
-                        <p className="span">
-                          <span className="head">{`${numberTwitter.likes} of ${itemTotalTwitter.likes}`}</span>
-                          <span>|</span>
-                          <span>{`${totalMetricTwitter.likes}% likes`}</span>
-                        </p>
-                        <p className="span">
-                          <span className="head">{`${numberTwitter.comments} of ${itemTotalTwitter.comments}`}</span>
-                          <span>|</span>
-                          <span>{`${totalMetricTwitter.comments}% comments`}</span>
-                        </p>
-                        <p className="span">
-                          <span className="head">{`${numberTwitter.shares} of ${itemTotalTwitter.shares}`}</span>
-                          <span>|</span>
-                          <span>{`${totalMetricTwitter.shares}% retweets`}</span>
-                        </p>
-                      </>
-                    ) : metric === "instagram" ? (
-                      <>
-                        <div className="">
-                          <div>{accInstagram.label} Instagram</div>
-                        </div>
-                        <p className="span">
-                          <span className="head">{`${numberInstagram.likes} of ${itemTotalInstagram.likes}`}</span>
-                          <span>|</span>
-                          <span>{`${totalMetricInstagram.likes}% likes`}</span>
-                        </p>
-                        <p className="span">
-                          <span className="head">{`${numberInstagram.comments} of ${itemTotalInstagram.comments}`}</span>
-                          <span>|</span>
-                          <span>{`${totalMetricInstagram.comments}% comments`}</span>
-                        </p>
-                        <p className="span">
-                          <span className="head">{`${numberInstagram.saves} of ${itemTotalInstagram.saves}`}</span>
-                          <span>|</span>
-                          <span>{`${totalMetricInstagram.saves}% saves`}</span>
-                        </p>
-                      </>
-                    ) : metric === "linkedin" ? (
-                      <>
-                        <div className="">
-                          <div>{accLinkedin.label} Linkedin</div>
-                        </div>
-                        <p className="span">
-                          <span className="head">{`${numberLinkedin.likes} of ${itemTotalLinkedin.likes}`}</span>
-                          <span>|</span>
-                          <span>{`${totalMetricLinkedin.likes}% likes`}</span>
-                        </p>
-                        <p className="span">
-                          <span className="head">{`${numberLinkedin.comments} of ${itemTotalLinkedin.comments}`}</span>
-                          <span>|</span>
-                          <span>{`${totalMetricLinkedin.comments}% comments`}</span>
-                        </p>
-                        <p className="span">
-                          <span className="head">{`${numberLinkedin.shares} of ${itemTotalLinkedin.shares}`}</span>
-                          <span>|</span>
-                          <span>{`${totalMetricLinkedin.shares}% shares`}</span>
-                        </p>
-                      </>
-                    ) : null}
-                  </div>
-                }
-                handleClose={togglePopup}
-              />
-            )}
+                  }
+                  handleClose={togglePopup}
+                />
+              )}
+            </div>
           </div>
         </div>
       ) : (

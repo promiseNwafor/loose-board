@@ -12,14 +12,18 @@
     padding-top: 3rem;
 }
 
-.AddAccount .head, .Analytics .head{
+.AddAccount .head, .Wrap .head{
     display: flex;
     justify-content: center;
     color: #0c63e6;
 }
 
-.Analytics .head{
+.Wrap .head{
     justify-content: flex-start;
+}
+
+.Wrap .displayName{
+    background: #efefef;
 }
 
 .AddAccount .wrap, .Analytics .wrap{
@@ -32,7 +36,7 @@
 
 .Analytics .wrap{
     min-width: 800px;
-    padding: 3rem
+    padding: 3rem;
 }
 
 table{
@@ -107,11 +111,12 @@ button{
         padding: 0.5rem 0.1rem;
         border-radius: 30px;
     }
-    /* .addMore{
-    } */
   }
 
 @media screen and (max-width: 520px) {
+    .AddAccount, .Analytics{
+        padding-top: 1rem;
+    }
     .AddAccount .wrap{
         width: 85%;
         padding: 2rem;
@@ -119,11 +124,6 @@ button{
     .AddAccount input{
         width: 90%;
     }
-    
-    /* .Btn{ */
-        /* padding: 0.5rem 0.3rem; */
-        /* border-radius: 30px; */
-    /* } */
   }
 
 

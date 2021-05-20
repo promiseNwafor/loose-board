@@ -33,7 +33,8 @@ function Login() {
         })
         .catch((err) => {
           setLoading(false);
-          console.error(err);
+          alert(err.message)
+          // console.error(err);
         });
     }
     // setLoading(false);

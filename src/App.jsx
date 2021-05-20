@@ -47,6 +47,8 @@ function App() {
       .doc(newAccount.id)
       .set(newAccount)
       .catch((err) => {
+        alert(err);
+        setLoading(false);
         console.log(err);
       })
       .then(() => {
@@ -66,6 +68,8 @@ function App() {
       .set(newAccount)
       .catch((err) => {
         console.log(err);
+        alert(err);
+        setLoading(false);
       })
       .then(() => {
         setLoading(false);
@@ -84,6 +88,8 @@ function App() {
       .set(newAccount)
       .catch((err) => {
         console.log(err);
+        alert(err);
+        setLoading(false);
       })
       .then(() => {
         setLoading(false);
@@ -102,6 +108,8 @@ function App() {
       .set(newAccount)
       .catch((err) => {
         console.log(err);
+        alert(err);
+        setLoading(false);
       })
       .then(() => {
         setLoading(false);
@@ -123,6 +131,8 @@ function App() {
             .update(newAccount)
             .catch((err) => {
               console.log(err);
+              alert(err);
+              setLoading(false);
             })
             .then(() => {
               setLoading(false);
@@ -135,6 +145,8 @@ function App() {
             .set(newAccount)
             .catch((err) => {
               console.log(err);
+              alert(err);
+              setLoading(false)
             })
             .then(() => {
               setLoading(false);
@@ -212,7 +224,7 @@ function App() {
         ? setIsAdmin(true)
         : setIsAdmin(false)
       : console.log("no currentUser");
-      // console.log(currentUser);
+    // console.log(currentUser);
   }, [currentUser, isAdmin, locale]);
 
   useEffect(() => {
@@ -225,7 +237,8 @@ function App() {
     var second = 0;
     var atSix = new Date(year, month, day, hour, minute, second);
     var positiveDifference = atSix.getTime() - currentTime.getTime();
-    var negativeDifference = 86400000 - (currentTime.getTime() - atSix.getTime());
+    var negativeDifference =
+      86400000 - (currentTime.getTime() - atSix.getTime());
     var delay =
       atSix.getTime() > currentTime.getTime()
         ? positiveDifference
@@ -246,8 +259,8 @@ function App() {
   }, [currentUser, isAdmin, isWeekend]);
 
   useEffect(() => {
-    var day = new Date().getDay()
-    setIsWeekend((day === 6) || (day  === 0))
+    var day = new Date().getDay();
+    setIsWeekend(day === 6 || day === 0);
     // console.log(isWeekend);
   }, [isWeekend]);
 
