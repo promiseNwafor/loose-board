@@ -78,9 +78,9 @@ function AddReport() {
     today =
       date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
 
-  const handleBtnClick = () => {
+  const handleBtnClick = async () => {
     if (platform !== "" && platform.value !== "" && accountName !== "") {
-      addToFacebook(accountName.label, {
+      await addToFacebook(`${accountName.label}-${currentUser.displayName}`, {
         id: reportDate !== "" ? reportDate : today,
         likes: parseInt(likesFb),
         comments: parseInt(commentsFb),
@@ -93,7 +93,7 @@ function AddReport() {
         downloads: parseInt(downloadsFb),
         posts: postNoFb,
       });
-      addToTwitter(accountName.label, {
+      await addToTwitter(`${accountName.label}-${currentUser.displayName}`, {
         id: reportDate !== "" ? reportDate : today,
         likes: parseInt(likesTw),
         comments: parseInt(commentsTw),
@@ -106,7 +106,7 @@ function AddReport() {
         downloads: parseInt(downloadsTw),
         posts: postNoTw,
       });
-      addToInstagram(accountName.label, {
+      await addToInstagram(`${accountName.label}-${currentUser.displayName}`, {
         id: reportDate !== "" ? reportDate : today,
         likes: parseInt(likesIg),
         comments: parseInt(commentsIg),
@@ -120,7 +120,7 @@ function AddReport() {
         downloads: parseInt(downloadsIg),
         posts: postNoIg,
       });
-      addToLinkedin(accountName.label, {
+      await addToLinkedin(`${accountName.label}-${currentUser.displayName}`, {
         id: reportDate !== "" ? reportDate : today,
         likes: parseInt(likesLn),
         comments: parseInt(commentsLn),

@@ -34,7 +34,7 @@ function ManagerAnalytics() {
   const viewFacebook = async (account) => {
     // ===============set the assigned target metrics===============
     var itemTotal;
-    accountsRef.doc(account.label).onSnapshot((querySnapshot) => {
+    accountsRef.doc(`${account.label}-${currentUser.displayName}`).onSnapshot((querySnapshot) => {
       itemTotal = querySnapshot.data().facebook;
       setItemTotalFacebook(itemTotal);
       // console.log(itemTotal);
@@ -43,7 +43,7 @@ function ManagerAnalytics() {
     const items = [];
     accounts.length > 0
       ? accountsRef
-          .doc(account.label)
+          .doc(`${account.label}-${currentUser.displayName}`)
           .collection("facebook")
           .get()
           .then((response) => {
@@ -100,25 +100,33 @@ function ManagerAnalytics() {
             });
             // ===============get the percentage met===============
             finalAns = {
-              likes: Math.round((likes / itemTotal.likes) * 100).toFixed(0),
-              comments: Math.round(
-                (comments / itemTotal.comments) * 100
-              ).toFixed(0),
-              shares: Math.round((shares / itemTotal.shares) * 100).toFixed(0),
-              reach: Math.round((reach / itemTotal.reach) * 100).toFixed(0),
-              impressions: Math.round(
+              likes: itemTotal.likes < 1 ? 0
+              : Math.round((likes / itemTotal.likes) * 100).toFixed(0),
+              // comments
+              comments: itemTotal.comments < 1 ? 0 
+              : Math.round((comments / itemTotal.comments) * 100).toFixed(0),
+              // shares
+              shares: itemTotal.shares < 1 ? 0 : Math.round((shares / itemTotal.shares) * 100).toFixed(0),
+              // reach
+              reach: itemTotal.reach < 1 ? 0 : Math.round((reach / itemTotal.reach) * 100).toFixed(0),
+              // impressions
+              impressions: itemTotal.impressions < 1 ? 0 : Math.round(
                 (impressions / itemTotal.impressions) * 100
               ).toFixed(0),
-              leads: Math.round((leads / itemTotal.impressions) * 100).toFixed(
+              // leads
+              leads: itemTotal.leads < 1 ? 0 : Math.round((leads / itemTotal.impressions) * 100).toFixed(
                 0
               ),
-              views: Math.round((views / itemTotal.impressions) * 100).toFixed(
+              // views
+              views: itemTotal.views < 1 ? 0 : Math.round((views / itemTotal.impressions) * 100).toFixed(
                 0
               ),
-              downloads: Math.round(
+              // downloads
+              downloads: itemTotal.downloads < 1 ? 0 : Math.round(
                 (downloads / itemTotal.impressions) * 100
               ).toFixed(0),
-              followers: Math.round(
+              // followers
+              followers: itemTotal.shares < 1 ? 0 : Math.round(
                 (followers / itemTotal.impressions) * 100
               ).toFixed(0),
             };
@@ -134,15 +142,16 @@ function ManagerAnalytics() {
   const viewTwitter = async (account) => {
     // ===============set the assigned target metrics===============
     var itemTotal;
-    accountsRef.doc(account.label).onSnapshot((querySnapshot) => {
+    accountsRef.doc(`${account.label}-${currentUser.displayName}`).onSnapshot((querySnapshot) => {
       itemTotal = querySnapshot.data().twitter;
       setItemTotalTwitter(itemTotal);
+      // console.log(itemTotal);
     });
     var finalAns;
     const items = [];
     accounts.length > 0
       ? accountsRef
-          .doc(account.label)
+          .doc(`${account.label}-${currentUser.displayName}`)
           .collection("twitter")
           .get()
           .then((response) => {
@@ -199,27 +208,33 @@ function ManagerAnalytics() {
             });
             // ===============get the percentage met===============
             finalAns = {
-              likes: Math.round(
-                (likes / parseInt(itemTotal.likes)) * 100
-              ).toFixed(0),
-              comments: Math.round(
-                (comments / parseInt(itemTotal.comments)) * 100
-              ).toFixed(0),
-              shares: Math.round((shares / itemTotal.shares) * 100).toFixed(0),
-              reach: Math.round((reach / itemTotal.reach) * 100).toFixed(0),
-              impressions: Math.round(
+              likes: itemTotal.likes < 1 ? 0
+              : Math.round((likes / itemTotal.likes) * 100).toFixed(0),
+              // comments
+              comments: itemTotal.comments < 1 ? 0 
+              : Math.round((comments / itemTotal.comments) * 100).toFixed(0),
+              // shares
+              shares: itemTotal.shares < 1 ? 0 : Math.round((shares / itemTotal.shares) * 100).toFixed(0),
+              // reach
+              reach: itemTotal.reach < 1 ? 0 : Math.round((reach / itemTotal.reach) * 100).toFixed(0),
+              // impressions
+              impressions: itemTotal.impressions < 1 ? 0 : Math.round(
                 (impressions / itemTotal.impressions) * 100
               ).toFixed(0),
-              leads: Math.round((leads / itemTotal.impressions) * 100).toFixed(
+              // leads
+              leads: itemTotal.leads < 1 ? 0 : Math.round((leads / itemTotal.impressions) * 100).toFixed(
                 0
               ),
-              views: Math.round((views / itemTotal.impressions) * 100).toFixed(
+              // views
+              views: itemTotal.views < 1 ? 0 : Math.round((views / itemTotal.impressions) * 100).toFixed(
                 0
               ),
-              downloads: Math.round(
+              // downloads
+              downloads: itemTotal.downloads < 1 ? 0 : Math.round(
                 (downloads / itemTotal.impressions) * 100
               ).toFixed(0),
-              followers: Math.round(
+              // followers
+              followers: itemTotal.shares < 1 ? 0 : Math.round(
                 (followers / itemTotal.impressions) * 100
               ).toFixed(0),
             };
@@ -236,7 +251,7 @@ function ManagerAnalytics() {
   const viewInstagram = async (account) => {
     // ===============set the assigned target metrics===============
     var itemTotal;
-    accountsRef.doc(account.label).onSnapshot((querySnapshot) => {
+    accountsRef.doc(`${account.label}-${currentUser.displayName}`).onSnapshot((querySnapshot) => {
       itemTotal = querySnapshot.data().instagram;
       setItemTotalInstagram(itemTotal);
     });
@@ -244,7 +259,7 @@ function ManagerAnalytics() {
     const items = [];
     accounts.length > 0
       ? accountsRef
-          .doc(account.label)
+          .doc(`${account.label}-${currentUser.displayName}`)
           .collection("instagram")
           .get()
           .then((response) => {
@@ -305,26 +320,35 @@ function ManagerAnalytics() {
             });
             // ===============get the percentage met===============
             finalAns = {
-              likes: Math.round((likes / itemTotal.likes) * 100).toFixed(0),
-              comments: Math.round(
-                (comments / itemTotal.comments) * 100
-              ).toFixed(0),
-              saves: Math.round((saves / itemTotal.saves) * 100).toFixed(0),
-              shares: Math.round((shares / itemTotal.shares) * 100).toFixed(0),
-              reach: Math.round((reach / itemTotal.reach) * 100).toFixed(0),
-              impressions: Math.round(
+              likes: itemTotal.likes < 1 ? 0
+              : Math.round((likes / itemTotal.likes) * 100).toFixed(0),
+              // comments
+              comments: itemTotal.comments < 1 ? 0 
+              : Math.round((comments / itemTotal.comments) * 100).toFixed(0),
+              // shares
+              shares: itemTotal.shares < 1 ? 0 : Math.round((shares / itemTotal.shares) * 100).toFixed(0),
+            //  saves
+              saves: itemTotal.saves < 1 ? 0 : Math.round((saves / itemTotal.saves) * 100).toFixed(0),
+              // reach
+              reach: itemTotal.reach < 1 ? 0 : Math.round((reach / itemTotal.reach) * 100).toFixed(0),
+              // impressions
+              impressions: itemTotal.impressions < 1 ? 0 : Math.round(
                 (impressions / itemTotal.impressions) * 100
               ).toFixed(0),
-              leads: Math.round((leads / itemTotal.impressions) * 100).toFixed(
+              // leads
+              leads: itemTotal.leads < 1 ? 0 : Math.round((leads / itemTotal.impressions) * 100).toFixed(
                 0
               ),
-              views: Math.round((views / itemTotal.impressions) * 100).toFixed(
+              // views
+              views: itemTotal.views < 1 ? 0 : Math.round((views / itemTotal.impressions) * 100).toFixed(
                 0
               ),
-              downloads: Math.round(
+              // downloads
+              downloads: itemTotal.downloads < 1 ? 0 : Math.round(
                 (downloads / itemTotal.impressions) * 100
               ).toFixed(0),
-              followers: Math.round(
+              // followers
+              followers: itemTotal.shares < 1 ? 0 : Math.round(
                 (followers / itemTotal.impressions) * 100
               ).toFixed(0),
             };
@@ -341,7 +365,7 @@ function ManagerAnalytics() {
   const viewLinkedin = async (account) => {
     // ===============set the assigned target metrics===============
     var itemTotal;
-    accountsRef.doc(account.label).onSnapshot((querySnapshot) => {
+    accountsRef.doc(`${account.label}-${currentUser.displayName}`).onSnapshot((querySnapshot) => {
       itemTotal = querySnapshot.data().linkedin;
       setItemTotalLinkedin(itemTotal);
     });
@@ -349,7 +373,7 @@ function ManagerAnalytics() {
     const items = [];
     accounts.length > 0
       ? accountsRef
-          .doc(account.label)
+          .doc(`${account.label}-${currentUser.displayName}`)
           .collection("linkedin")
           .get()
           .then((response) => {
@@ -406,25 +430,33 @@ function ManagerAnalytics() {
             });
             // ===============get the percentage met===============
             finalAns = {
-              likes: Math.round((likes / itemTotal.likes) * 100).toFixed(0),
-              comments: Math.round(
-                (comments / itemTotal.comments) * 100
-              ).toFixed(0),
-              shares: Math.round((shares / itemTotal.shares) * 100).toFixed(0),
-              reach: Math.round((reach / itemTotal.reach) * 100).toFixed(0),
-              impressions: Math.round(
+              likes: itemTotal.likes < 1 ? 0
+              : Math.round((likes / itemTotal.likes) * 100).toFixed(0),
+              // comments
+              comments: itemTotal.comments < 1 ? 0 
+              : Math.round((comments / itemTotal.comments) * 100).toFixed(0),
+              // shares
+              shares: itemTotal.shares < 1 ? 0 : Math.round((shares / itemTotal.shares) * 100).toFixed(0),
+              // reach
+              reach: itemTotal.reach < 1 ? 0 : Math.round((reach / itemTotal.reach) * 100).toFixed(0),
+              // impressions
+              impressions: itemTotal.impressions < 1 ? 0 : Math.round(
                 (impressions / itemTotal.impressions) * 100
               ).toFixed(0),
-              leads: Math.round((leads / itemTotal.impressions) * 100).toFixed(
+              // leads
+              leads: itemTotal.leads < 1 ? 0 : Math.round((leads / itemTotal.impressions) * 100).toFixed(
                 0
               ),
-              views: Math.round((views / itemTotal.impressions) * 100).toFixed(
+              // views
+              views: itemTotal.views < 1 ? 0 : Math.round((views / itemTotal.impressions) * 100).toFixed(
                 0
               ),
-              downloads: Math.round(
+              // downloads
+              downloads: itemTotal.downloads < 1 ? 0 : Math.round(
                 (downloads / itemTotal.impressions) * 100
               ).toFixed(0),
-              followers: Math.round(
+              // followers
+              followers: itemTotal.shares < 1 ? 0 : Math.round(
                 (followers / itemTotal.impressions) * 100
               ).toFixed(0),
             };

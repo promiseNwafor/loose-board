@@ -21,6 +21,7 @@ function App() {
   const [accounts, setAccounts] = useState([]);
   const [currentUser, setCurrentUser] = useState(null);
   const [isWeekend, setIsWeekend] = useState(false);
+
   const setAuthScreen = () => {
     localStorage.setItem("isLogged", "true");
     localStorage.setItem("isRegistered", "true");
@@ -53,8 +54,8 @@ function App() {
       })
       .then(() => {
         setLoading(false);
-        alert("Report added");
-        console.log(newAccount);
+        // alert("Report added");
+        // console.log(newAccount);
       });
     // setLoading(false);
   };
@@ -93,8 +94,9 @@ function App() {
       })
       .then(() => {
         setLoading(false);
-        // alert("Report added");
-        console.log(newAccount);
+        alert("Report added");
+        window.location.pathname = "/";
+        // console.log(newAccount);
       });
     // setLoading(false);
   };
@@ -119,6 +121,18 @@ function App() {
     // setLoading(false);
   };
 
+  const addUser = (newUser) => {
+    firebase
+      .firestore()
+      .collection("users")
+      .doc(newUser.id)
+      .set(newUser)
+      .then(() => {
+        // console.log(newUser)
+      })
+      .catch((err) => console.log(err));
+  };
+
   const handleAddAccount = (newAccount) => {
     setLoading(true);
     accountsRef
@@ -137,7 +151,7 @@ function App() {
             .then(() => {
               setLoading(false);
               alert("Account added");
-              console.log(newAccount);
+              window.location.pathname = "/";
             });
         } else {
           accountsRef
@@ -146,12 +160,13 @@ function App() {
             .catch((err) => {
               console.log(err);
               alert(err);
-              setLoading(false)
+              setLoading(false);
             })
             .then(() => {
               setLoading(false);
               alert("Account added");
-              console.log(newAccount);
+              window.location.pathname = "/";
+              // console.log(newAccount);
             });
         }
       });
@@ -189,16 +204,17 @@ function App() {
       "service_leolhdo",
       "template_dqdqsfn",
       {
-        from_name: "Loosebot",
+        from_name: "Loose Board bot",
         to_name: currentUser.displayName,
         to_email: currentUser.email,
-        message: "It's time for your daily report,<br/><b> Ensure to do so</b>",
+        message: "It's time for your daily report, Ensure to do so",
         reply_to: "",
       },
       "user_TcK80igUFauKfN3Gqb1QS"
     )
       .then((response) => {
         console.log("SUCCESS!", response.status, response.text);
+        setIsWeekend(isWeekend);
       })
       .catch((err) => {
         console.log("FAILED...", err);
@@ -218,7 +234,7 @@ function App() {
         currentUser.email.includes("ized") ||
         currentUser.email.includes("kemi") ||
         currentUser.email.includes("charles") ||
-        currentUser.email.includes("elizabeth") ||
+        currentUser.email.includes("ughoro") ||
         currentUser.email.includes("joan") ||
         currentUser.email.includes("mobola")
         ? setIsAdmin(true)
@@ -244,12 +260,13 @@ function App() {
         ? positiveDifference
         : negativeDifference;
 
-    // console.log(atSix.getTime(), currentTime.getTime());
-    // console.log(atSix.getTime() - currentTime.getTime());
+    // console.log(atSix);
     // console.log(delay);
+
     // 86400000 milliseconds in 1 day
 
-    const handleInterval = () => setInterval(handleSendEmail, 86400000);
+    const handleInterval = () =>
+      setInterval(handleSendEmail, 86400000, handleSendEmail);
 
     currentUser && !isAdmin && !isWeekend
       ? setTimeout(() => {
@@ -264,10 +281,7 @@ function App() {
     // console.log(isWeekend);
   }, [isWeekend]);
 
-  useEffect(() => {
-    // console.log(currentUser);
-    // console.log(locale);
-  }, [loading, isAdmin]);
+  useEffect(() => {}, [loading, isAdmin]);
 
   return (
     <AuthContext.Provider
@@ -287,7 +301,7 @@ function App() {
         accounts,
       }}
     >
-      <AuthScreen.Provider value={{ setAuthScreen, setIsLogged }}>
+      <AuthScreen.Provider value={{ setAuthScreen, setIsLogged, addUser }}>
         <Router>
           <div className="App">
             <Switch>

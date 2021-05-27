@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import firebase from "../../lib/firebase";
 import { AuthScreen } from "../../App";
 import "./auth.css";
@@ -9,12 +9,25 @@ function Register() {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [isAdmin, setIsAdmin] = useState(false);
   const [loading, setLoading] = useState(false);
   const [confirmPassword, setConfirmPassword] = useState("");
   const [passwordShown, setPasswordShown] = useState(false);
 
   const setIsRegister = useContext(SetIsRegister);
-  const { setAuthScreen } = useContext(AuthScreen);
+  const { setAuthScreen, addUser } = useContext(AuthScreen);
+
+  const admin = () => {
+    email.includes("seun") ||
+    email.includes("ized") ||
+    email.includes("kemi") ||
+    email.includes("charles") ||
+    email.includes("ughoro") ||
+    email.includes("joan") ||
+    email.includes("mobola")
+      ? setIsAdmin(true)
+      : setIsAdmin(false);
+  };
 
   const register = (e) => {
     e.preventDefault();
@@ -28,17 +41,21 @@ function Register() {
         .createUserWithEmailAndPassword(email, password)
         .then(() => {
           firebase.auth().currentUser.updateProfile({ displayName: username });
+          setUsername(username);
+        })
+        .then(() => {
+          addUser({ email: email, value: username, label: username, id: email, isAdmin });
+          // console.log(username);
         })
         .then(() => {
           setAuthScreen();
           setLoading(false);
           resetInput();
           // window.location.pathname = "/";
-          console.log(firebase.auth().currentUser);
         })
         .catch((err) => {
           // console.error(err);
-          alert(err.message)
+          alert(err.message);
           setLoading(false);
         });
     }
@@ -55,6 +72,13 @@ function Register() {
   const togglePasswordVisiblity = () => {
     setPasswordShown(passwordShown ? false : true);
   };
+
+  useEffect(() => {
+  }, [username]);
+
+  useEffect(() => {
+    admin()
+  }, [email, isAdmin]);
 
   return (
     <div className="Register">

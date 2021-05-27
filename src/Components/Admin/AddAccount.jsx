@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
+import firebase from "../../lib/firebase";
 import Select from "react-select";
 import { AuthContext } from "../../App";
 import Nav from "../Nav";
@@ -6,12 +7,12 @@ import "./admin.css";
 import LoadingIndicator from "../LoadingIndicator";
 
 function AddAccount() {
-  const { handleAddAccount, loading, currentUser, isAdmin } = useContext(
-    AuthContext
-  );
+  const { handleAddAccount, loading, currentUser, isAdmin } =
+    useContext(AuthContext);
   const [accountName, setAccountName] = useState("");
   const [manager, setManager] = useState("");
   const [platform, setPlatform] = useState("");
+  const [managers, setManagers] = useState("");
   const [platformFb, setPlatformFb] = useState(false);
   const [platformTw, setPlatformTw] = useState(false);
   const [platformIg, setPlatformIg] = useState(false);
@@ -66,15 +67,18 @@ function AddAccount() {
   // const [followers, setFollowers] = useState(0);
   // const [reach, setReach] = useState(0);
 
-  const managers = [
-    { value: "Ramsey", label: "Ramsey" },
-    { value: "Ayomide", label: "Ayomide" },
-    { value: "Janelle", label: "Janelle" },
-    { value: "Chucks", label: "Chucks" },
-    { value: "Tiwalade", label: "Tiwalade" },
-    { value: "Gift", label: "Gift" },
-    { value: "Iyimide", label: "Iyimide" },
-  ];
+  const getManagers = firebase
+    .firestore()
+    .collection("users")
+    .where("isAdmin", "==", false)
+    .onSnapshot((querySnapshot) => {
+      const items = [];
+      querySnapshot.forEach((doc) => {
+        items.push(doc.data());
+      });
+      setManagers(items);
+    });
+
   const platforms = [
     { value: "facebook", label: "facebook" },
     { value: "twitter", label: "twitter" },
@@ -95,10 +99,8 @@ function AddAccount() {
 
   const handleBtnClick = () => {
     if (platform !== "" || accountName !== "") {
-      // switch (platform.value) {
-      //   case "facebook":
       handleAddAccount({
-        id: accountName,
+        id: `${accountName}-${manager.value}`,
         label: accountName,
         manager: manager.value,
         date: day,
@@ -148,68 +150,6 @@ function AddAccount() {
           downloads: parseInt(downloadsLn),
         },
       });
-      //   break;
-      // case "twitter":
-      //   handleAddAccount({
-      //     id: accountName,
-      //     label: accountName,
-      //     manager: manager.value,
-      //     date: day,
-      //     twitter: {
-      //       likes: parseInt(likes),
-      //       comments: parseInt(comments),
-      //       reach: parseInt(reach),
-      //       shares: parseInt(shares),
-      //       leads: parseInt(leads),
-      //       views: parseInt(views),
-      //       impressions: parseInt(impressions),
-      //       followers: parseInt(followers),
-      //       downloads: parseInt(downloads),
-      //     },
-      //   });
-      //   break;
-      // case "instagram":
-      //   handleAddAccount({
-      //     id: accountName,
-      //     label: accountName,
-      //     manager: manager.value,
-      //     date: day,
-      //     instagram: {
-      //       likes: parseInt(likes),
-      //       comments: parseInt(comments),
-      //       saves: parseInt(saves),
-      //       reach: parseInt(reach),
-      //       shares: parseInt(shares),
-      //       leads: parseInt(leads),
-      //       views: parseInt(views),
-      //       impressions: parseInt(impressions),
-      //       followers: parseInt(followers),
-      //       downloads: parseInt(downloads),
-      //     },
-      //   });
-      //   break;
-      // case "linkedin":
-      //   handleAddAccount({
-      //     id: accountName,
-      //     label: accountName,
-      //     manager: manager.value,
-      //     date: day,
-      //     linkedin: {
-      //       likes: parseInt(likes),
-      //       comments: parseInt(comments),
-      //       reach: parseInt(reach),
-      //       shares: parseInt(shares),
-      //       leads: parseInt(leads),
-      //       views: parseInt(views),
-      //       impressions: parseInt(impressions),
-      //       followers: parseInt(followers),
-      //       downloads: parseInt(downloads),
-      //     },
-      //   });
-      //   break;
-      // default:
-      //   return;
-      // }
     }
   };
 
@@ -224,6 +164,10 @@ function AddAccount() {
   useEffect(() => {
     // console.log(platform.value);
   }, [platform]);
+
+  useEffect(() => {
+    getManagers()
+  }, [])
 
   const showFacebook = (
     <div className="input">
@@ -339,12 +283,7 @@ function AddAccount() {
         placeholder="Comments"
         type="number"
       />
-      <input
-        onChange={(e) => setSaves(e.target.value)}
-        placeholder="Saves"
-        type="number"
-        required
-      />
+      
       <input
         onChange={(e) => setSharesIg(e.target.value)}
         placeholder="Shares"
@@ -357,8 +296,8 @@ function AddAccount() {
         type="number"
       />
       <input
-        onChange={(e) => setImpressionsIg(e.target.value)}
-        placeholder="Impressions"
+        onChange={(e) => setViewsIg(e.target.value)}
+        placeholder="Views"
         type="number"
       />
       <input
@@ -367,19 +306,26 @@ function AddAccount() {
         type="number"
       />
       <input
+        onChange={(e) => setImpressionsIg(e.target.value)}
+        placeholder="Impressions"
+        type="number"
+      />
+      <input
         onChange={(e) => setDownloadsIg(e.target.value)}
         placeholder="Downloads"
         type="number"
       />
-      <input
-        onChange={(e) => setViewsIg(e.target.value)}
-        placeholder="Views"
-        type="number"
-      />
+      
       <input
         onChange={(e) => setFollowersIg(e.target.value)}
         placeholder="Followers"
         type="number"
+      />
+      <input
+        onChange={(e) => setSaves(e.target.value)}
+        placeholder="Saves"
+        type="number"
+        required
       />
     </div>
   );
@@ -408,8 +354,8 @@ function AddAccount() {
         type="number"
       />
       <input
-        onChange={(e) => setImpressionsLn(e.target.value)}
-        placeholder="Impressions"
+        onChange={(e) => setViewsLn(e.target.value)}
+        placeholder="Views"
         type="number"
       />
       <input
@@ -418,15 +364,16 @@ function AddAccount() {
         type="number"
       />
       <input
+        onChange={(e) => setImpressionsLn(e.target.value)}
+        placeholder="Impressions"
+        type="number"
+      />
+      <input
         onChange={(e) => setDownloadsLn(e.target.value)}
         placeholder="Downloads"
         type="number"
       />
-      <input
-        onChange={(e) => setViewsLn(e.target.value)}
-        placeholder="Views"
-        type="number"
-      />
+      
       <input
         onChange={(e) => setFollowersLn(e.target.value)}
         placeholder="Followers"
@@ -466,6 +413,8 @@ function AddAccount() {
     }
     setPlatform(e);
   };
+
+
 
   const showForm = (
     <>
