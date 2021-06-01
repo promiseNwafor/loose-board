@@ -26,6 +26,10 @@
     background: #efefef;
 }
 
+.Wrap .displayName h3{
+    padding-top: 1.5rem;
+}
+
 .AddAccount .wrap, .Analytics .wrap{
     width: 60%;
     margin: auto;

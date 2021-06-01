@@ -24,6 +24,10 @@
   overflow: auto;
 }
  
+.popup-box .box::-webkit-scrollbar {
+  display: none;
+}
+ 
 .close-icon {
   content: 'x';
   cursor: pointer;
