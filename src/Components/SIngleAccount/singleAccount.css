@@ -1,0 +1,24 @@
+table.accountTable{
+    width: 90%;
+    margin: auto;
+    margin-top: 2rem;
+}
+
+.platforms{
+    display: flex;
+    width: 80%;
+    margin: auto;
+    margin-top: 2rem;
+}
+
+.platforms p{
+    width: 25%;
+    padding: 1rem 2rem;
+    cursor: pointer;
+    background: rgb(240, 238, 238);
+    border-right: 1px solid rgb(172, 170, 170);
+}
+
+.platforms p.active{
+    background: rgb(212, 211, 211);
+}

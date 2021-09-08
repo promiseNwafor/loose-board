@@ -5,8 +5,9 @@ import Popup from "./Popup";
 import "./admin.css";
 import Nav from "../Nav";
 import LoadingIndicator from "../LoadingIndicator";
+import { Link } from "react-router-dom";
 
-function Analytics() {
+function Analytics(props) {
   const { currentUser, isAdmin } = useContext(AuthContext);
   const accountsRef = firebase.firestore().collection("account");
   const [accounts, setAccounts] = useState([]);
@@ -609,7 +610,7 @@ function Analytics() {
     setIsLoading(true);
     // viewFacebook(accounts[0])
     currentUser
-      ? accountsRef
+      && accountsRef
           .get()
           .then((response) => {
             const items = [];
@@ -628,12 +629,12 @@ function Analytics() {
             setError(err);
             setIsLoading(true);
           })
-      : console.log("No user");
+      // : console.log("No user");
     // console.log(isAdmin)
   }, [currentUser]);
 
   useEffect(() => {
-    accFacebook ? viewFacebook(accFacebook) : console.log("acc not ready");
+    accFacebook && viewFacebook(accFacebook)
     // console.log(accFacebook);
   }, [accFacebook]);
 
@@ -725,7 +726,17 @@ function Analytics() {
                     return (
                       <tbody key={account.id}>
                         <tr>
-                          <td>{account.label}</td>
+                          <td
+                          >
+                            <Link
+                              to={{
+                                pathname: `/analytics/${account.label}`,
+                                state: { account, numberFacebook },
+                              }}
+                            >
+                              {account.label}
+                            </Link>
+                          </td>
                           <td>{account.manager}</td>
                           <td>
                             {account.facebook.likes < 1 &&
@@ -982,139 +993,144 @@ function Analytics() {
                           <div className="">
                             <div>{accInstagram.label} Instagram</div>
                           </div>
-                          {
-                            numberInstagram.likes !== undefined ||
+                          {numberInstagram.likes !== undefined ||
                           numberInstagram.comments !== undefined ||
                           numberInstagram.impressions !== undefined ||
                           numberInstagram.shares !== undefined ||
                           numberInstagram.views !== undefined ||
                           numberInstagram.reach !== undefined ||
                           numberInstagram.saves !== undefined ||
-                          numberInstagram.downloads !== undefined
-                          ? 
-                          <>
-                          <p className="span">
-                            <span className="head">{`${numberInstagram.likes} of ${itemTotalInstagram.likes}`}</span>
-                            {/* <span>|</span> */}
-                            <span>{`${totalMetricInstagram.likes}% likes`}</span>
-                          </p>
-                          <p className="span">
-                            <span className="head">{`${numberInstagram.comments} of ${itemTotalInstagram.comments}`}</span>
-                            {/* <span>|</span> */}
-                            <span>{`${totalMetricInstagram.comments}% comments`}</span>
-                          </p>
-                          <p className="span">
-                            <span className="head">{`${numberInstagram.saves} of ${itemTotalInstagram.saves}`}</span>
-                            {/* <span>|</span> */}
-                            <span>{`${totalMetricInstagram.saves}% saves`}</span>
-                          </p>
-                          <p className="span">
-                            <span className="head">{`${numberInstagram.shares} of ${itemTotalInstagram.shares}`}</span>
-                            {/* <span>|</span> */}
-                            <span>{`${totalMetricInstagram.shares}% shares`}</span>
-                          </p>
-                          <p className="span">
-                            <span className="head">{`${numberInstagram.leads} of ${itemTotalInstagram.leads}`}</span>
-                            {/* <span>|</span> */}
-                            <span>{`${totalMetricInstagram.leads}% leads`}</span>
-                          </p>
-                          <p className="span">
-                            <span className="head">{`${numberInstagram.impressions} of ${itemTotalInstagram.impressions}`}</span>
-                            {/* <span>|</span> */}
-                            <span>{`${totalMetricInstagram.impressions}% impressions`}</span>
-                          </p>
-                          <p className="span">
-                            <span className="head">{`${numberInstagram.reach} of ${itemTotalInstagram.reach}`}</span>
-                            {/* <span>|</span> */}
-                            <span>{`${totalMetricInstagram.reach}% reach`}</span>
-                          </p>
-                          <p className="span">
-                            <span className="head">{`${numberInstagram.followers} of ${itemTotalInstagram.followers}`}</span>
-                            {/* <span>|</span> */}
-                            <span>{`${totalMetricInstagram.followers}% followers`}</span>
-                          </p>
-                          <p className="span">
-                            <span className="head">{`${numberInstagram.views} of ${itemTotalInstagram.views}`}</span>
-                            {/* <span>|</span> */}
-                            <span>{`${totalMetricInstagram.views}% views`}</span>
-                          </p>
-                          <p className="span">
-                            <span className="head">{`${numberInstagram.downloads} of ${itemTotalInstagram.downloads}`}</span>
-                            {/* <span>|</span> */}
-                            <span>{`${totalMetricInstagram.downloads}% downloads`}</span>
-                          </p>
-                          </> : <center>
-                          <LoadingIndicator
-                            type="Rings"
-                            height={50}
-                            width={50}
-                          /></center>}
+                          numberInstagram.downloads !== undefined ? (
+                            <>
+                              <p className="span">
+                                <span className="head">{`${numberInstagram.likes} of ${itemTotalInstagram.likes}`}</span>
+                                {/* <span>|</span> */}
+                                <span>{`${totalMetricInstagram.likes}% likes`}</span>
+                              </p>
+                              <p className="span">
+                                <span className="head">{`${numberInstagram.comments} of ${itemTotalInstagram.comments}`}</span>
+                                {/* <span>|</span> */}
+                                <span>{`${totalMetricInstagram.comments}% comments`}</span>
+                              </p>
+                              <p className="span">
+                                <span className="head">{`${numberInstagram.saves} of ${itemTotalInstagram.saves}`}</span>
+                                {/* <span>|</span> */}
+                                <span>{`${totalMetricInstagram.saves}% saves`}</span>
+                              </p>
+                              <p className="span">
+                                <span className="head">{`${numberInstagram.shares} of ${itemTotalInstagram.shares}`}</span>
+                                {/* <span>|</span> */}
+                                <span>{`${totalMetricInstagram.shares}% shares`}</span>
+                              </p>
+                              <p className="span">
+                                <span className="head">{`${numberInstagram.leads} of ${itemTotalInstagram.leads}`}</span>
+                                {/* <span>|</span> */}
+                                <span>{`${totalMetricInstagram.leads}% leads`}</span>
+                              </p>
+                              <p className="span">
+                                <span className="head">{`${numberInstagram.impressions} of ${itemTotalInstagram.impressions}`}</span>
+                                {/* <span>|</span> */}
+                                <span>{`${totalMetricInstagram.impressions}% impressions`}</span>
+                              </p>
+                              <p className="span">
+                                <span className="head">{`${numberInstagram.reach} of ${itemTotalInstagram.reach}`}</span>
+                                {/* <span>|</span> */}
+                                <span>{`${totalMetricInstagram.reach}% reach`}</span>
+                              </p>
+                              <p className="span">
+                                <span className="head">{`${numberInstagram.followers} of ${itemTotalInstagram.followers}`}</span>
+                                {/* <span>|</span> */}
+                                <span>{`${totalMetricInstagram.followers}% followers`}</span>
+                              </p>
+                              <p className="span">
+                                <span className="head">{`${numberInstagram.views} of ${itemTotalInstagram.views}`}</span>
+                                {/* <span>|</span> */}
+                                <span>{`${totalMetricInstagram.views}% views`}</span>
+                              </p>
+                              <p className="span">
+                                <span className="head">{`${numberInstagram.downloads} of ${itemTotalInstagram.downloads}`}</span>
+                                {/* <span>|</span> */}
+                                <span>{`${totalMetricInstagram.downloads}% downloads`}</span>
+                              </p>
+                            </>
+                          ) : (
+                            <center>
+                              <LoadingIndicator
+                                type="Rings"
+                                height={50}
+                                width={50}
+                              />
+                            </center>
+                          )}
                         </>
                       ) : metric === "linkedin" ? (
                         <>
                           <div className="">
                             <div>{accLinkedin.label} Linkedin</div>
                           </div>
-                          {
-                            numberLinkedin.likes !== undefined ||
-                            numberLinkedin.comments !== undefined ||
-                            numberLinkedin.impressions !== undefined ||
-                            numberLinkedin.shares !== undefined ||
-                            numberLinkedin.views !== undefined ||
-                            numberLinkedin.reach !== undefined ||
-                            numberLinkedin.downloads !== undefined ?
+                          {numberLinkedin.likes !== undefined ||
+                          numberLinkedin.comments !== undefined ||
+                          numberLinkedin.impressions !== undefined ||
+                          numberLinkedin.shares !== undefined ||
+                          numberLinkedin.views !== undefined ||
+                          numberLinkedin.reach !== undefined ||
+                          numberLinkedin.downloads !== undefined ? (
                             <>
-                          <p className="span">
-                            <span className="head">{`${numberLinkedin.likes} of ${itemTotalLinkedin.likes}`}</span>
-                            {/* <span>|</span> */}
-                            <span>{`${totalMetricLinkedin.likes}% likes`}</span>
-                          </p>
-                          <p className="span">
-                            <span className="head">{`${numberLinkedin.comments} of ${itemTotalLinkedin.comments}`}</span>
-                            {/* <span>|</span> */}
-                            <span>{`${totalMetricLinkedin.comments}% comments`}</span>
-                          </p>
-                          <p className="span">
-                            <span className="head">{`${numberLinkedin.shares} of ${itemTotalLinkedin.shares}`}</span>
-                            {/* <span>|</span> */}
-                            <span>{`${totalMetricLinkedin.shares}% shares`}</span>
-                          </p>
-                          <p className="span">
-                            <span className="head">{`${numberLinkedin.leads} of ${itemTotalLinkedin.leads}`}</span>
-                            {/* <span>|</span> */}
-                            <span>{`${totalMetricLinkedin.leads}% leads`}</span>
-                          </p>
-                          <p className="span">
-                            <span className="head">{`${numberLinkedin.impressions} of ${itemTotalLinkedin.impressions}`}</span>
-                            {/* <span>|</span> */}
-                            <span>{`${totalMetricLinkedin.impressions}% impressions`}</span>
-                          </p>
-                          <p className="span">
-                            <span className="head">{`${numberLinkedin.reach} of ${itemTotalLinkedin.reach}`}</span>
-                            {/* <span>|</span> */}
-                            <span>{`${totalMetricLinkedin.reach}% reach`}</span>
-                          </p>
-                          <p className="span">
-                            <span className="head">{`${numberLinkedin.followers} of ${itemTotalLinkedin.followers}`}</span>
-                            {/* <span>|</span> */}
-                            <span>{`${totalMetricLinkedin.followers}% followers`}</span>
-                          </p>
-                          <p className="span">
-                            <span className="head">{`${numberLinkedin.views} of ${itemTotalLinkedin.views}`}</span>
-                            {/* <span>|</span> */}
-                            <span>{`${totalMetricLinkedin.views}% views`}</span>
-                          </p>
-                          <p className="span">
-                            <span className="head">{`${numberLinkedin.downloads} of ${itemTotalLinkedin.downloads}`}</span>
-                            {/* <span>|</span> */}
-                            <span>{`${totalMetricLinkedin.downloads}% downloads`}</span>
-                          </p></> : <center>
-                          <LoadingIndicator
-                            type="Rings"
-                            height={50}
-                            width={50}
-                          />
-                        </center>}
+                              <p className="span">
+                                <span className="head">{`${numberLinkedin.likes} of ${itemTotalLinkedin.likes}`}</span>
+                                {/* <span>|</span> */}
+                                <span>{`${totalMetricLinkedin.likes}% likes`}</span>
+                              </p>
+                              <p className="span">
+                                <span className="head">{`${numberLinkedin.comments} of ${itemTotalLinkedin.comments}`}</span>
+                                {/* <span>|</span> */}
+                                <span>{`${totalMetricLinkedin.comments}% comments`}</span>
+                              </p>
+                              <p className="span">
+                                <span className="head">{`${numberLinkedin.shares} of ${itemTotalLinkedin.shares}`}</span>
+                                {/* <span>|</span> */}
+                                <span>{`${totalMetricLinkedin.shares}% shares`}</span>
+                              </p>
+                              <p className="span">
+                                <span className="head">{`${numberLinkedin.leads} of ${itemTotalLinkedin.leads}`}</span>
+                                {/* <span>|</span> */}
+                                <span>{`${totalMetricLinkedin.leads}% leads`}</span>
+                              </p>
+                              <p className="span">
+                                <span className="head">{`${numberLinkedin.impressions} of ${itemTotalLinkedin.impressions}`}</span>
+                                {/* <span>|</span> */}
+                                <span>{`${totalMetricLinkedin.impressions}% impressions`}</span>
+                              </p>
+                              <p className="span">
+                                <span className="head">{`${numberLinkedin.reach} of ${itemTotalLinkedin.reach}`}</span>
+                                {/* <span>|</span> */}
+                                <span>{`${totalMetricLinkedin.reach}% reach`}</span>
+                              </p>
+                              <p className="span">
+                                <span className="head">{`${numberLinkedin.followers} of ${itemTotalLinkedin.followers}`}</span>
+                                {/* <span>|</span> */}
+                                <span>{`${totalMetricLinkedin.followers}% followers`}</span>
+                              </p>
+                              <p className="span">
+                                <span className="head">{`${numberLinkedin.views} of ${itemTotalLinkedin.views}`}</span>
+                                {/* <span>|</span> */}
+                                <span>{`${totalMetricLinkedin.views}% views`}</span>
+                              </p>
+                              <p className="span">
+                                <span className="head">{`${numberLinkedin.downloads} of ${itemTotalLinkedin.downloads}`}</span>
+                                {/* <span>|</span> */}
+                                <span>{`${totalMetricLinkedin.downloads}% downloads`}</span>
+                              </p>
+                            </>
+                          ) : (
+                            <center>
+                              <LoadingIndicator
+                                type="Rings"
+                                height={50}
+                                width={50}
+                              />
+                            </center>
+                          )}
                         </>
                       ) : (
                         <center>

@@ -7,6 +7,7 @@ import AddAccount from "./Components/Admin/AddAccount";
 import AddReport from "./Components/User/AddReport";
 import ManagerAnalytics from "./Components/User/ManagerAnalytics";
 import Analytics from "./Components/Admin/Analytics";
+import SingleAccount from "./Components/SIngleAccount/SingleAccount";
 
 export const AuthScreen = React.createContext();
 export const AuthContext = React.createContext();
@@ -331,6 +332,9 @@ function App() {
               </Route>
               <Route exact path="/managerAnalytics">
                 <ManagerAnalytics />
+              </Route>
+              <Route exact path="/analytics/:account">
+                <SingleAccount />
               </Route>
             </Switch>
           </div>
