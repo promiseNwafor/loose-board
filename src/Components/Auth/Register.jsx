@@ -44,7 +44,13 @@ function Register() {
           setUsername(username);
         })
         .then(() => {
-          addUser({ email: email, value: username, label: username, id: email, isAdmin });
+          addUser({
+            email: email,
+            value: username,
+            label: username,
+            id: email,
+            isAdmin,
+          });
           // console.log(username);
         })
         .then(() => {
@@ -73,11 +79,12 @@ function Register() {
     setPasswordShown(passwordShown ? false : true);
   };
 
-  useEffect(() => {
-  }, [username]);
+  const handleGotoLogin = () => setIsRegister(true);
+
+  useEffect(() => {}, [username]);
 
   useEffect(() => {
-    admin()
+    admin();
   }, [email, isAdmin]);
 
   return (
@@ -144,16 +151,14 @@ function Register() {
               />
             </center>
           ) : (
-            <div className="Btn">
-              <button onClick={register} type="submit">
-                REGISTER
-              </button>
+            <div onClick={register} className="Btn">
+              <button type="submit">REGISTER</button>
             </div>
           )}
         </div>
       </div>
       <div className="foot">
-        <p onClick={() => setIsRegister(false)}>Already have an account?</p>
+        <p onClick={handleGotoLogin}>Already have an account?</p>
       </div>
     </div>
   );

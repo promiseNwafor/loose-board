@@ -33,7 +33,7 @@ function Login() {
         })
         .catch((err) => {
           setLoading(false);
-          alert(err.message)
+          alert(err.message);
           // console.error(err);
         });
     }
@@ -48,6 +48,8 @@ function Login() {
   const togglePasswordVisiblity = () => {
     setPasswordShown(passwordShown ? false : true);
   };
+
+  const handleGotoRegister = () => setIsRegister(false);
 
   useEffect(() => {}, [loading]);
 
@@ -95,17 +97,15 @@ function Login() {
               />
             </center>
           ) : (
-            <div className="Btn">
-              <button onClick={login} type="submit">
-                LOGIN
-              </button>
+            <div onClick={login} className="Btn">
+              <button type="submit">LOGIN</button>
             </div>
           )}
           {/* </div> */}
         </div>
       </div>
       <div className="foot">
-        <p onClick={() => setIsRegister(true)}>Don't have an account?</p>
+        <p onClick={handleGotoRegister}>Don't have an account?</p>
       </div>
     </div>
   );

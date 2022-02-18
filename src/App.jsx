@@ -230,18 +230,17 @@ function App() {
     });
     currentUser ? getManagerAccounts() : console.log("No user yet");
     getAccounts();
-    currentUser
-      ? currentUser.email.includes("seun") ||
-        currentUser.email.includes("ized") ||
-        currentUser.email.includes("kemi") ||
-        currentUser.email.includes("charles") ||
-        currentUser.email.includes("ughoro") ||
-        currentUser.email.includes("joan") ||
-        currentUser.email.includes("mobola")
-        ? setIsAdmin(true)
-        : setIsAdmin(false)
-      : console.log("no currentUser");
-    // console.log(currentUser);
+    // currentUser
+    //   && currentUser.email.includes("seun") ||
+    //     currentUser.email.includes("ized") ||
+    //     currentUser.email.includes("ceo") ||
+    //     currentUser.email.includes("kemi") ||
+    //     currentUser.email.includes("charles") ||
+    //     currentUser.email.includes("ughoro") ||
+    //     currentUser.email.includes("chinedu")
+    //     ? setIsAdmin(true)
+    //     : setIsAdmin(false)
+    setIsAdmin(true);
   }, [currentUser, isAdmin, locale]);
 
   useEffect(() => {
